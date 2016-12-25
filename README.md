@@ -13,15 +13,12 @@
 
 ## 运行截图
 
+![首页](http://o8rhu247b.bkt.clouddn.com/home.png)
+![s](http://o8rhu247b.bkt.clouddn.com/detail.gif)
+![搜索](http://o8rhu247b.bkt.clouddn.com/search_%E7%9C%8B%E5%9B%BE%E7%8E%8B.png)
 
 
 ## 安装运行
-
-![首页](http://o8rhu247b.bkt.clouddn.com/home.png)
-
-![搜索](http://o8rhu247b.bkt.clouddn.com/search.png)
-
-![s](http://o8rhu247b.bkt.clouddn.com/detail.gif)
 
 ``` bash
 # install dependencies
