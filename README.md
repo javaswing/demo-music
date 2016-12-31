@@ -13,9 +13,9 @@
 
 ## 运行截图
 
-![首页](http://github.com/javaSwing/vue-demo-music/master/screenshots/home.png)
-![s](http://github.com/javaSwing/vue-demo-music/master/screenshots/detail.png)
-![搜索](http://github.com/javaSwing/vue-demo-music/master/screenshots/search.png)
+![首页](https://github.com/javaSwing/vue-demo-music/raw/master/screenshots/home.png)
+![详情](https://github.com/javaSwing/vue-demo-music/raw/master/screenshots/detail.png)
+![搜索](https://github.com/javaSwing/vue-demo-music/raw/master/screenshots/search.png)
 
 
 ## 安装运行
