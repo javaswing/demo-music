@@ -13,9 +13,9 @@
 
 ## 运行截图
 
-![首页](http://o8rhu247b.bkt.clouddn.com/home.png)
-![s](http://o8rhu247b.bkt.clouddn.com/vue-demo-detail)
-![搜索](http://o8rhu247b.bkt.clouddn.com/search_%E7%9C%8B%E5%9B%BE%E7%8E%8B.png)
+![首页](http://github.com/javaSwing/vue-demo-music/master/screenshots/home.png)
+![s](http://github.com/javaSwing/vue-demo-music/master/screenshots/detail.png)
+![搜索](http://github.com/javaSwing/vue-demo-music/master/screenshots/search.png)
 
 
 ## 安装运行
