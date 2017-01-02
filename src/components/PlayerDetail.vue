@@ -7,7 +7,7 @@
         <mu-icon-button icon='keyboard_arrow_left' @click="back" slot="left"/>
         <mu-icon-button icon='more_horiz' slot="right"/>
       </mu-appbar>
-        <div class="cover h5p-pause" :class="{'h5p-roll': isPlay}">
+        <div class="cover h5p-pause" :class="{'h5p-roll': playing}">
           <img :src="audio.album_pic" class="img1" :alt="audio.name">
         </div>
         <div id="lyric" class="lyric lrc">
@@ -17,7 +17,7 @@
         </div>
         <div class="pro">
           <div class="pro-wrap">
-            <mu-slider v-model="playerTime" @change="changeTime" :disabled="!sliderStatus" class="song-slider"/>
+            <mu-slider v-model="prCurrentTime" @change="changeTime" :disabled="!currentTime > 0" class="song-slider"/>
           </div>
           <div class="time">
             <time id="cur">{{currentTime | time}}</time>
@@ -26,7 +26,7 @@
         </div>
         <div class="control-bar">
            <i class="control-btn btn-prev btn-sm" @click="prev"></i>
-           <i class="control-btn btn-play btn-lg" @click="togglePlayer" :class="{'btn-pause':isPlay}"></i>
+           <i class="control-btn btn-play btn-lg" @click="togglePlayer" :class="{'btn-pause':playing}"></i>
            <i class="control-btn btn-next btn-sm" @click="next"></i>
         </div>
       </div>
@@ -39,50 +39,18 @@
  </section>
 </template>
 <script>
-import bus from '../bus.js'
+import { mapGetters } from 'vuex'
 import api from '../api/api.js'
 export default {
   data () {
     return {
-      audio: {
-        'id': 0,
-        'name': '标题',
-        'singer': '演唱者',
-        'album_pic': 'static/defaultD.png',
-        'location': '',
-        'album': ''
-      },
       lyric: '',
       afterLrc: [],
-      isPlay: false,
-      currentTime: 0,
-      durationTime: 0,
-      bufferedTime: 0,
-      lrcIndex: 0,
-      sliderStatus: false
+      lrcIndex: 0
     }
   },
   created () {
-    var vm = this
-    // 监听Play组件发送的事件
-    bus.$on('openDetail', function (song, status, currentTime, durationTime, bufferedTime) {
-      vm.isPlay = !status
-      vm.audio = song
-      if (song.id > 0) {
-        vm.sliderStatus = true
-      }
-      vm.currentTime = currentTime
-      vm.durationTime = durationTime
-      vm.bufferedTime = bufferedTime
-      vm.loadLrc(song.id)
-    })
-
-    // 监听Play组件发送的时间更新事件
-    bus.$on('transferTime', function (currentTime, durationTime, bufferedTime) {
-      vm.currentTime = currentTime
-      vm.durationTime = durationTime
-      vm.bufferedTime = durationTime
-    })
+    this.loadLrc(this.audio.id)
   },
   methods: {
     back () {
@@ -91,22 +59,22 @@ export default {
     },
     // 播放和暂停事件
     togglePlayer () {
-      var vm = this
-      this.isPlay = !this.isPlay
-      // 触发Play组件监听的播放事件
-      bus.$emit('playEvent', vm.isPlay)
+      if (this.playing) {
+        this.$store.commit('pause')
+      } else {
+        this.$store.commit('play')
+      }
     },
     prev () {
-      bus.$emit('prev')
+      this.$store.commit('playPrev')
     },
     next () {
-      bus.$emit('next')
+      this.$store.commit('playNext')
     },
     changeTime (value) { // 改变播放时间事件
-      var precentage = value / 100
-      this.currentTime = this.durationTime * precentage
-      // 发送给Palyer组件
-      bus.$emit('changeTime', precentage)
+      var time = (value * this.durationTime) / 100
+      this.$store.commit('changeTime', time)
+      this.$store.commit('setChange', true)
     },
     loadLrc (id) {
       this.afterLrc = [{'txt': '正在加载中...'}]
@@ -173,9 +141,14 @@ export default {
     }
   },
   computed: {
-    playerTime () {
-      return this.currentTime / this.durationTime * 100
-    },
+    ...mapGetters([
+      'currentTime',
+      'bufferedTime',
+      'durationTime',
+      'prCurrentTime',
+      'audio',
+      'playing'
+    ]),
     lrcOffset () {
       if (this.afterLrc) {
         // 1、根据时间获得歌词

@@ -8,7 +8,7 @@
   </transition>
   <Player v-show="!detailShow" @detail="toggleDetail"></Player>
   <transition name="slide-fade">
-    <PlayerDetail v-show="detailShow" @back="toggleDetail"></PlayerDetail>
+    <PlayerDetail v-if="detailShow" @back="toggleDetail"></PlayerDetail>
   </transition>
 </div>
 </template>
@@ -42,13 +42,13 @@ export default {
 </script>
 <style scopoed>
   .slide-fade-enter-active {
-    transition: all .3s ease;
+    transition: all .2s ease;
   }
   .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
   .slide-fade-enter, .slide-fade-leave-active {
-    transform: translateY(20px);
+    transform: translateY(200px);
     opacity: 0;
   }
   .fade-enter-active, .fade-leave-active {

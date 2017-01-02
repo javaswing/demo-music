@@ -1,9 +1,9 @@
 <template>
   <div>
   <mu-circular-progress :size="60" class="center" v-if="isloading"/>
-    <mu-list v-show="!isloading">
+    <mu-list :value="value" v-show="!isloading" @change="change">
       <div v-for="(item, index) in lists">
-       <mu-list-item  :disableRipple="true" :title="item.name" @click="Player(item)"  :describeText="item.ar[0].name" >
+       <mu-list-item  :disableRipple="true" :value="index + 1" :title="item.name" @click="Player(item, index)" :describeText="item.ar[0].name" >
         <span slot="left" v-if="" class="indexStyle">{{index + 1}}</span>
       </mu-list-item>
       <mu-divider inset/>
@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import bus from '../bus.js'
+import { mapGetters } from 'vuex'
 export default {
   name: 'item-list',
   props: {
@@ -29,7 +29,9 @@ export default {
   data () {
     return {
       lists: [],
-      isloading: false
+      isloading: false,
+      currentPlay: false,
+      value: 0
     }
   },
   created () {
@@ -37,7 +39,6 @@ export default {
   },
   watch: {
     api (val, oldVal) {
-      console.log('ddd' + val)
       this.loadData()
     }
   },
@@ -55,6 +56,9 @@ export default {
         console.log('jsonp fail')
       })
     },
+    change (val) {
+      this.value = val
+    },
     Player (song) {
       // 传递数据给play组件
       // 为了统一数据模型防止接口改变，这里对自定义的数据模型赋值
@@ -63,9 +67,15 @@ export default {
       audio.singer = song.ar[0].name // 演唱者
       audio.album_pic = song.al.picUrl
       audio.name = song.name
-      // 通过Event Bar传递数据
-      bus.$emit('player', audio)
+      // 通过Vuex改变状态
+      this.$store.commit('addToList', audio)
+      this.$store.commit('setAudio')
     }
+  },
+  computed: {
+    ...mapGetters([
+      'currentIndex'
+    ])
   }
 }
 </script>
