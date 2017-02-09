@@ -2,7 +2,6 @@
 
 > 这是一个用Vue写的简单音乐demo
 
-[在线地址](http://vuetest-001-site1.btempurl.com/)
 
 ### 用到的技术
 - vuejs2.x
