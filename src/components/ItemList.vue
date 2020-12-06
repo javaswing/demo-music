@@ -2,10 +2,11 @@
   <div>
   <mu-circular-progress :size="60" class="center" v-if="isloading"/>
     <mu-list v-show="!isloading">
-      <div v-for="(item, index) in lists">
+      <div v-for="(item, index) in lists" :key="index">
        <mu-list-item  :disableRipple="true" :title="item.name" @click="Player(item)"  :describeText="item.ar[0].name" >
-        <span slot="left" v-if="" class="indexStyle">{{index + 1}}</span>
+        <span slot="left"  class="indexStyle">{{index + 1}}</span>
       </mu-list-item>
+      </div>
       <mu-divider inset/>
     </mu-list>
   </div>
