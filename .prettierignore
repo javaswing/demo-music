@@ -1,0 +1,27 @@
+/src/assets
+/dist
+/out
+
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.otf
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.scss.d.ts
+
+# misc
+.DS_Store
+.tps_log
+*.lock
+*.log
+package-lock.json
+node_modules
+.github/*
+.vscode
+.{git,svn,hg}
