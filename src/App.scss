@@ -1,3 +1,26 @@
-.title {
-  font-size: 1px;
+.mod_nav {
+  background-color: red;
+}
+.mod_nav_list {
+  display: flex;
+  padding: 7.5px 5px 5px;
+}
+.mod_nav_list_item {
+  flex: 1;
+  text-align: center;
+  font-size: 5px;
+}
+.mod_nav_list_item_logo {
+  display: block;
+  margin: 0 auto;
+  width: 20px;
+  height: 20px;
+}
+.mod_nav_list_item_logo img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+.mod_nav_list_item_name {
+  margin-top: 1px;
 }
