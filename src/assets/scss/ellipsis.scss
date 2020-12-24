@@ -1,0 +1,13 @@
+@import './mixins/ellipsis';
+
+.txt-ellipsis {
+  @include ellipsis();
+}
+
+.txt-ellipsis--l2 {
+  @include multi-ellipsis(2);
+}
+
+.txt-ellipsis--l3 {
+  @include multi-ellipsis(3);
+}
