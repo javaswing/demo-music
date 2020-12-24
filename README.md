@@ -24,7 +24,7 @@
 
 - [ ] 常用 scss 封装
   - [x] `normalize`浏览器重置样式
-  - [ ] `flex` 帮助样式类
+  - [x] `flex` 帮助样式类
   - [x] `ellipsis` 文本截取
   - [x] `clearfix` 清除浮动
   - [x] `hariline` 1px 边框
@@ -36,5 +36,5 @@
 
 ## TODO
 
-- [ ] H5 移动端开发模版
+- [x] H5 移动端开发模版
 - [ ] PC 开发模版
