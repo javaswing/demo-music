@@ -6,14 +6,17 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   extends: [
-   'airbnb',
-   'prettier',
-   'plugin:react/recommended',
-   'plugin:import/typescript',
-   'prettier/react',
+    "plugin:@typescript-eslint/eslint-recommended", // eslint 处理typescript格式
+    "plugin:@typescript-eslint/recommended",
+    'plugin:react/recommended', // eslint处理react代码格式 https://github.com/yannickcr/eslint-plugin-react
+    'plugin:import/errors', // https://www.npmjs.com/package/eslint-plugin-import
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+    'plugin:prettier/recommended',
+    'prettier/@typescript-eslint', // 如果eslint和prettier有冲突，以prettier为主
   ],
   plugins: ['@typescript-eslint', 'react', 'react-hooks'],
-  settings: {
+  settings: { // 自动发现react版本
     react: {
       version: "detect"
     },
@@ -23,6 +26,13 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts']
       }
     }
+  },
+  parserOptions: { // 指定eslint可以解析的jsx语法
+    ecmaVersion: 2019,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
    // https://github.com/typescript-eslint/typescript-eslint/issues/46#issuecomment-470486034
    overrides: [
