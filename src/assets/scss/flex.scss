@@ -1,0 +1,45 @@
+// https://github.com/youzan/zent/blob/master/packages/zent/assets/layout.scss
+.row {
+  box-sizing: border-box;
+  display: flex;
+
+  &-justify {
+    &-start {
+      justify-content: flex-start;
+    }
+
+    &-end {
+      justify-content: flex-end;
+    }
+
+    &-center {
+      justify-content: center;
+    }
+
+    &-space-between {
+      justify-content: space-between;
+    }
+
+    &-space-around {
+      justify-content: space-around;
+    }
+
+    &-space-evenly {
+      justify-content: space-evenly;
+    }
+  }
+
+  &-align {
+    &-start {
+      align-items: start;
+    }
+
+    &-center {
+      align-items: center;
+    }
+
+    &-end {
+      align-items: end;
+    }
+  }
+}
