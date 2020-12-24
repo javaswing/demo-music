@@ -93,6 +93,23 @@ module.exports = {
 
     'import/extensions': 0,
     'import/no-cycle': 0,
+    'import/order': ['error', { // 排序import引入顺序
+      'pathGroups': [
+        {
+          "pattern": "~/**",
+          "group": "external"
+        },
+        {
+          "pattern": "@/**",
+          "group": "external",
+          "position": "after"
+        },
+        {
+          pattern: '.\/*.scss',
+          group: 'object',
+        },
+      ]
+    }],
 
     // https://github.com/typescript-eslint/typescript-eslint/issues/2540#issuecomment-692866111
     'no-use-before-define': 0,
