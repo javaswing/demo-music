@@ -45,6 +45,12 @@ module.exports = {
       },
     },
     {
+      files: ['*.ts'],
+      rules: {
+        "@typescript-eslint/explicit-module-boundary-types": "warn" // 函数的返回值类型一定要写 only ts
+      },
+    },
+    {
       files: ['*.md'], // md检测
       globals: {
         React: true,
@@ -95,5 +101,6 @@ module.exports = {
     '@typescript-eslint/no-shadow': [2, { ignoreTypeValueShadow: true }],
     // https://github.com/typescript-eslint/typescript-eslint/issues/2528#issuecomment-689369395
     'no-undef': 0,
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   },
 };
