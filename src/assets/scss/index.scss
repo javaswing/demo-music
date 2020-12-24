@@ -1,21 +1,5 @@
+@import './var.scss';
 @import './normalize.scss';
+@import './auto-design.scss';
 
-// rem 单位换算：定为 75px 只是方便运算，750px-75px、640-64px、1080px-108px，如此类推
-$vw_fontsize: 37.5; // iPhone 6尺寸的根元素大小基准值
 
-// 根元素大小使用 vw 单位
-$vw_design: 375;
-html {
-  font-size: ($vw_fontsize / ($vw_design / 2)) * 100vw;
-  // 同时，通过Media Queries 限制根元素最大最小值
-  @media screen and (max-width: 320px) {
-      font-size: 64px;
-  }
-  @media screen and (min-width: 540px) {
-      font-size: 108px;
-  }
-}
-
-body {
-  line-height: 1.6;
-}

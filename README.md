@@ -9,7 +9,7 @@
 ## 添加的功能
 
 - [x] scss 支持
-- [ ] postcss 处理
+- [x] postcss 处理 (rem 处理)
 - [x] husky
 - [x] lint-staged
 - [x] prettier
@@ -23,6 +23,7 @@
 ## 封装
 
 - [ ] 常用 scss 封装
+  - [x] `normalize`浏览器重置样式
 - [ ] 常用工具类封装
 
 ## QA

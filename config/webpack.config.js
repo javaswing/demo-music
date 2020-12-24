@@ -135,7 +135,7 @@ module.exports = function (webpackEnv) {
 
             // add px2rem
             pxtorem({
-              rootValue: 37.5,
+              rootValue: 75,
               propList: ['*']
             })
           ],

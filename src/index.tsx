@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
-// import 'amfe-flexible';
 
 ReactDOM.render(
   <React.StrictMode>
