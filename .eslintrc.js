@@ -111,6 +111,13 @@ module.exports = {
       ]
     }],
 
+    "import/no-unresolved": [
+      2,
+      {
+          "ignore": ["^@/"] // @ 是设置的路径别名
+      },
+    ],
+
     // https://github.com/typescript-eslint/typescript-eslint/issues/2540#issuecomment-692866111
     'no-use-before-define': 0,
     '@typescript-eslint/no-use-before-define': 2,
