@@ -27,7 +27,7 @@ const initialState: SongInfoState = {
   totalTime: 0,
 };
 
-const currentSong = (state = initialState, action: SetSongAction): SongInfoState => {
+const songReducer = (state = initialState, action: SetSongAction): SongInfoState => {
   switch (action.type) {
     case SET_SONG: {
       return {
@@ -40,4 +40,4 @@ const currentSong = (state = initialState, action: SetSongAction): SongInfoState
   }
 };
 
-export default currentSong;
+export default songReducer;
