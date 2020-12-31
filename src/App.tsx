@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.scss';
+import styles from './App.module.scss';
 
 function App() {
-  return <div></div>;
+  return <div className={styles.wrapper}></div>;
 }
 
 export default App;
