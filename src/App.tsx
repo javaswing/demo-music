@@ -1,9 +1,8 @@
 import React from 'react';
-import './App.scss';
-import Detail from '@/components/detail';
+import styles from './App.module.scss';
 
 function App() {
-  return <Detail />;
+  return <div className={styles.wrapper}></div>;
 }
 
 export default App;
