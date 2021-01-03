@@ -62,13 +62,9 @@ declare module '*.module.css' {
 }
 
 declare module '*.module.scss' {
-  interface IClassNames {
-    [className: string]: string;
-  }
-  const classNames: IClassNames;
-  export = classNames;
+  const classes: { readonly [key: string]: string };
+  export default classes;
 }
-
 declare module '*.scss' {
   const classes: { readonly [key: string]: string };
   export default classes;

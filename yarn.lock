@@ -11496,8 +11496,8 @@ typedarray@^0.0.6:
 
 typescript-plugin-css-modules@^3.0.1:
   version "3.0.1"
-  resolved "https://registry.yarnpkg.com/typescript-plugin-css-modules/-/typescript-plugin-css-modules-3.0.1.tgz#6d9a9e11660fcba60b5679797bdcf61621705062"
-  integrity sha512-nrnI1ZX6o4iTELlYV2P+yapoaWhdWGbJRiKSeNf5yE10QrAX9MfiKVBxRF7wCdolkK9N1g0u1egUto7hojomLg==
+  resolved "https://registry.npm.taobao.org/typescript-plugin-css-modules/download/typescript-plugin-css-modules-3.0.1.tgz#6d9a9e11660fcba60b5679797bdcf61621705062"
+  integrity sha1-bZqeEWYPy6YLVnl5e9z2FiFwUGI=
   dependencies:
     dotenv "^8.2.0"
     icss-utils "^4.1.1"
