@@ -28,7 +28,14 @@
       "src/react-app-env",
       "node_modules/@types"
     ],
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [
+      {
+      "name": "typescript-plugin-css-modules" ,
+      // "options": {
+      //   "classnameTransform": "camelCase",
+      // }
+      }
+    ]
   },
   "include": [
     "src"
