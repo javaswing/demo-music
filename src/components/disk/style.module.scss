@@ -8,23 +8,23 @@
   .stick {
     position: absolute;
     top: 0;
-    width: 105px;
-    height: 165px;
-    right: 30%;
-    background: url('../../assets/img/stick_bg.png') no-repeat left top;
-    background-size: cover;
+    left: 0;
+    width: 375px;
+    height: 207px;
+    background: url('../../assets/img/styli2.png') no-repeat left bottom;
+    background-size: 100% auto;
     transition: all 300ms ease-in;
-    transform-origin: left top;
-    z-index: 4;
+    transform-origin: center top;
+    z-index: 1;
 
     &--pause {
-      transform: rotate(-20deg);
+      transform: rotate(-25deg);
     }
   }
 }
 
 .disk {
-  margin-top: 110px;
+  margin-top: 105px;
   position: relative;
   width: 310px;
   height: 310px;
