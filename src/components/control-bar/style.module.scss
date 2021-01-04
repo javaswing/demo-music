@@ -1,0 +1,49 @@
+.progress-bar {
+  margin-top: 40px;
+  padding: 0 10px;
+  .time {
+    color: #fff;
+    font-size: 12px;
+    opacity: 0.5;
+  }
+
+  .slider {
+    margin: 0 10px;
+    width: 290px;
+  }
+}
+
+.control-bar {
+  padding: 0 20px;
+  margin-top: 20px;
+  .btn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .d-mode {
+    background: url('../../assets/img/seq.png') no-repeat;
+    background-size: cover;
+  }
+
+  .d-prev {
+    background: url('../../assets/img/prev.png') no-repeat;
+    background-size: cover;
+  }
+  .d-play {
+    background: url('../../assets/img/play.png') no-repeat;
+    background-size: cover;
+  }
+  .d-pause {
+    background: url('../../assets/img/pause.png') no-repeat;
+    background-size: cover;
+  }
+  .d-next {
+    background: url('../../assets/img/next.png') no-repeat;
+    background-size: cover;
+  }
+  .d-list {
+    background: url('../../assets/img/list.png') no-repeat;
+    background-size: cover;
+  }
+}
