@@ -63,7 +63,6 @@
 }
 
 .cd {
-  &-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
@@ -81,23 +80,20 @@
       transform: rotate(-20deg);
       z-index: 4;
     }
+}
 
-    .disk {
-      &-box {
-        margin-top: 110px;
-        position: relative;
-        width: 310px;
-        height: 310px;
-        border-radius: 50%;
-        background: url('../../assets/img/disk.png') no-repeat center center;
-        background-size: contain;
-        .img {
-          position: relative;
-          width: 195px;
-          height: 195px;
-          border-radius: 50%;
-        }
-      }
+.disk {
+    margin-top: 110px;
+    position: relative;
+    width: 310px;
+    height: 310px;
+    border-radius: 50%;
+    background: url('../../assets/img/disk.png') no-repeat center center;
+    background-size: contain;
+    .img {
+      position: relative;
+      width: 195px;
+      height: 195px;
+      border-radius: 50%;
     }
-  }
 }

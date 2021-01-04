@@ -8,9 +8,9 @@ export default function Detail() {
       <div className={styles['player-wrapper']}>
         <div className={styles['player__nav-bar']}></div>
         <div className={styles.player__content}>
-          <div className={cls(styles['cd-wrapper'], 'row row-justify-center row-align-center')}>
+          <div className={cls('row row-justify-center row-align-center', styles.cd)}>
             <div className={styles.stick}></div>
-            <div className={cls('row row-justify-center row-align-center', styles['disk-box'])}>
+            <div className={cls('row row-justify-center row-align-center', styles.disk)}>
               <img
                 className={styles.img}
                 src="http://p1.music.126.net/dREm6MLlitjPHtUMD8l7bQ==/109951163849833537.jpg?param=500y500"
