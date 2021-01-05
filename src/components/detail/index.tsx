@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DetailContent from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
 // import cls from 'classnames';
+import { getSongInfo } from '@/service';
 import styles from './style.module.scss';
 
 export default function Detail() {
+  useEffect(() => {
+    async function init() {
+      const json = await getSongInfo(33894312);
+      console.log(json);
+    }
+    init();
+  }, []);
+
   return (
     <div className={styles.content}>
       <div className={styles['player-wrapper']}>
