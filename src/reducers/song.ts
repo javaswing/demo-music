@@ -1,4 +1,5 @@
-export const SET_SONG = 'SET_SONG';
+import { SetSongAction } from '@/actions';
+import { SET_SONG } from '@/constants';
 
 export interface SongInfo {
   id?: number;
@@ -12,13 +13,6 @@ export interface SongInfoState {
   song?: SongInfo;
   currentTime?: number;
   totalTime?: number;
-}
-
-export type SongActionTypes = typeof SET_SONG;
-
-export interface SetSongAction {
-  type: SongActionTypes;
-  payload: SongInfo;
 }
 
 const initialState: SongInfoState = {
