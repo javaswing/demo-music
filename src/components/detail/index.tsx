@@ -1,24 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import DetailContent from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
 // import cls from 'classnames';
-import { getSongInfo } from '@/services';
+import { getSongInfo, getSongUrl } from '@/services';
+import { pick } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSongInfo } from '@/actions';
+import { RootState } from '@/reducers';
 import styles from './style.module.scss';
 
+export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
+
 export default function Detail() {
+  const dispatch = useDispatch();
+
+  const init = useCallback(async () => {
+    const songId = 468513829;
+    const songInfoJson = (await getSongInfo(songId)) as SongInfoResponse;
+    const { data: songUrlData } = await getSongUrl(songId);
+    const [songUrl] = songUrlData;
+    const [firtSong] = songInfoJson.songs ?? [];
+    const targetSongUrl = pick(songUrl, 'url', 'urlSource', 'type', 'md5', 'size');
+    dispatch(setSongInfo({ ...targetSongUrl, ...firtSong }));
+  }, [dispatch]);
+
   useEffect(() => {
-    async function init() {
-      const json = await getSongInfo(468513829);
-      console.log(json);
-    }
     init();
-  }, []);
+  }, [init]);
+
+  const { song } = useSelector((state: RootState) => state.song);
 
   return (
     <div className={styles.content}>
       <div className={styles['player-wrapper']}>
-        <div className={styles['player__nav-bar']}></div>
-        <DetailContent className={styles.player__content} />
+        <div className={styles['player__nav-bar']}>{song?.name}</div>
+        <DetailContent coverImg={song?.al?.picUrl} className={styles.player__content} />
         <ControlBar className={styles.player__control} />
       </div>
       <div className={styles.mask}>

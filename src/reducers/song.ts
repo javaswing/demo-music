@@ -1,20 +1,7 @@
 import { SetSongAction } from '@/actions';
 import { SET_SONG } from '@/constants';
 
-export interface SongInfo {
-  id?: number;
-  name?: string;
-  /** 播放地址 */
-  url?: string;
-  urlSource?: number;
-  /** 歌曲类型 */
-  type?: 'mp3' | 'm4a' | string;
-  md5?: string;
-  /** 封面 */
-  coverImg?: string;
-  /** 大小 kb */
-  size?: number;
-}
+export type SongInfo = ResponseSong & BaseSongUrl;
 
 export interface SongInfoState {
   song?: SongInfo;
@@ -33,7 +20,7 @@ const songReducer = (state = initialState, action: SetSongAction): SongInfoState
     case SET_SONG: {
       return {
         ...state,
-        ...action.payload,
+        song: action.payload,
       };
     }
     default:

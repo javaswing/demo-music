@@ -39,7 +39,7 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       rules: {
-        '@typescript-eslint/no-unused-vars': [2, { args: 'none', "argsIgnorePattern": "^_" }],
+        '@typescript-eslint/no-unused-vars': [1, { args: 'none', "argsIgnorePattern": "^_" }],
         'no-unused-expressions': 'off',
         '@typescript-eslint/no-unused-expressions': 2,
       },

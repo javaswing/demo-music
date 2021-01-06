@@ -6,15 +6,16 @@ import Lyric from '@/components/lyric';
 export interface DetailContentProps {
   model?: 'disk' | 'lyric';
   className?: string;
+  coverImg?: string;
 }
 
 const DetailContent = (props: DetailContentProps) => {
-  const { model = 'disk', className } = props;
+  const { model = 'disk', className, coverImg } = props;
   const isDiskModel = useMemo(() => {
     return model === 'disk';
   }, [model]);
 
-  return <div className={cls(className)}>{isDiskModel ? <Disk /> : <Lyric />}</div>;
+  return <div className={cls(className)}>{isDiskModel ? <Disk diskCover={coverImg} /> : <Lyric />}</div>;
 };
 
 export default React.memo(DetailContent);
