@@ -91,7 +91,7 @@ module.exports = {
     'react/default-props-match-prop-types': 0,
     'react-hooks/rules-of-hooks': 2, // Checks rules of Hooks
     "react-hooks/exhaustive-deps": 2,
-
+    '@typescript-eslint/no-explicit-any': 0, // close use any typess
     'import/extensions': 0,
     'import/no-cycle': 0,
     'import/order': ['error', { // 排序import引入顺序

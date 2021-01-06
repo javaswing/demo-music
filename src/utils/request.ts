@@ -1,10 +1,9 @@
 import { baseUrl } from '@/constants/global';
 import axios, { AxiosRequestConfig, Method } from 'axios';
+/** 请求配置 */
 export type RequestOption = {
   method?: Method;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params?: any;
   url: string;
 };
