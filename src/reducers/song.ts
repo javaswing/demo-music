@@ -5,11 +5,14 @@ export interface SongInfo {
   id?: number;
   /** 播放地址 */
   url?: string;
+  urlSource?: number;
   /** 歌曲类型 */
   type?: 'mp3' | 'm4a' | string;
   md5?: string;
   /** 封面 */
   coverImg?: string;
+  /** 大小 kb */
+  size?: number;
 }
 
 export interface SongInfoState {

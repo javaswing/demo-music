@@ -1,5 +1,5 @@
 import { baseUrl } from '@/constants/global';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 function genAxiosInstance(config?: AxiosRequestConfig) {
   return axios.create({
@@ -14,18 +14,18 @@ function genAxiosInstance(config?: AxiosRequestConfig) {
 
 const axiosInstance = genAxiosInstance();
 
-axiosInstance.interceptors.response.use(
-  (res: AxiosResponse) => {
-    if (res.data.code !== 200) {
-      window.alert('数据返回有误');
-      return Promise.reject(res);
-    }
-    return Promise.resolve(res);
-  },
-  (error: AxiosError) => {
-    console.log('promise error:' + error);
-    return Promise.reject(error);
-  }
-);
+const request = <T>(config: AxiosRequestConfig): Promise<BaseResponse<T>> => {
+  return new Promise((resolve, reject) => {
+    axiosInstance
+      .request<BaseResponse<T>>(config)
+      .then((res) => {
+        const { data } = res;
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
 
-export default axiosInstance;
+export default request;

@@ -9,7 +9,7 @@ export default function Detail() {
   useEffect(() => {
     async function init() {
       const json = await getSongInfo(33894312);
-      console.log(json.data);
+      console.log(json);
     }
     init();
   }, []);

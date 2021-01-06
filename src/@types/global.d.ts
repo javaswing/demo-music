@@ -75,17 +75,9 @@ declare module '*.module.sass' {
   export default classes;
 }
 
-/** 通用泛型响应 */
+/** 通用后端响应字段 */
 interface BaseResponse<T = any> {
   code: number;
   data: T;
   message?: string;
 }
-
-/** 请求类型配置 */
-type RequestOption = {
-  method?: Method;
-  data?: any;
-  params?: any;
-  url: string;
-};

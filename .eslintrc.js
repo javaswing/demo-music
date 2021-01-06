@@ -47,7 +47,7 @@ module.exports = {
     {
       files: ['*.ts'],
       rules: {
-        "@typescript-eslint/explicit-module-boundary-types": "warn" // 函数的返回值类型一定要写 only ts
+        "@typescript-eslint/explicit-module-boundary-types": 0 // 函数的返回值类型一定要写 only ts
       },
     },
     {
