@@ -3,9 +3,12 @@ import { SET_SONG } from '@/constants';
 
 export interface SongInfo {
   id?: number;
+  /** 播放地址 */
   url?: string;
+  /** 歌曲类型 */
   type?: 'mp3' | 'm4a' | string;
   md5?: string;
+  /** 封面 */
   coverImg?: string;
 }
 
