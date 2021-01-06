@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import DetailContent from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
 // import cls from 'classnames';
@@ -13,6 +13,7 @@ export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
 
 export default function Detail() {
   const dispatch = useDispatch();
+  const [isPlay, setIsPlay] = useState<boolean>(false);
 
   const init = useCallback(async () => {
     const songId = 468513829;
@@ -34,8 +35,8 @@ export default function Detail() {
     <div className={styles.content}>
       <div className={styles['player-wrapper']}>
         <div className={styles['player__nav-bar']}>{song?.name}</div>
-        <DetailContent coverImg={song?.al?.picUrl} className={styles.player__content} />
-        <ControlBar className={styles.player__control} />
+        <DetailContent isPlay={isPlay} coverImg={song?.al?.picUrl} className={styles.player__content} />
+        <ControlBar toggleStatus={setIsPlay} className={styles.player__control} />
       </div>
       <div className={styles.mask}>
         <div className={styles.mask__album}></div>
