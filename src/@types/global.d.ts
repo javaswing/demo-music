@@ -75,9 +75,28 @@ declare module '*.module.sass' {
   export default classes;
 }
 
+interface Song {
+  id?: number;
+  name?: string;
+  mv?: number;
+  publishTime?: number;
+}
+
+interface Album {
+  id: number;
+  name: string;
+  pic?: number;
+  picUrl?: string;
+  pic_str?: string;
+}
+
 /** 通用后端响应字段 */
 interface BaseResponse<T = any> {
   code: number;
   data: T;
   message?: string;
+  /** 获取歌曲详情专用 */
+  songs?: [];
+  /** 获取歌曲详情专用 */
+  privileges?: [];
 }

@@ -8,7 +8,7 @@ import styles from './style.module.scss';
 export default function Detail() {
   useEffect(() => {
     async function init() {
-      const json = await getSongInfo(33894312);
+      const json = await getSongInfo(468513829);
       console.log(json);
     }
     init();

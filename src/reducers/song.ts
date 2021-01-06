@@ -3,6 +3,7 @@ import { SET_SONG } from '@/constants';
 
 export interface SongInfo {
   id?: number;
+  name?: string;
   /** 播放地址 */
   url?: string;
   urlSource?: number;
