@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { AudioPlayerProvider } from 'react-use-audio-player';
 import store from './store';
 import App from './App';
 import './index.scss';
@@ -9,7 +10,9 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <AudioPlayerProvider>
+        <App />
+      </AudioPlayerProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
