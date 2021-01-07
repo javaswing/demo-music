@@ -4,9 +4,7 @@
   "spellright.documentTypes": [
     "latex"
   ],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
+
   "editor.formatOnSave": true,
   "[javascript]": {
     "editor.formatOnSave": false
@@ -23,6 +21,9 @@
   "eslint.workingDirectories": [
     "./src",
   ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
   "cSpell.words": [
     "browserslist"
   ]

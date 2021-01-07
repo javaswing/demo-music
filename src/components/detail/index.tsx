@@ -7,7 +7,7 @@ import { pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSongInfo } from '@/actions';
 import { RootState } from '@/reducers';
-import { useAudioPlayer } from 'react-use-audio-player';
+import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import styles from './style.module.scss';
 
 export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
@@ -15,6 +15,9 @@ export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
 export default function Detail() {
   const dispatch = useDispatch();
   const { load, playing, loading, ready, togglePlayPause } = useAudioPlayer();
+  const { position, duration, seek } = useAudioPosition({ highRefreshRate: true });
+  const { song } = useSelector((state: RootState) => state.song);
+  const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
 
   const init = useCallback(async () => {
     const songId = 468513829;
@@ -29,29 +32,57 @@ export default function Detail() {
   useEffect(() => {
     init();
   }, [init]);
-  const { song } = useSelector((state: RootState) => state.song);
 
   useEffect(() => {
     if (song?.url) {
-      console.log('loading :>> ', loading);
       load({
         src: song.url,
       });
     }
-  }, [load, loading, song?.url]);
+  }, [load, song?.url]);
 
   const handlePlay = useCallback(() => {
+    setIsClickPlay(true);
     if (ready) {
       togglePlayPause();
+      setIsClickPlay(false);
     }
   }, [ready, togglePlayPause]);
+
+  useEffect(() => {
+    // loading完成自动继续执行播放
+    if (!loading && isClickPlay) {
+      handlePlay();
+    }
+  }, [handlePlay, isClickPlay, loading]);
+
+  const handleSeek = useCallback(
+    (value: number) => {
+      seek(value);
+    },
+    [seek]
+  );
 
   return (
     <div className={styles.content}>
       <div className={styles['player-wrapper']}>
         <div className={styles['player__nav-bar']}>{song?.name}</div>
-        <DetailContent isPlay={isPlay} coverImg={song?.al?.picUrl} className={styles.player__content} />
-        <ControlBar toggleStatus={setIsPlay} className={styles.player__control} />
+        <DetailContent
+          position={position}
+          duration={duration}
+          isPlay={playing}
+          coverImg={song?.al?.picUrl}
+          className={styles.player__content}
+        />
+        <ControlBar
+          position={position}
+          duration={duration}
+          isPlay={playing}
+          onSeek={handleSeek}
+          onControl={handlePlay}
+          isLoading={loading}
+          className={styles.player__control}
+        />
       </div>
       <div className={styles.mask}>
         <div className={styles.mask__album}></div>

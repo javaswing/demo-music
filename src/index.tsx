@@ -8,13 +8,13 @@ import './index.scss';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <AudioPlayerProvider>
-        <App />
-      </AudioPlayerProvider>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <AudioPlayerProvider>
+      <App />
+    </AudioPlayerProvider>
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
