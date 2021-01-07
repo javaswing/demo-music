@@ -7,13 +7,14 @@ import { pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSongInfo } from '@/actions';
 import { RootState } from '@/reducers';
+import { useAudioPlayer } from 'react-use-audio-player';
 import styles from './style.module.scss';
 
 export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
 
 export default function Detail() {
   const dispatch = useDispatch();
-  const [isPlay, setIsPlay] = useState<boolean>(false);
+  const { load, playing, loading, ready, togglePlayPause } = useAudioPlayer();
 
   const init = useCallback(async () => {
     const songId = 468513829;
@@ -28,8 +29,22 @@ export default function Detail() {
   useEffect(() => {
     init();
   }, [init]);
-
   const { song } = useSelector((state: RootState) => state.song);
+
+  useEffect(() => {
+    if (song?.url) {
+      console.log('loading :>> ', loading);
+      load({
+        src: song.url,
+      });
+    }
+  }, [load, loading, song?.url]);
+
+  const handlePlay = useCallback(() => {
+    if (ready) {
+      togglePlayPause();
+    }
+  }, [ready, togglePlayPause]);
 
   return (
     <div className={styles.content}>
