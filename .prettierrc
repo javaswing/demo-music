@@ -1,8 +1,10 @@
 {
-  "quotes": true,
+  "printWidth": 120,
   "semi": true,
+  "useTabs": false,
   "tabWidth": 2,
+  "trailingComma": "es5",
   "singleQuote": true,
-  "jsxBracketSameLine": false,
-  "printWidth": 120
+  "proseWrap": "preserve",
+  "arrowParens": "avoid"
 }

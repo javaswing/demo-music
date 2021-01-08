@@ -77,8 +77,14 @@ const ControlBar = (props: ControlBarProps) => {
             handleStyle={dotStyleObj}
             max={duration}
             min={0}
-            trackStyle={{ backgroundColor: 'rgba(255, 255,255, .4)', height: '0.038rem' }}
-            railStyle={{ backgroundColor: 'rgba(255, 255,255, .2)', height: '0.039rem' }}
+            trackStyle={{
+              backgroundColor: 'rgba(255, 255,255, .4)',
+              height: '0.038rem',
+            }}
+            railStyle={{
+              backgroundColor: 'rgba(255, 255,255, .2)',
+              height: '0.039rem',
+            }}
             value={currentValue}
             onChange={handleOnChange}
             onBeforeChange={handleBeforChange}

@@ -15,7 +15,9 @@ export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
 export default function Detail() {
   const dispatch = useDispatch();
   const { load, playing, loading, ready, togglePlayPause } = useAudioPlayer();
-  const { position, duration, seek } = useAudioPosition({ highRefreshRate: true });
+  const { position, duration, seek } = useAudioPosition({
+    highRefreshRate: true,
+  });
   const { song } = useSelector((state: RootState) => state.song);
   const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
 

@@ -57,7 +57,7 @@ module.exports = {
         mountNode: true,
       },
       rules: {
-        indent: 0,
+        'indent':0,
         'no-console': 0,
         'no-plusplus': 0,
         'eol-last': 0,
@@ -89,7 +89,7 @@ module.exports = {
     'react/no-unused-prop-types': 0,
     'react/default-props-match-prop-types': 0,
     'react-hooks/rules-of-hooks': 2, // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": 2,
+    'react-hooks/exhaustive-deps': [1, { enableDangerousAutofixThisMayCauseInfiniteLoops: true }],
     '@typescript-eslint/no-explicit-any': 0, // close use any typess
     'import/extensions': 0,
     'import/no-cycle': 0,
@@ -125,6 +125,7 @@ module.exports = {
     '@typescript-eslint/no-shadow': [2, { ignoreTypeValueShadow: true }],
     // https://github.com/typescript-eslint/typescript-eslint/issues/2528#issuecomment-689369395
     'no-undef': 0,
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    '@typescript-eslint/no-empty-function': 0, // 关闭ts空方法检测
   },
 };
