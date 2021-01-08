@@ -18,11 +18,11 @@ const request = <T>(config: AxiosRequestConfig): Promise<BaseResponse<T>> => {
   return new Promise((resolve, reject) => {
     axiosInstance
       .request<BaseResponse<T>>(config)
-      .then((res) => {
+      .then(res => {
         const { data } = res;
         resolve(data);
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error);
       });
   });
