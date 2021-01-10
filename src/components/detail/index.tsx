@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import DetailContent from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
+import NavBar from '@/components/nav-bar';
 // import cls from 'classnames';
 import { getSongInfo, getSongUrl } from '@/services';
 import { pick } from 'lodash';
@@ -65,10 +66,14 @@ export default function Detail() {
     [seek]
   );
 
+  const singerName = useMemo(() => song?.ar?.[0]?.name, [song?.ar]);
+
+  const albumStyle = useMemo(() => ({ backgroundImage: `url(${song?.al?.picUrl})` }), [song?.al?.picUrl]);
+
   return (
     <div className={styles.content}>
       <div className={styles['player-wrapper']}>
-        <div className={styles['player__nav-bar']}>{song?.name}</div>
+        <NavBar songName={song?.name} singer={singerName} className={styles['player__nav-bar']} />
         <DetailContent
           position={position}
           duration={duration}
@@ -87,7 +92,7 @@ export default function Detail() {
         />
       </div>
       <div className={styles.mask}>
-        <div className={styles.mask__album}></div>
+        <div className={styles.mask__album} style={albumStyle}></div>
         <div className={styles.mask__cover}></div>
       </div>
     </div>

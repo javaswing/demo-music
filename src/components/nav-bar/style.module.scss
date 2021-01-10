@@ -1,0 +1,31 @@
+.box {
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+.btn {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.backBtn {
+  background-image: url('../../assets/img/arrow-down.png');
+}
+
+.info {
+  padding: 0 20px;
+  text-align: center;
+  font-size: 16px;
+  min-width: 0;
+}
+
+.songName {
+  overflow: hidden;
+  height: 25px;
+}
+
+.singerName {
+  font-size: 12px;
+  color: #aaabaa;
+}

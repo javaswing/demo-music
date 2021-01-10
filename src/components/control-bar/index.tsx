@@ -2,7 +2,8 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import cls from 'classnames';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { fomatSongTime } from '@/utils/time-helper';
+import { fomatSongTime } from '@/utils/format';
+import { rem } from '@/utils/base';
 import styles from './style.module.scss';
 
 export interface ControlBarProps {
@@ -60,10 +61,10 @@ const ControlBar = (props: ControlBarProps) => {
   const dotStyleObj = useMemo(() => {
     const target = {
       borderColor: 'rgba(0,0,0, .2)',
-      borderWidth: '0.013rem',
-      width: '0.12rem',
-      height: '0.12rem',
-      marginTop: '-0.04rem',
+      borderWidth: `${rem(1)}`,
+      width: `${rem(10)}`,
+      height: `${rem(10)}`,
+      marginTop: `-${rem(3.5)}`,
     };
     return target;
   }, []);
@@ -79,11 +80,11 @@ const ControlBar = (props: ControlBarProps) => {
             min={0}
             trackStyle={{
               backgroundColor: 'rgba(255, 255,255, .4)',
-              height: '0.038rem',
+              height: `${rem(2)}`,
             }}
             railStyle={{
               backgroundColor: 'rgba(255, 255,255, .2)',
-              height: '0.039rem',
+              height: `${rem(2)}`,
             }}
             value={currentValue}
             onChange={handleOnChange}

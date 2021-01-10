@@ -19,7 +19,7 @@
     "editor.formatOnSave": false
   },
   "[typescriptreact]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": true
   },
   "eslint.workingDirectories": [
     "./src",
