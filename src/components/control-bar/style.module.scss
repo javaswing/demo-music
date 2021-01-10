@@ -1,6 +1,6 @@
 .progress-bar {
   margin-top: 40px;
-  padding: 0 10px;
+  padding: 0 12px;
   .time {
     color: #fff;
     font-size: 12px;
@@ -8,17 +8,17 @@
   }
 
   .slider {
-    margin: 0 10px;
+    margin: 0 7px;
     width: 290px;
   }
 }
 
 .control-bar {
-  padding: 0 15px;
+  padding: 0 28px;
   margin-top: 20px;
   .btn {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background-size: cover;
     background-repeat: no-repeat;
     &--mini {
