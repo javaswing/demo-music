@@ -5,8 +5,8 @@ import ControlBar from '@/components/control-bar';
 import { getSongInfo, getSongUrl } from '@/services';
 import { pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSongInfo } from '@/actions';
-import { RootState } from '@/reducers';
+import { setSongInfo } from '@/redux/actions';
+import { RootState } from '@/redux/reducers';
 import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import styles from './style.module.scss';
 

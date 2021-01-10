@@ -1,5 +1,5 @@
-import { SetSongAction } from '@/actions';
-import { SET_SONG } from '@/constants';
+import { SetSongAction } from '@/redux/actions';
+import { SET_SONG } from '@/redux/constants';
 
 export type SongInfo = ResponseSong & BaseSongUrl;
 

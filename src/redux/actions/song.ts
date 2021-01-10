@@ -1,5 +1,5 @@
-import { SET_SONG } from '@/constants';
-import { SongInfo } from '@/reducers/song';
+import { SET_SONG } from '@/redux/constants';
+import { SongInfo } from '@/redux/reducers/song';
 
 export type SongActionTypes = typeof SET_SONG;
 
