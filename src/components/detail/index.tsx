@@ -23,7 +23,7 @@ export default function Detail() {
   const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
 
   const init = useCallback(async () => {
-    const songId = 29535531;
+    const songId = 410715503;
     const songInfoJson = (await getSongInfo(songId)) as SongInfoResponse;
     const { data: songUrlData } = await getSongUrl(songId);
     const [songUrl] = songUrlData;

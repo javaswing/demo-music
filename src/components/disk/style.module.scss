@@ -8,14 +8,14 @@
   .stick {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 375px;
-    height: 207px;
-    background: url('../../assets/img/styli2.png') no-repeat left bottom;
+    left: 173px;
+    width: 100px;
+    height: 170px;
+    background: url('../../assets/img/stick.png') no-repeat left bottom;
     background-size: 100% auto;
     transition: all 300ms ease-in;
-    transform-origin: center top;
-    z-index: 1;
+    transform-origin: 18px 18px;
+    z-index: 3;
 
     &--pause {
       transform: rotate(-25deg);
@@ -29,12 +29,22 @@
   width: 310px;
   height: 310px;
   border-radius: 50%;
-  background: url('../../assets/img/disk.png') no-repeat center center;
+  background: url('../../assets/img/disk-bg.png') no-repeat center center;
   background-size: contain;
-  .img {
+  z-index: 1;
+  &-cover {
     position: relative;
-    width: 195px;
-    height: 195px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
+    background: url('../../assets/img/disk.png') no-repeat center center;
+    background-size: contain;
+    z-index: 2;
+    .img {
+      position: relative;
+      width: 205px;
+      height: 205px;
+      border-radius: 50%;
+    }
   }
 }

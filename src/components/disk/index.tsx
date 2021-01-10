@@ -22,13 +22,15 @@ const Disk = (props: DiskProps) => {
           [styles['stick--pause']]: !isPlay,
         })}
       ></div>
-      <div
-        className={cls('row row-justify-center row-align-center', styles.disk)}
-        style={{
-          transform: `rotate(${rotate}deg)`,
-        }}
-      >
-        <img className={styles.img} src={diskCover} />
+      <div className={cls('row row-justify-center row-align-center', styles.disk)}>
+        <div
+          className={cls('row row-justify-center row-align-center', styles['disk-cover'])}
+          style={{
+            transform: `rotate(${rotate}deg)`,
+          }}
+        >
+          <img className={styles.img} src={diskCover} />
+        </div>
       </div>
     </div>
   );
