@@ -10,10 +10,10 @@ html {
     font-size: ($vw_fontsize / ($vw_design / 2)) * 100vw;
     // 同时，通过Media Queries 限制根元素最大最小值
     @media screen and (max-width: 320px) {
-        font-size: 64px;
+        font-size: 64PX;
     }
     @media screen and (min-width: 540px) {
-        font-size: 108px;
+        font-size: 108PX;
     }
 }
 

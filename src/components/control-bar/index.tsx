@@ -94,11 +94,11 @@ const ControlBar = (props: ControlBarProps) => {
         <div className={styles.time}>{totalTime}</div>
       </div>
       <div className={cls('row row-justify-space-around row-align-center', styles['control-bar'])}>
-        <div className={cls(styles.btn, styles['d-mode'])}></div>
-        <div className={cls(styles.btn, styles['d-prev'])}></div>
+        <div className={cls(styles.btn, styles['d-model'])}></div>
+        <div className={cls(styles.btn, styles['btn--mini'], styles['d-prev'])}></div>
         <div onClick={onControl} className={cls(styles.btn, playControlClassName)}></div>
-        <div className={cls(styles.btn, styles['d-next'])}></div>
-        <div className={cls(styles.btn, styles['d-list'])}></div>
+        <div className={cls(styles.btn, styles['btn--mini'], styles['d-next'])}></div>
+        <div className={cls(styles.btn, styles['btn--mini'], styles['d-list'])}></div>
       </div>
     </div>
   );

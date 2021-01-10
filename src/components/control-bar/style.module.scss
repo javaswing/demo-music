@@ -19,31 +19,30 @@
   .btn {
     width: 60px;
     height: 60px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    &--mini {
+      width: 40px;
+      height: 40px;
+    }
   }
+}
 
-  .d-mode {
-    background: url('../../assets/img/seq.png') no-repeat;
-    background-size: cover;
-  }
+// 按钮map：key为类名，value图片名
+$iconsMap: (
+  'model': 'seq',
+  'prev': 'prev',
+  'play': 'play',
+  'pause': 'pause',
+  'next': 'next',
+  'list': 'list',
+);
 
-  .d-prev {
-    background: url('../../assets/img/prev.png') no-repeat;
-    background-size: cover;
-  }
-  .d-play {
-    background: url('../../assets/img/play.png') no-repeat;
-    background-size: cover;
-  }
-  .d-pause {
-    background: url('../../assets/img/pause.png') no-repeat;
-    background-size: cover;
-  }
-  .d-next {
-    background: url('../../assets/img/next.png') no-repeat;
-    background-size: cover;
-  }
-  .d-list {
-    background: url('../../assets/img/list.png') no-repeat;
-    background-size: cover;
+@each $name, $img in $iconsMap {
+  .d-#{$name} {
+    background-image: url('~@/assets/img/#{$img}.png');
+    &:active {
+      background-image: url('~@/assets/img/#{$img}-hover.png');
+    }
   }
 }
