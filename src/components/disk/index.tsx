@@ -21,7 +21,13 @@ const Disk = (props: DiskProps) => {
         className={cls(styles.stick, {
           [styles['stick--pause']]: !isPlay,
         })}
-      ></div>
+      >
+        {/* <img
+          className={styles.crosshair}
+          src="https://interactive-examples.mdn.mozilla.net/media/examples/crosshair.svg"
+        ></img> */}
+        {/* <div className={styles.crosshair}></div> */}
+      </div>
       <div className={cls('row row-justify-center row-align-center', styles.disk)}>
         <div
           className={cls('row row-justify-center row-align-center', styles['disk-cover'])}

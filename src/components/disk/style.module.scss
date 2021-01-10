@@ -1,5 +1,8 @@
 // @import '~@/assets/scss/var.scss';
 
+$originx: 17px;
+$originY: 29px;
+
 .cd {
   position: relative;
   width: 100%;
@@ -11,16 +14,27 @@
     left: 173px;
     width: 100px;
     height: 170px;
-    background: url('../../assets/img/stick.png') no-repeat left bottom;
-    background-size: 100% auto;
-    transition: all 300ms ease-in;
-    transform-origin: 18px 18px;
+    background: url('../../assets/img/stick.png') no-repeat;
+    background-size: contain;
+    transition: all 300ms linear;
+    transform-origin: $originx $originY;
     z-index: 3;
 
     &--pause {
       transform: rotate(-25deg);
     }
   }
+}
+
+.crosshair {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: red;
+  left: $originx - 3;
+  top: $originY - 3;
+  opacity: 0.5;
+  z-index: 5;
 }
 
 .disk {
