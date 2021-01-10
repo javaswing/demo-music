@@ -1,5 +1,19 @@
 import request from '@/utils/request';
 
+export interface BaseLrc {
+  version?: number;
+  lyric?: string;
+}
+
+export interface LyricRespone {
+  sgc?: boolean;
+  sfy?: boolean;
+  qfy?: boolean;
+  lrc?: BaseLrc;
+  klyric?: BaseLrc;
+  tlyric?: BaseLrc;
+}
+
 export function getSongUrl(id: number) {
   return request<BaseSongUrl[]>({ url: '/song/url', params: { id }, method: 'get' });
 }
@@ -19,4 +33,12 @@ export function getSongInfo(ids: number) {
  */
 export function getPayListById(id: number, s = 8) {
   return request({ url: '/playlist/detail', params: { id, s }, method: 'get' });
+}
+
+/**
+ * 获取歌词
+ * @param id
+ */
+export function getLyricById(id: number) {
+  return request({ url: '/lyric', params: { id }, method: 'get' });
 }

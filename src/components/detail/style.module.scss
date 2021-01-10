@@ -8,21 +8,26 @@
 .player {
   &-wrapper {
     position: relative;
+    flex-direction: column;
     z-index: 4;
+    height: 100vh;
   }
 
   &__nav-bar {
+    flex: 0 0 56px;
     height: 56px;
     font-size: 16px;
     color: #fff;
   }
 
   &__content {
-    min-height: 400px;
+    overflow: hidden;
+    flex: 1;
   }
 
   &__control {
-    height: 88px;
+    flex: 0 0 168px;
+    height: 168px;
   }
 }
 

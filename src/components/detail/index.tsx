@@ -2,16 +2,18 @@ import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import DetailContent from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
 import NavBar from '@/components/nav-bar';
-// import cls from 'classnames';
-import { getSongInfo, getSongUrl } from '@/services';
-import { pick } from 'lodash';
+import cls from 'classnames';
+import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
+import { omit, pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSongInfo } from '@/redux/actions';
+import { setSongInfo, setSongLrc } from '@/redux/actions';
 import { RootState } from '@/redux/reducers';
 import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import styles from './style.module.scss';
 
 export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
+
+export type SongLrcResponse = BaseResponse & Partial<LyricRespone>;
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -19,17 +21,20 @@ export default function Detail() {
   const { position, duration, seek } = useAudioPosition({
     highRefreshRate: true,
   });
-  const { song } = useSelector((state: RootState) => state.song);
+  const { song, songLrc } = useSelector((state: RootState) => state.song);
   const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
 
   const init = useCallback(async () => {
-    const songId = 410715503;
+    const songId = 470759757;
     const songInfoJson = (await getSongInfo(songId)) as SongInfoResponse;
     const { data: songUrlData } = await getSongUrl(songId);
+    const lyricJson = (await getLyricById(songId)) as SongLrcResponse;
     const [songUrl] = songUrlData;
     const [firtSong] = songInfoJson.songs ?? [];
     const targetSongUrl = pick(songUrl, 'url', 'urlSource', 'type', 'md5', 'size');
+
     dispatch(setSongInfo({ ...targetSongUrl, ...firtSong }));
+    dispatch(setSongLrc(omit(lyricJson, 'data', 'code', 'message')));
   }, [dispatch]);
 
   useEffect(() => {
@@ -70,13 +75,18 @@ export default function Detail() {
 
   const albumStyle = useMemo(() => ({ backgroundImage: `url(${song?.al?.picUrl})` }), [song?.al?.picUrl]);
 
+  const lyric = useMemo(() => {
+    return songLrc?.lrc?.lyric;
+  }, [songLrc?.lrc?.lyric]);
+
   return (
     <div className={styles.content}>
-      <div className={styles['player-wrapper']}>
+      <div className={cls(styles['player-wrapper'], 'row')}>
         <NavBar songName={song?.name} singer={singerName} className={styles['player__nav-bar']} />
         <DetailContent
           position={position}
           duration={duration}
+          lyric={lyric}
           isPlay={playing}
           coverImg={song?.al?.picUrl}
           className={styles.player__content}

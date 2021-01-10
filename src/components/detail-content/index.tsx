@@ -10,10 +10,11 @@ export interface DetailContentProps {
   isPlay?: boolean;
   duration?: number;
   position?: number;
+  lyric?: string;
 }
 
 const DetailContent = (props: DetailContentProps) => {
-  const { model = 'disk', className, coverImg, isPlay, duration = 0, position = 0 } = props;
+  const { model = 'lyric', className, coverImg, isPlay, duration = 0, position = 0, lyric } = props;
   const isDiskModel = useMemo(() => {
     return model === 'disk';
   }, [model]);
@@ -25,7 +26,11 @@ const DetailContent = (props: DetailContentProps) => {
 
   return (
     <div className={cls(className)}>
-      {isDiskModel ? <Disk rotate={rotate} isPlay={isPlay} diskCover={coverImg} /> : <Lyric />}
+      {isDiskModel ? (
+        <Disk rotate={rotate} isPlay={isPlay} diskCover={coverImg} />
+      ) : (
+        <Lyric position={position} lyricStr={lyric} />
+      )}
     </div>
   );
 };

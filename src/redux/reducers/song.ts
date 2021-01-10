@@ -1,26 +1,30 @@
 import { SetSongAction } from '@/redux/actions';
-import { SET_SONG } from '@/redux/constants';
+import { LyricRespone } from '@/services';
 
 export type SongInfo = ResponseSong & BaseSongUrl;
 
 export interface SongInfoState {
   song?: SongInfo;
-  currentTime?: number;
-  totalTime?: number;
+  songLrc?: LyricRespone;
 }
 
 const initialState: SongInfoState = {
   song: {},
-  currentTime: 0,
-  totalTime: 0,
+  songLrc: {},
 };
 
 const songReducer = (state = initialState, action: SetSongAction): SongInfoState => {
   switch (action.type) {
-    case SET_SONG: {
+    case 'SET_SONG': {
       return {
         ...state,
-        song: action.payload,
+        song: action.payload as SongInfo,
+      };
+    }
+    case 'SET_LRC': {
+      return {
+        ...state,
+        songLrc: action.payload as LyricRespone,
       };
     }
     default:
