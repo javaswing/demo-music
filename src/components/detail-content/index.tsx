@@ -2,22 +2,21 @@ import React, { useMemo } from 'react';
 import cls from 'classnames';
 import Disk from '@/components/disk';
 import Lyric from '@/components/lyric';
+import { noop } from '@/utils/base';
 
 export interface DetailContentProps {
-  model?: 'disk' | 'lyric';
+  isDiskModel?: boolean;
   className?: string;
   coverImg?: string;
   isPlay?: boolean;
   duration?: number;
   position?: number;
   lyric?: string;
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const DetailContent = (props: DetailContentProps) => {
-  const { model = 'lyric', className, coverImg, isPlay, duration = 0, position = 0, lyric } = props;
-  const isDiskModel = useMemo(() => {
-    return model === 'disk';
-  }, [model]);
+  const { isDiskModel = true, className, coverImg, isPlay, duration = 0, position = 0, lyric, onClick = noop } = props;
 
   const rotate = useMemo(() => {
     // 10倍的正常速度
@@ -25,7 +24,7 @@ const DetailContent = (props: DetailContentProps) => {
   }, [duration, position]);
 
   return (
-    <div className={cls(className)}>
+    <div className={cls(className)} onClick={onClick}>
       {isDiskModel ? (
         <Disk rotate={rotate} isPlay={isPlay} diskCover={coverImg} />
       ) : (

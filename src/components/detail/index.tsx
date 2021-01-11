@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import DetailContent from '@/components/detail-content';
+import DetailContent, { DetailContentProps } from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
 import NavBar from '@/components/nav-bar';
 import cls from 'classnames';
@@ -23,6 +23,8 @@ export default function Detail() {
   });
   const { song, songLrc } = useSelector((state: RootState) => state.song);
   const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
+
+  const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
   const init = useCallback(async () => {
     const songId = 470759757;
@@ -79,15 +81,24 @@ export default function Detail() {
     return songLrc?.lrc?.lyric;
   }, [songLrc?.lrc?.lyric]);
 
+  const toggleDetail = useCallback(
+    e => {
+      setIsDiskModel(!isDiskModel);
+    },
+    [isDiskModel]
+  );
+
   return (
     <div className={styles.content}>
       <div className={cls(styles['player-wrapper'], 'row')}>
         <NavBar songName={song?.name} singer={singerName} className={styles['player__nav-bar']} />
         <DetailContent
+          onClick={toggleDetail}
           position={position}
           duration={duration}
           lyric={lyric}
           isPlay={playing}
+          isDiskModel={isDiskModel}
           coverImg={song?.al?.picUrl}
           className={styles.player__content}
         />

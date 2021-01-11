@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import cls from 'classnames';
-import { rem } from '@/utils/base';
 import styles from './style.module.scss';
 
 export interface LyricProps {
@@ -8,6 +7,8 @@ export interface LyricProps {
   className?: string;
   position?: number;
 }
+
+const defaultTranlateY = 150;
 
 const Lyric = (props: LyricProps) => {
   const { className, lyricStr, position = 0 } = props;
@@ -64,7 +65,13 @@ const Lyric = (props: LyricProps) => {
     ));
   }, [formatLrc, isActive]);
 
-  return <div className={cls(className, styles.listLrc)}>{renderLrc}</div>;
+  return (
+    <div className={cls(className, styles.listLrc)}>
+      <div className={styles.listBox} style={{ transform: `translateY(${defaultTranlateY - translateY}px)` }}>
+        {renderLrc}
+      </div>
+    </div>
+  );
 };
 
 export default React.memo(Lyric);
