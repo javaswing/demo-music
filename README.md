@@ -34,10 +34,9 @@
 
 - [目前版本的 create-react-app 安装 node-sass 最新版本出错](https://exerror.com/error-node-sass-version-5-0-0-is-incompatible-with-4-0-0/)
 
-## TODO
+- 歌词进度显示不是很准确是因为，原来的歌词时间也不准
 
-- [x] H5 移动端开发模版
-- [ ] PC 开发模版
+- 如果想让`typescript-plugin-css-modules`这个插件生效，请在打开`TSX`文件时，选择当前workspace中的ts版本
 
 
 ## 说明
