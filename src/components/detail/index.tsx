@@ -6,9 +6,9 @@ import cls from 'classnames';
 import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
 import { omit, pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSongInfo, setSongLrc } from '@/redux/actions';
-import { RootState } from '@/redux/reducers';
+import { RootState } from '@/redux';
 import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
+import { setSongInfo, setSongLrc } from '@/redux/song/action';
 import styles from './style.module.scss';
 
 export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };

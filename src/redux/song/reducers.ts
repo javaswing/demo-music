@@ -1,5 +1,5 @@
 import { LyricRespone } from '@/services';
-import { SET_LRC, SET_SONG, SongActionTypes, SongInfo } from '../types';
+import { SET_LRC, SET_SONG, SongActionTypes, SongInfo } from './types';
 
 export interface SongInfoState {
   song: SongInfo;
