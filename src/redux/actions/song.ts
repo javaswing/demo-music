@@ -1,24 +1,16 @@
-import { SET_LRC, SET_SONG } from '@/redux/constants';
-import { SongInfo } from '@/redux/reducers/song';
 import { LyricRespone } from '@/services';
+import { SET_LRC, SET_SONG, SongActionTypes, SongInfo } from '../types';
 
-export type SongActionTypes = typeof SET_SONG | typeof SET_LRC;
-
-export interface SetSongAction {
-  type: SongActionTypes;
-  payload: SongInfo | LyricRespone;
-}
-
-export const setSongInfo = (info: SongInfo): SetSongAction => {
+export const setSongInfo = (info: SongInfo): SongActionTypes => {
   return {
     type: SET_SONG,
     payload: info,
   };
 };
 
-export const setSongLrc = (info: LyricRespone): SetSongAction => {
+export const setSongLrc = (lrc: LyricRespone): SongActionTypes => {
   return {
     type: SET_LRC,
-    payload: info,
+    payload: lrc,
   };
 };
