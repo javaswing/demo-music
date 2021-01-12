@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import DetailContent, { DetailContentProps } from '@/components/detail-content';
+import DetailContent from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
 import NavBar from '@/components/nav-bar';
 import cls from 'classnames';
@@ -74,7 +74,6 @@ export default function Detail() {
   );
 
   const singerName = useMemo(() => song?.ar?.[0]?.name, [song?.ar]);
-
   const albumStyle = useMemo(() => ({ backgroundImage: `url(${song?.al?.picUrl})` }), [song?.al?.picUrl]);
 
   const lyric = useMemo(() => {

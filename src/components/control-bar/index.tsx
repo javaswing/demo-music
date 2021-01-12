@@ -3,7 +3,7 @@ import cls from 'classnames';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { fomatSongTime } from '@/utils/format';
-import { rem } from '@/utils/base';
+import { noop, rem } from '@/utils/base';
 import styles from './style.module.scss';
 
 export interface ControlBarProps {
@@ -16,13 +16,16 @@ export interface ControlBarProps {
   isLoading?: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
-
 const ControlBar = (props: ControlBarProps) => {
-  const { className, isPlay, duration = 0, position = 0, onControl, onSeek = noop } = props;
+  const { className, isPlay, duration = 0, position = 0, onControl = noop, onSeek = noop } = props;
   const [currentValue, setCurrentValue] = useState<number>(duration);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!isDragging) {
+      setCurrentValue(position);
+    }
+  }, [isDragging, position]);
 
   const playControlClassName = useMemo(() => {
     return isPlay ? styles['d-play'] : styles['d-pause'];
@@ -35,12 +38,6 @@ const ControlBar = (props: ControlBarProps) => {
   const totalTime = useMemo(() => {
     return fomatSongTime(duration);
   }, [duration]);
-
-  useEffect(() => {
-    if (!isDragging) {
-      setCurrentValue(position);
-    }
-  }, [isDragging, position]);
 
   const handleBeforChange = useCallback((value: number) => {
     setIsDragging(true);

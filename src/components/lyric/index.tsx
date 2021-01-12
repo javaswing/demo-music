@@ -6,32 +6,25 @@ export interface LyricProps {
   lyricStr?: string;
   className?: string;
   position?: number;
+  loading?: boolean;
+  error?: boolean;
 }
 
 const defaultTranlateY = 150;
+const lyrcLineHeight = 35;
 
 const Lyric = (props: LyricProps) => {
   const { className, lyricStr, position = 0 } = props;
   const [translateY, setTranslateY] = useState<number>(0);
 
   const formatLrc = useMemo(() => {
-    if (!lyricStr)
-      return [
-        {
-          lrc: '歌词加载中..',
-          time: '00:00.00',
-          totalSecounds: 0,
-        },
-      ];
-    const lyricArr = lyricStr.split('\n');
+    const lyricArr = lyricStr?.split('\n') ?? [];
 
     return lyricArr.map(item => {
       const endIndex = item.lastIndexOf(']');
       const time = item.substring(1, endIndex); // 03:36.310
-      const timeArr = time.split(':');
-      const totalSecounds = timeArr.reduce((pre, cur) => {
-        const sum = pre + (cur.indexOf('.') > -1 ? Number.parseFloat(cur) : Number.parseFloat(cur) * 60);
-        return sum;
+      const totalSecounds = time.split(':').reduce((pre, cur) => {
+        return pre + (cur.indexOf('.') > -1 ? parseFloat(cur) : parseFloat(cur) * 60);
       }, 0);
       const lrc = item.substring(endIndex + 1).trim();
       return { totalSecounds, time, lrc };
@@ -41,16 +34,15 @@ const Lyric = (props: LyricProps) => {
   const isActive = useCallback(
     (index: number) => {
       const gtIndex = formatLrc.findIndex(e => e.totalSecounds > position);
-      if (gtIndex === -1) return false;
       const safeIndex = gtIndex >= 1 ? gtIndex - 1 : gtIndex;
-      if (safeIndex === index) {
-        setTranslateY(index * 35);
-      }
-      return safeIndex === index;
+      const result = safeIndex === index;
+      result && setTranslateY(index * lyrcLineHeight);
+      return result;
     },
     [formatLrc, position]
   );
 
+  // TODO 处理加载中和加载出错的界面显示
   const renderLrc = useMemo(() => {
     return formatLrc.map((e, index) => (
       <div
