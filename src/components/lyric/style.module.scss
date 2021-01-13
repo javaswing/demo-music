@@ -5,13 +5,14 @@
 
 .listBox {
   text-align: center;
+
+}
+.transition {
   transition: all 0.5s linear;
 }
-
 .flag {
   font-size: 12px;
   color: #aaabaa;
-
   height: 35px;
   line-height: 35px;
   transition: color 0.7s linear;

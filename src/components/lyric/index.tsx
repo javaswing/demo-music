@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cls from 'classnames';
 import styles from './style.module.scss';
 
@@ -12,10 +12,19 @@ export interface LyricProps {
 
 const defaultTranlateY = 150;
 const lyrcLineHeight = 35;
+const miniMoveDistance = 10; // 最小的touch move距离
 
+interface SwipeInfo {
+  y: number;
+  swiping?: boolean;
+}
+
+const defaultSwipedInfoValue = { y: 0, swiping: false };
 const Lyric = (props: LyricProps) => {
   const { className, lyricStr, position = 0 } = props;
   const [translateY, setTranslateY] = useState<number>(0);
+  const [swiped, setSwiped] = useState<boolean>(false); // 是否是快划
+  const swipeInfo = useRef<SwipeInfo>(defaultSwipedInfoValue);
 
   const formatLrc = useMemo(() => {
     const lyricArr = lyricStr?.split('\n') ?? [];
@@ -36,13 +45,14 @@ const Lyric = (props: LyricProps) => {
       const gtIndex = formatLrc.findIndex(e => e.totalSecounds > position);
       const safeIndex = gtIndex >= 1 ? gtIndex - 1 : gtIndex;
       const result = safeIndex === index;
-      result && setTranslateY(index * lyrcLineHeight);
+      result && !swiped && setTranslateY(index * lyrcLineHeight);
       return result;
     },
-    [formatLrc, position]
+    [formatLrc, position, swiped]
   );
 
   // TODO 处理加载中和加载出错的界面显示
+  // 监听touch事件来实现歌词的手势滑动效果
   const renderLrc = useMemo(() => {
     return formatLrc.map((e, index) => (
       <div
@@ -57,9 +67,47 @@ const Lyric = (props: LyricProps) => {
     ));
   }, [formatLrc, isActive]);
 
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    swipeInfo.current = { y: touch.clientY };
+    setSwiped(false);
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches && e.touches.length) {
+      swipeInfo.current.swiping = true;
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.changedTouches[0];
+    const moveY = -(touch.clientY - swipeInfo.current.y);
+    console.log(moveY);
+    const absY = Math.abs(moveY);
+    if (absY > miniMoveDistance) {
+      setSwiped(true);
+      setTranslateY(prev => prev + moveY);
+    }
+    swipeInfo.current = defaultSwipedInfoValue;
+  }, []);
+
+  useEffect(() => {
+    if (swiped) {
+      console.log('swiped');
+    }
+  }, [swiped]);
+
   return (
     <div className={cls(className, styles.listLrc)}>
-      <div className={styles.listBox} style={{ transform: `translateY(${defaultTranlateY - translateY}px)` }}>
+      <div
+        className={cls(styles.listBox, {
+          [styles.transition]: !swiped,
+        })}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{ transform: `translateY(${defaultTranlateY - translateY}px)` }}
+      >
         {renderLrc}
       </div>
     </div>
