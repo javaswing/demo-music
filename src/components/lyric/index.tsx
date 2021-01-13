@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cls from 'classnames';
+import BScroll from '@better-scroll/core';
+import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll';
+import { delay } from 'lodash';
 import styles from './style.module.scss';
 
 export interface LyricProps {
@@ -12,23 +15,34 @@ export interface LyricProps {
 
 const defaultTranlateY = 150;
 const lyrcLineHeight = 35;
-const miniMoveDistance = 10; // 最小的touch move距离
 
-interface SwipeInfo {
-  y: number;
-  swiping?: boolean;
-}
-
-const defaultSwipedInfoValue = { y: 0, swiping: false };
 const Lyric = (props: LyricProps) => {
   const { className, lyricStr, position = 0 } = props;
-  const [translateY, setTranslateY] = useState<number>(0);
-  const [swiped, setSwiped] = useState<boolean>(false); // 是否是快划
-  const swipeInfo = useRef<SwipeInfo>(defaultSwipedInfoValue);
+  const scrollWrapperRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<BScrollConstructor>(); // scroll 实例
+  const [isTap, setIsTap] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (scrollWrapperRef.current) {
+      scrollRef.current = new BScroll(scrollWrapperRef.current, {});
+      let timer: NodeJS.Timeout | null = null;
+      scrollRef.current.on('beforeScrollStart', () => {
+        setIsTap(true);
+        timer && clearTimeout(timer);
+      });
+      scrollRef.current.on('touchEnd', () => {
+        timer = setTimeout(() => {
+          setIsTap(false);
+        }, 2000);
+      });
+    }
+    return () => {
+      scrollRef.current?.destroy();
+    };
+  }, []);
 
   const formatLrc = useMemo(() => {
     const lyricArr = lyricStr?.split('\n') ?? [];
-
     return lyricArr.map(item => {
       const endIndex = item.lastIndexOf(']');
       const time = item.substring(1, endIndex); // 03:36.310
@@ -40,76 +54,39 @@ const Lyric = (props: LyricProps) => {
     });
   }, [lyricStr]);
 
-  const isActive = useCallback(
-    (index: number) => {
-      const gtIndex = formatLrc.findIndex(e => e.totalSecounds > position);
-      const safeIndex = gtIndex >= 1 ? gtIndex - 1 : gtIndex;
-      const result = safeIndex === index;
-      result && !swiped && setTranslateY(index * lyrcLineHeight);
-      return result;
-    },
-    [formatLrc, position, swiped]
-  );
+  /**
+   * 当前高亮索引
+   */
+  const currentIndex = useMemo(() => {
+    const gtIndex = formatLrc.findIndex(e => e.totalSecounds > position);
+    const safeIndex = gtIndex >= 1 ? gtIndex - 1 : gtIndex;
+    return safeIndex;
+  }, [formatLrc, position]);
 
   // TODO 处理加载中和加载出错的界面显示
-  // 监听touch事件来实现歌词的手势滑动效果
   const renderLrc = useMemo(() => {
     return formatLrc.map((e, index) => (
       <div
         key={e.time}
         data-time={e.time}
         className={cls(styles.flag, {
-          [styles.active]: isActive(index),
+          [styles.active]: currentIndex === index,
         })}
       >
         {e.lrc}
       </div>
     ));
-  }, [formatLrc, isActive]);
-
-  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    const touch = e.touches[0];
-    swipeInfo.current = { y: touch.clientY };
-    setSwiped(false);
-  }, []);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    if (e.touches && e.touches.length) {
-      swipeInfo.current.swiping = true;
-    }
-  }, []);
-
-  const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    const touch = e.changedTouches[0];
-    const moveY = -(touch.clientY - swipeInfo.current.y);
-    console.log(moveY);
-    const absY = Math.abs(moveY);
-    if (absY > miniMoveDistance) {
-      setSwiped(true);
-      setTranslateY(prev => prev + moveY);
-    }
-    swipeInfo.current = defaultSwipedInfoValue;
-  }, []);
+  }, [currentIndex, formatLrc]);
 
   useEffect(() => {
-    if (swiped) {
-      console.log('swiped');
-    }
-  }, [swiped]);
+    const scrollY = -lyrcLineHeight * currentIndex;
+    !isTap && scrollRef.current?.scrollTo(0, scrollY, 500);
+    return () => {};
+  }, [currentIndex, isTap]);
 
   return (
-    <div className={cls(className, styles.listLrc)}>
-      <div
-        className={cls(styles.listBox, {
-          [styles.transition]: !swiped,
-        })}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        style={{ transform: `translateY(${defaultTranlateY - translateY}px)` }}
-      >
-        {renderLrc}
-      </div>
+    <div ref={scrollWrapperRef} className={cls(className, styles.listLrc)}>
+      <div className={cls(styles.listBox)}>{renderLrc}</div>
     </div>
   );
 };

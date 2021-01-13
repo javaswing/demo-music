@@ -1134,6 +1134,18 @@
   resolved "https://r.cnpmjs.org/@bcoe/v8-coverage/download/@bcoe/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha1-daLotRy3WKdVPWgEpZMteqznXDk=
 
+"@better-scroll/core@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/@better-scroll/core/download/@better-scroll/core-2.1.1.tgz#845d42db780c85f219fa63efee794060b3025999"
+  integrity sha1-hF1C23gMhfIZ+mPv7nlAYLMCWZk=
+  dependencies:
+    "@better-scroll/shared-utils" "^2.1.1"
+
+"@better-scroll/shared-utils@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/@better-scroll/shared-utils/download/@better-scroll/shared-utils-2.1.1.tgz#d6f55befbb3f729280ecf18d0a4c7d780ffd9b7c"
+  integrity sha1-1vVb77s/cpKA7PGNCkx9eA/9m3w=
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://r.cnpmjs.org/@cnakazawa/watch/download/@cnakazawa/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"

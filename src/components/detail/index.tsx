@@ -27,7 +27,7 @@ export default function Detail() {
   const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
   const init = useCallback(async () => {
-    const songId = 470759757;
+    const songId = 308208;
     const songInfoJson = (await getSongInfo(songId)) as SongInfoResponse;
     const { data: songUrlData } = await getSongUrl(songId);
     const lyricJson = (await getLyricById(songId)) as SongLrcResponse;
