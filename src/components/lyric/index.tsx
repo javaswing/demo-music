@@ -1,45 +1,46 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import cls from 'classnames';
 import BScroll from '@better-scroll/core';
 import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll';
-import { delay } from 'lodash';
 import styles from './style.module.scss';
 
 export interface LyricProps {
   lyricStr?: string;
+  isPlaying?: boolean;
   className?: string;
   position?: number;
   loading?: boolean;
   error?: boolean;
 }
 
-const defaultTranlateY = 150;
 const lyrcLineHeight = 35;
 
 const Lyric = (props: LyricProps) => {
-  const { className, lyricStr, position = 0 } = props;
+  const { className, lyricStr, position = 0, isPlaying } = props;
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<BScrollConstructor>(); // scroll 实例
   const [isTap, setIsTap] = useState<boolean>(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (scrollWrapperRef.current) {
-      scrollRef.current = new BScroll(scrollWrapperRef.current, {});
-      let timer: NodeJS.Timeout | null = null;
+      scrollRef.current = new BScroll(scrollWrapperRef.current, { click: true });
       scrollRef.current.on('beforeScrollStart', () => {
+        if (!isPlaying) return;
         setIsTap(true);
-        timer && clearTimeout(timer);
+        timerRef.current && clearTimeout(timerRef.current);
       });
       scrollRef.current.on('touchEnd', () => {
-        timer = setTimeout(() => {
+        timerRef.current = setTimeout(() => {
           setIsTap(false);
         }, 2000);
       });
     }
     return () => {
+      timerRef.current && clearTimeout(timerRef.current);
       scrollRef.current?.destroy();
     };
-  }, []);
+  }, [isPlaying]);
 
   const formatLrc = useMemo(() => {
     const lyricArr = lyricStr?.split('\n') ?? [];
