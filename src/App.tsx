@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Detail from './components/detail';
+import Detail from '@/container/detail';
 // import styles from './App.module.scss';
 
 function App() {

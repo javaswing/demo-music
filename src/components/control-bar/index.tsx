@@ -17,7 +17,7 @@ export interface ControlBarProps {
 }
 
 const ControlBar = (props: ControlBarProps) => {
-  const { className, isPlay, duration = 0, position = 0, onControl = noop, onSeek = noop } = props;
+  const { className, isPlay, duration = 0, position = 0, onControl = noop, onSeek = noop, isLoading } = props;
   const [currentValue, setCurrentValue] = useState<number>(duration);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
@@ -94,7 +94,9 @@ const ControlBar = (props: ControlBarProps) => {
       <div className={cls('row row-justify-space-around row-align-center', styles['control-bar'])}>
         <div className={cls(styles.btn, styles['btn--mini'], styles['d-model'])}></div>
         <div className={cls(styles.btn, styles['btn--mini'], styles['d-prev'])}></div>
-        <div onClick={onControl} className={cls(styles.btn, playControlClassName)}></div>
+        <div onClick={onControl} className={cls(styles.btn, playControlClassName)}>
+          {isLoading && <div className={styles.loading}></div>}
+        </div>
         <div className={cls(styles.btn, styles['btn--mini'], styles['d-next'])}></div>
         <div className={cls(styles.btn, styles['btn--mini'], styles['d-list'])}></div>
       </div>

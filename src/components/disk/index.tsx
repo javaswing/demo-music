@@ -1,5 +1,6 @@
 import React from 'react';
 import cls from 'classnames';
+import { defaultDiskCover } from '@/constants/global';
 import styles from './style.module.scss';
 
 export interface DiskProps {
@@ -9,14 +10,10 @@ export interface DiskProps {
 }
 
 const Disk = (props: DiskProps) => {
-  const {
-    diskCover = 'http://p1.music.126.net/dREm6MLlitjPHtUMD8l7bQ==/109951163849833537.jpg?param=500y500',
-    isPlay = false,
-    rotate = 0,
-  } = props;
+  const { diskCover = defaultDiskCover, isPlay = false, rotate = 0 } = props;
 
   return (
-    <div className={cls('row row-justify-center row-align-center', styles.cd)}>
+    <div className={cls('row row-justify-center', styles.cd)}>
       <div
         className={cls(styles.stick, {
           [styles['stick--pause']]: !isPlay,

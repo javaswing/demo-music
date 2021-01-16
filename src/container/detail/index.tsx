@@ -27,7 +27,7 @@ export default function Detail() {
   const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
   const init = useCallback(async () => {
-    const songId = 31445554;
+    const songId = 38592202;
     const songInfoJson = (await getSongInfo(songId)) as SongInfoResponse;
     const { data: songUrlData } = await getSongUrl(songId);
     const lyricJson = (await getLyricById(songId)) as SongLrcResponse;
@@ -76,10 +76,6 @@ export default function Detail() {
   const singerName = useMemo(() => song?.ar?.[0]?.name, [song?.ar]);
   const albumStyle = useMemo(() => ({ backgroundImage: `url(${song?.al?.picUrl})` }), [song?.al?.picUrl]);
 
-  const lyric = useMemo(() => {
-    return songLrc?.lrc?.lyric;
-  }, [songLrc?.lrc?.lyric]);
-
   const toggleDetail = useCallback(
     e => {
       setIsDiskModel(!isDiskModel);
@@ -95,7 +91,7 @@ export default function Detail() {
           onClick={toggleDetail}
           position={position}
           duration={duration}
-          lyric={lyric}
+          lyricInfo={songLrc}
           isPlay={playing}
           isDiskModel={isDiskModel}
           coverImg={song?.al?.picUrl}

@@ -12,6 +12,7 @@ export interface LyricRespone {
   lrc?: BaseLrc;
   klyric?: BaseLrc;
   tlyric?: BaseLrc;
+  nolyric?: boolean;
 }
 
 export function getSongUrl(id: number) {

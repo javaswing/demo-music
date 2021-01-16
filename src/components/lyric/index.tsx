@@ -6,6 +6,7 @@ import styles from './style.module.scss';
 
 export interface LyricProps {
   lyricStr?: string;
+  noLyric?: boolean;
   isPlaying?: boolean;
   className?: string;
   position?: number;
@@ -16,11 +17,30 @@ export interface LyricProps {
 const lyrcLineHeight = 35;
 
 const Lyric = (props: LyricProps) => {
-  const { className, lyricStr, position = 0, isPlaying } = props;
+  const { className, lyricStr, position = 0, isPlaying, noLyric } = props;
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<BScrollConstructor>(); // scroll 实例
   const [isTap, setIsTap] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const formatLrc = useMemo(() => {
+    const lyricArr = lyricStr?.split('\n') ?? [];
+    return lyricArr.map(item => {
+      const endIndex = item.lastIndexOf(']');
+      const time = item.substring(1, endIndex); // 03:36.310
+      const totalSecounds = time.split(':').reduce((pre, cur) => {
+        return pre + (cur.indexOf('.') > -1 ? parseFloat(cur) : parseFloat(cur) * 60);
+      }, 0);
+      const lrc = item.substring(endIndex + 1).trim();
+      return { totalSecounds, time, lrc };
+    });
+  }, [lyricStr]);
+
+  const currentIndex = useMemo(() => {
+    const gtIndex = formatLrc.findIndex(e => e.totalSecounds > position);
+    const safeIndex = gtIndex >= 1 ? gtIndex - 1 : gtIndex;
+    return safeIndex;
+  }, [formatLrc, position]);
 
   useEffect(() => {
     if (scrollWrapperRef.current) {
@@ -40,36 +60,16 @@ const Lyric = (props: LyricProps) => {
       timerRef.current && clearTimeout(timerRef.current);
       scrollRef.current?.destroy();
     };
-  }, [isPlaying]);
-
-  const formatLrc = useMemo(() => {
-    const lyricArr = lyricStr?.split('\n') ?? [];
-    return lyricArr.map(item => {
-      const endIndex = item.lastIndexOf(']');
-      const time = item.substring(1, endIndex); // 03:36.310
-      const totalSecounds = time.split(':').reduce((pre, cur) => {
-        return pre + (cur.indexOf('.') > -1 ? parseFloat(cur) : parseFloat(cur) * 60);
-      }, 0);
-      const lrc = item.substring(endIndex + 1).trim();
-      return { totalSecounds, time, lrc };
-    });
-  }, [lyricStr]);
-
-  /**
-   * 当前高亮索引
-   */
-  const currentIndex = useMemo(() => {
-    const gtIndex = formatLrc.findIndex(e => e.totalSecounds > position);
-    const safeIndex = gtIndex >= 1 ? gtIndex - 1 : gtIndex;
-    return safeIndex;
-  }, [formatLrc, position]);
+  }, [currentIndex, isPlaying]);
 
   // TODO 处理加载中和加载出错的界面显示
   const renderLrc = useMemo(() => {
+    if (noLyric) {
+      return <div className={cls(styles.flag)}>纯音乐，无歌词</div>;
+    }
     return formatLrc.map((e, index) => (
       <div
         key={e.time}
-        data-time={e.time}
         className={cls(styles.flag, {
           [styles.active]: currentIndex === index,
         })}
@@ -77,13 +77,14 @@ const Lyric = (props: LyricProps) => {
         {e.lrc}
       </div>
     ));
-  }, [currentIndex, formatLrc]);
+  }, [currentIndex, formatLrc, noLyric]);
 
   useEffect(() => {
+    if (noLyric) return;
     const scrollY = -lyrcLineHeight * currentIndex;
     !isTap && scrollRef.current?.scrollTo(0, scrollY, 500);
     return () => {};
-  }, [currentIndex, isTap]);
+  }, [currentIndex, isTap, noLyric]);
 
   return (
     <div ref={scrollWrapperRef} className={cls(className, styles.listLrc)}>
