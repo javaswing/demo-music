@@ -107,6 +107,19 @@
       "last 1 safari version"
     ]
   },
+  "lint-staged": {
+    "{src}/*/*.{js,jsx,ts,tsx}": [
+      "npm run lint:ls",
+      "eslint --fix"
+    ],
+    "{src}/*.{js,jsx,ts,tsx}": [
+      "npm run lint:ls",
+      "eslint --fix"
+    ],
+    "{src}/**": [
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@types/classnames": "^2.2.11",
