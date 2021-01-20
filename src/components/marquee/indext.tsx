@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import cls from 'classnames';
 import { doubleRaf, raf } from '@/utils/raf';
 
 export interface MarqueeProps {
