@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import Detail from '@/container/detail';
+// import Detail from '@/container/detail';
+import PlayList from './container/play-list';
 // import styles from './App.module.scss';
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
     };
   }, []);
 
-  return <Detail />;
+  return <PlayList />;
 }
 
 export default App;
