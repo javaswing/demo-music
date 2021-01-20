@@ -22,13 +22,23 @@
 
 ## 封装
 
-- [ ] 常用 scss 封装
+- [x] 常用 scss 封装
   - [x] `normalize`浏览器重置样式
   - [x] `flex` 帮助样式类
   - [x] `ellipsis` 文本截取
   - [x] `clearfix` 清除浮动
   - [x] `hariline` 1px 边框
-- [ ] 常用工具类封装
+- [x] 常用工具类封装
+
+## redux 部分
+
+### player 播放器配置
+
+- `playModel` 播放模式
+- `playList` 播放列表
+- `currentSongId` 当前播放歌曲 ID,信息从 playList 中获取
+- `nextSongId` 下一个播放歌 ID
+- `prevSongId` 上一个播放 ID
 
 ## QA
 
@@ -36,14 +46,15 @@
 
 - 歌词进度显示不是很准确是因为，原来的歌词时间也不准
 
-- 如果想让`typescript-plugin-css-modules`这个插件生效，请在打开`TSX`文件时，选择当前workspace中的ts版本
-
+- 如果想让`typescript-plugin-css-modules`这个插件生效，请在打开`TSX`文件时，选择当前 workspace 中的 ts 版本
 
 ## 说明
+
 - 为`scss`生成的`*.d.ts`描述文件在`react-app-env.d.ts`中,目前对于引入的`style`文件的提示使用的是[`typescript-plugin-css-modules`](https://github.com/mrmckeb/typescript-plugin-css-modules)插件,目前仅支持`*.module.scss`类文件提示（暂时不会生成`*.d.ts`）文件，也能实现智能提示
 
 ## 其它
+
 - [`react-app-env.d.ts`](https://github.com/lizhongzhen11/dailyGain/issues/36)
-- [使用SASS生成CSS模块的TypeScript定义](https://skovy.dev/generating-typescript-definitions-for-css-modules-using-sass/)
+- [使用 SASS 生成 CSS 模块的 TypeScript 定义](https://skovy.dev/generating-typescript-definitions-for-css-modules-using-sass/)
 - [Increasing the Value of CSS Modules with Typescript](https://spin.atomicobject.com/2020/06/22/css-module-typescript/)
 - [css modules in Typescript](https://codepen.io/codiechanel/post/css-modules-in-typescript)
