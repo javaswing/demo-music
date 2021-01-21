@@ -34,8 +34,8 @@
 
 ### player 播放器配置
 
-- `playModel` 播放模式
-- `playList` 播放列表
+- `playerModel` 播放模式
+- `playerList` 播放列表
 - `currentSongId` 当前播放歌曲 ID,信息从 playList 中获取
 - `nextSongId` 下一个播放歌 ID
 - `prevSongId` 上一个播放 ID
