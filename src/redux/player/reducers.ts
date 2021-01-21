@@ -1,8 +1,12 @@
-import { stat } from 'fs';
+import { LyricRespone } from '@/services';
 import { PlayerActionTypes, SET_SONG_LRC } from './types';
 
+export type playerTrack = {
+  [key: number]: SongObj & { lrcInfo: LyricRespone };
+};
+
 export interface PlayerState {
-  playerList: [];
+  playerList: playerTrack[];
   /** order:顺序  singleLoop:单曲循环 listLoop: 列表循环 random:随机 */
   playerModel: 'random' | 'listLoop' | 'singleLoop' | 'order';
   currentSongId: number | string;

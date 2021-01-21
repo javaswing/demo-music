@@ -15,6 +15,16 @@ export interface LyricRespone {
   nolyric?: boolean;
 }
 
+export interface CheckMusicResponse {
+  success: boolean;
+  message: string;
+}
+
+/**
+ * 获取音乐URL
+ * @param id
+ * @description 注 : 部分用户反馈获取的 url 会 403,hwaphon找到的解决方案是当获取到音乐的 id 后，将 https://music.163.com/song/media/outer/url?id=id.mp3 以 src 赋予 Audio 即可播放
+ */
 export function getSongUrl(id: number) {
   return request<BaseSongUrl[]>({ url: '/song/url', params: { id }, method: 'get' });
 }
@@ -28,11 +38,19 @@ export function getSongInfo(ids: number) {
 }
 
 /**
+ * 检测音乐是否可用
+ * @param id 歌曲ID
+ */
+export function checkMusic(id: number) {
+  return request<CheckMusicResponse>({ url: '/check/music', params: { id } });
+}
+
+/**
  * 获取歌单详情
  * @param id 歌单ID
  * @param s 默认值为：8 歌单最近的s个收藏者
  */
-export function getPayListById(id: number, s = 8) {
+export function getPlayListById(id: number, s = 8) {
   return request({ url: '/playlist/detail', params: { id, s }, method: 'get' });
 }
 

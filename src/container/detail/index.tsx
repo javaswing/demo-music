@@ -11,7 +11,7 @@ import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import { setSongInfo, setSongLrc } from '@/redux/song/action';
 import styles from './style.module.scss';
 
-export type SongInfoResponse = BaseResponse & { songs?: ResponseSong[] };
+export type SongInfoResponse = BaseResponse & { songs?: SongObj[] };
 
 export type SongLrcResponse = BaseResponse & Partial<LyricRespone>;
 

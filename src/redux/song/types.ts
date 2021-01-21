@@ -5,7 +5,7 @@ export const SET_SONG = 'SET_SONG';
 export const SET_LRC = 'SET_LRC';
 
 //--------------------------------------- state types --------------------------//
-export type SongInfo = ResponseSong & BaseSongUrl;
+export type SongInfo = SongObj & BaseSongUrl;
 
 //--------------------------------------- action types ---------------------------//
 interface SetSongAction {
