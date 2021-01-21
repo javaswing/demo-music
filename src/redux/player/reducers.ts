@@ -1,4 +1,5 @@
-import { PlayerActionTypes } from './types';
+import { stat } from 'fs';
+import { PlayerActionTypes, SET_SONG_LRC } from './types';
 
 export interface PlayerState {
   playerList: [];
@@ -19,6 +20,11 @@ const initialState: PlayerState = {
 
 export default function playerReducer(state = initialState, action: PlayerActionTypes) {
   switch (action.type) {
+    case SET_SONG_LRC: {
+      return {
+        ...state,
+      };
+    }
     default:
       return state;
   }
