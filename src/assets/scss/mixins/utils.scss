@@ -1,0 +1,10 @@
+@mixin extend($width:10px) {
+  &::after {
+    content: '';
+    position: absolute;
+    top: -$width;
+    left: -$width;
+    bottom: -$width;
+    right: -$width;
+  }
+}
