@@ -28,7 +28,7 @@ const ControlBar = (props: ControlBarProps) => {
   }, [isDragging, position]);
 
   const playControlClassName = useMemo(() => {
-    return isPlay ? styles['d-play'] : styles['d-pause'];
+    return isPlay ? styles.dPlay : styles.dPause;
   }, [isPlay]);
 
   const currentTime = useMemo(() => {
@@ -68,7 +68,7 @@ const ControlBar = (props: ControlBarProps) => {
 
   return (
     <div className={cls(className)}>
-      <div className={cls('row row-justify-space-around row-align-center', styles['progress-bar'])}>
+      <div className={cls('row row-justify-space-around row-align-center', styles.progressBar)}>
         <div className={styles.time}>{currentTime}</div>
         <div className={styles.slider}>
           <Slider
@@ -91,14 +91,14 @@ const ControlBar = (props: ControlBarProps) => {
         </div>
         <div className={styles.time}>{totalTime}</div>
       </div>
-      <div className={cls('row row-justify-space-around row-align-center', styles['control-bar'])}>
-        <div className={cls(styles.btn, styles['btn--mini'], styles['d-model'])}></div>
-        <div className={cls(styles.btn, styles['btn--mini'], styles['d-prev'])}></div>
+      <div className={cls('row row-justify-space-around row-align-center', styles.controlBar)}>
+        <div className={cls(styles.btn, styles.btnMini, styles.dModel)}></div>
+        <div className={cls(styles.btn, styles.btnMini, styles.dPrev)}></div>
         <div onClick={onControl} className={cls(styles.btn, playControlClassName)}>
           {isLoading && <div className={styles.loading}></div>}
         </div>
-        <div className={cls(styles.btn, styles['btn--mini'], styles['d-next'])}></div>
-        <div className={cls(styles.btn, styles['btn--mini'], styles['d-list'])}></div>
+        <div className={cls(styles.btn, styles.btnMini, styles.dNext)}></div>
+        <div className={cls(styles.btn, styles.btnMini, styles.dList)}></div>
       </div>
     </div>
   );

@@ -6,37 +6,37 @@
   background-size: cover;
   transform: rotate(180deg);
 
-  &Down {
+  &--down {
     transform: rotate(90deg);
   }
 }
 
-.navBar {
+.nav-bar {
   position: relative;
   box-sizing: border-box;
   width: 375px;
   height: 40px;
   user-select: none;
 
-  &Content {
+  &-content {
     position: relative;
     display: flex;
     align-items: center;
     height: 40px;
   }
 
-  &Title {
+  &-title {
     max-width: 60%;
     margin: 0 auto;
     font-size: 16px;
   }
 
-  &Text {
+  &-text {
     color: #fff;
   }
 
-  &Left,
-  &Right {
+  &-left,
+  &-right {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -45,11 +45,11 @@
     align-items: center;
   }
 
-  &Left {
+  &-left {
     left: 0;
   }
 
-  &Right {
+  &-right {
     right: 0;
   }
 }

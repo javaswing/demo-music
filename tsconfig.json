@@ -30,9 +30,9 @@
     "plugins": [
       {
       "name": "typescript-plugin-css-modules" ,
-      // "options": {
-      //   "classnameTransform": "camelCase",
-      // }
+      "options": {
+        "classnameTransform": "camelCaseOnly",
+      }
       }
     ]
   },

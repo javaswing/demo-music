@@ -16,14 +16,14 @@ const Disk = (props: DiskProps) => {
     <div className={cls('row row-justify-center', styles.cd)}>
       <div
         className={cls(styles.stick, {
-          [styles['stick--pause']]: !isPlay,
+          [styles.stickPause]: !isPlay,
         })}
       >
         {/* <div className={styles.crosshair}></div> */}
       </div>
       <div className={cls('row row-justify-center row-align-center', styles.disk)}>
         <div
-          className={cls('row row-justify-center row-align-center', styles['disk-cover'])}
+          className={cls('row row-justify-center row-align-center', styles.diskCover)}
           style={{
             transform: `rotate(${rotate}deg)`,
           }}

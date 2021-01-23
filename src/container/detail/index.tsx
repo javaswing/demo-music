@@ -84,7 +84,7 @@ export default function Detail() {
 
   return (
     <div className={styles.content}>
-      <div className={cls(styles['player-wrapper'], 'row')}>
+      <div className={cls(styles.playerWrapper, 'row')}>
         <NavBar
           title={
             <>
@@ -92,7 +92,7 @@ export default function Detail() {
               <div className={styles.singerName}>{singerName}</div>
             </>
           }
-          className={styles['player__nav-bar']}
+          className={styles.playerNavBar}
         />
         <DetailContent
           onClick={toggleDetail}
@@ -102,7 +102,7 @@ export default function Detail() {
           isPlay={playing}
           isDiskModel={isDiskModel}
           coverImg={currentSong?.al?.picUrl}
-          className={styles.player__content}
+          className={styles.playerContent}
         />
         <ControlBar
           position={position}
@@ -111,12 +111,12 @@ export default function Detail() {
           onSeek={handleSeek}
           onControl={handlePlay}
           isLoading={loading}
-          className={styles.player__control}
+          className={styles.playerControl}
         />
       </div>
       <div className={styles.mask}>
-        <div className={styles.mask__album} style={albumStyle}></div>
-        <div className={styles.mask__cover}></div>
+        <div className={styles.maskAlbum} style={albumStyle}></div>
+        <div className={styles.maskAlbum}></div>
       </div>
     </div>
   );

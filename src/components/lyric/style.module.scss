@@ -1,12 +1,15 @@
-.listLrc {
-  height: 100%;
-  overflow: hidden;
+.list {
+  &-lrc {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &-box {
+    padding: 50% 0;
+    text-align: center;
+  }
 }
 
-.listBox {
-  padding: 50% 0;
-  text-align: center;
-}
 .transition {
   transition: all 0.5s linear;
 }
