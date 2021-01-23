@@ -1,21 +1,58 @@
 import { LyricRespone } from '@/services';
-import { PlayerActionTypes, SET_SONG_INFO, SET_SONG_LRC, SongInfo } from './types';
+import { PlayerSongInfo } from './reducers';
+import {
+  PlayerActionTypes,
+  SET_CURRENT_SONG,
+  SET_PLAY_LIST,
+  UPDADTE_SONG_LRC,
+  UPDATE_SONG_INFO,
+  UPDATE_SONG_URL,
+} from './types';
 
 /**
- * 设置歌词信息
- * @param lrc
+ * 更新歌曲信息
+ * @param info
  */
-export const setSongLrc = (lrc: LyricRespone): PlayerActionTypes => {
+export const updateSongInfo = (info: PlayerSongInfo): PlayerActionTypes => {
   return {
-    type: SET_SONG_LRC,
-    payload: lrc,
+    type: UPDATE_SONG_INFO,
+    payload: info,
   };
 };
 
-/** 设置歌曲信息 */
-export const setSongInfo = (info: SongInfo): PlayerActionTypes => {
+/**
+ * 设置播放列表
+ * @param info
+ */
+export const setPlayerList = (info: PlayerSongInfo[]): PlayerActionTypes => {
   return {
-    type: SET_SONG_INFO,
+    type: SET_PLAY_LIST,
+    payload: info,
+  };
+};
+
+/**
+ * 更新歌词
+ * @param id
+ * @param lrc
+ */
+export const updateSongLrc = (id: number, lrc: LyricRespone): PlayerActionTypes => {
+  return {
+    type: UPDADTE_SONG_LRC,
+    payload: { id, lrc },
+  };
+};
+
+export const updateSongUrl = (id: number, urlInfo: BaseSongUrl): PlayerActionTypes => {
+  return {
+    type: UPDATE_SONG_URL,
+    payload: { id, urlInfo },
+  };
+};
+
+export const setCurrentSong = (info: PlayerSongInfo): PlayerActionTypes => {
+  return {
+    type: SET_CURRENT_SONG,
     payload: info,
   };
 };

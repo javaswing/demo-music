@@ -3,7 +3,7 @@ import cls from 'classnames';
 import NavBar from '@/components/nav-bar';
 import { getPlayListById } from '@/services';
 
-import { PlayListResponse } from './typing';
+import { PlayListResponse } from './play-list-types';
 import styles from './style.module.scss';
 
 export interface PlayListProps {

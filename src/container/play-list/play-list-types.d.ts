@@ -79,7 +79,7 @@ export interface PlayList {
   trackCount: number;
   /** 歌曲更新时间 */
   trackNumberUpdateTime: number;
-  tracks: SongObj[];
+  tracks: SongInfo[];
 }
 
 export interface PlayListResponse extends BaseResponse {

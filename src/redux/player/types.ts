@@ -1,31 +1,46 @@
 import { LyricRespone } from '@/services';
+import { PlayerModel, PlayerSongInfo } from './reducers';
 
-export const SET_SONG_INFO = 'SET_SONG_INFO';
-export const SET_SONG_LRC = 'SET_SONG_LRC';
+export const UPDATE_SONG_INFO = 'UPDATE_SONG_INFO';
 export const SET_PLAY_LIST = 'SET_PLAY_LIST';
+export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
+export const UPDADTE_SONG_LRC = 'UPDADTE_SONG_LRC';
+export const UPDATE_SONG_URL = 'UPDATE_SONG_URL';
+export const CHANGE_PLAYER_MODEL = 'CHANGE_PLAYER_MODEL';
 
-export type SongInfo = SongObj &
-  BaseSongUrl & {
-    lrc: LyricRespone;
-  };
-
-interface SetSongAction {
-  type: typeof SET_SONG_INFO;
-  payload: SongInfo;
+interface UpdateSongInfo {
+  type: typeof UPDATE_SONG_INFO;
+  payload: PlayerSongInfo;
 }
-
-interface SetSongLrc {
-  type: typeof SET_SONG_LRC;
-  payload: LyricRespone;
-}
-
 interface SetPlayList {
   type: typeof SET_PLAY_LIST;
-  /**
-   * TODO: 补全PlayList类型
-   * 类似 {1: {id: 1, name: '歌曲名'}, 2: {id: 2, name: '歌曲名'}}
-   */
-  payload: any;
+  payload: PlayerSongInfo[];
 }
 
-export type PlayerActionTypes = SetSongAction | SetSongLrc | SetPlayList;
+interface SetCurretSong {
+  type: typeof SET_CURRENT_SONG;
+  payload: PlayerSongInfo;
+}
+
+interface UpdateSongLrc {
+  type: typeof UPDADTE_SONG_LRC;
+  payload: { id: number; lrc: LyricRespone };
+}
+
+interface ChangePlayerModel {
+  type: typeof CHANGE_PLAYER_MODEL;
+  payload: PlayerModel;
+}
+
+interface UpdateSongUrl {
+  type: typeof UPDATE_SONG_URL;
+  payload: { id: number; urlInfo: BaseSongUrl };
+}
+
+export type PlayerActionTypes =
+  | UpdateSongInfo
+  | SetPlayList
+  | UpdateSongLrc
+  | SetCurretSong
+  | ChangePlayerModel
+  | UpdateSongUrl;
