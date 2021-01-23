@@ -4,6 +4,16 @@
   height: 100vh;
 }
 
+.songName {
+  overflow: hidden;
+  height: 25px;
+}
+
+.singerName {
+  font-size: 12px;
+  color: #aaabaa;
+}
+
 .player {
   &-wrapper {
     position: relative;

@@ -85,7 +85,15 @@ export default function Detail() {
   return (
     <div className={styles.content}>
       <div className={cls(styles['player-wrapper'], 'row')}>
-        <NavBar songName={currentSong?.name} singer={singerName} className={styles['player__nav-bar']} />
+        <NavBar
+          title={
+            <>
+              <div className={styles.songName}>{currentSong?.name}</div>
+              <div className={styles.singerName}>{singerName}</div>
+            </>
+          }
+          className={styles['player__nav-bar']}
+        />
         <DetailContent
           onClick={toggleDetail}
           position={position}

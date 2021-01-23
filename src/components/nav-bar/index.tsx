@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import cls from 'classnames';
 import styles from './style.module.scss';
 
 export interface NavBarProps {
   className?: string;
-  songName?: string;
-  singer?: string;
+  left?: React.ReactNode;
+  leftArrow?: boolean;
+  isArrowDown?: boolean;
+  right?: string | React.ReactNode;
+  title: string | React.ReactNode;
 }
 
 const NavBar = (props: NavBarProps) => {
-  const { className, songName = '歌名', singer = '歌手' } = props;
+  const { className, title, left, right, leftArrow = true, isArrowDown = false } = props;
+
+  const targetArrowClassName = useMemo(() => {
+    return isArrowDown && styles.arrowDown;
+  }, [isArrowDown]);
+
+  const renderLeft = useMemo(() => {
+    if (React.isValidElement(left)) return left;
+    return [leftArrow && <div className={cls(styles.arrow, targetArrowClassName)}></div>];
+  }, [left, leftArrow, targetArrowClassName]);
+
+  const renderRight = useMemo(() => {
+    if (React.isValidElement(right)) return right;
+    return right;
+  }, [right]);
+
+  const renderTitle = useMemo(() => {
+    if (React.isValidElement(title)) return title;
+    return title;
+  }, [title]);
+
   return (
-    <div className={cls(className, styles.box, 'row row-align-center')}>
-      <div className={cls(styles.btn, styles.backBtn)}></div>
-      <div className={cls(styles.info, 'flex-1')}>
-        <div className={cls(styles.songName)}>{songName}</div>
-        <div className={styles.singerName}>{singer}</div>
+    <div className={cls(className, styles.navBar)}>
+      <div className={styles.navBarContent}>
+        {(left || leftArrow) && <div className={styles.navBarLeft}>{renderLeft}</div>}
+        <div className={cls(styles.navBarTitle, styles.navBarText)}>{renderTitle}</div>
+        {right && <div className={styles.navBarRight}>{renderRight}</div>}
       </div>
-      <div className={cls(styles.btn)}></div>
     </div>
   );
 };

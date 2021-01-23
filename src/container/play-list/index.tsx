@@ -28,7 +28,7 @@ export default function PlayList(props: PlayListProps) {
 
   return (
     <div className={cls(className)}>
-      <NavBar />
+      <NavBar title="歌单" isArrowDown />
     </div>
   );
 }

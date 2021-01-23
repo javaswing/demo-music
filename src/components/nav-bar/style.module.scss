@@ -1,31 +1,55 @@
-.box {
-  box-sizing: border-box;
-  padding: 0 15px;
-}
-.btn {
+.arrow {
+  display: inline-block;
   width: 20px;
   height: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
+  background: url('../../assets/img/arrow.png') no-repeat center;
+  background-size: cover;
+  transform: rotate(180deg);
+
+  &Down {
+    transform: rotate(90deg);
+  }
 }
 
-.backBtn {
-  background-image: url('../../assets/img/arrow-down.png');
-}
+.navBar {
+  position: relative;
+  box-sizing: border-box;
+  width: 375px;
+  height: 40px;
+  user-select: none;
 
-.info {
-  padding: 0 20px;
-  text-align: center;
-  font-size: 16px;
-  min-width: 0;
-}
+  &Content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
 
-.songName {
-  overflow: hidden;
-  height: 25px;
-}
+  &Title {
+    max-width: 60%;
+    margin: 0 auto;
+    font-size: 16px;
+  }
 
-.singerName {
-  font-size: 12px;
-  color: #aaabaa;
+  &Text {
+    color: #fff;
+  }
+
+  &Left,
+  &Right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  &Left {
+    left: 0;
+  }
+
+  &Right {
+    right: 0;
+  }
 }
