@@ -1,0 +1,16 @@
+.top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 375px;
+  height: 215px;
+  z-index: 1;
+}
+
+.top-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  filter: blur(20px);
+  transform: scale(1.5);
+}

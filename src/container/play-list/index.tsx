@@ -28,7 +28,19 @@ export default function PlayList(props: PlayListProps) {
 
   return (
     <div className={cls(className)}>
-      <NavBar title="歌单" isArrowDown />
+      <NavBar
+        title={
+          <>
+            <div>歌单</div>
+          </>
+        }
+        isArrowDown
+        zIndex={3}
+      />
+      <section
+        className={cls(styles.top, styles.topBg)}
+        style={{ backgroundImage: 'url(//music.163.com/api/img/blur/109951165443713330?param=170y170)' }}
+      ></section>
     </div>
   );
 }

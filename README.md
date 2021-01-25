@@ -47,6 +47,7 @@
 - 歌词进度显示不是很准确是因为，原来的歌词时间也不准
 
 - 如果想让`typescript-plugin-css-modules`这个插件生效，请在打开`TSX`文件时，选择当前 workspace 中的 ts 版本
+- 另外如果`typescript-plugin-css-modules`中的`classnameTransform`使用的是`camelCaseOnly`,需要在 webpack 中进行[配置]https://stackoverflow.com/questions/50234890/how-to-use-css-modules-with-create-react-app
 
 ## 说明
 
