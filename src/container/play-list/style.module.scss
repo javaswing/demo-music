@@ -1,3 +1,19 @@
+.topBox {
+  position: relative;
+  padding: 58px 10px 0 10px;
+  &::before {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -100px;
+    z-index: -1;
+    content: ' ';
+    height: 215px;
+    width: 100%;
+    border-radius: 0 0 50% 50%;
+    background-color: #27ae60;
+  }
+}
 .top {
   position: absolute;
   top: 0;
@@ -7,10 +23,52 @@
   z-index: 1;
 }
 
-.top-bg {
+.topBg {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
   filter: blur(20px);
   transform: scale(1.5);
+  z-index: 1;
+}
+
+.placeholder {
+  &::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    content: ' ';
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+.topMain {
+  position: relative;
+  z-index: 2;
+}
+
+.coverBox {
+  overflow: hidden;
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 10px;
+}
+
+.img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.infoBox {
+  margin-left: 15px;
+
+  .title {
+    line-height: 1.3;
+    font-size: 17px;
+    color: #fefefe;
+  }
 }
