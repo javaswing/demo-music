@@ -54,7 +54,6 @@ modules: {
   exportLocalsConvention: "camelCase",
   getLocalIdent: getCSSModuleLocalIdent,
 }
-
 ```
 
 ## 说明
