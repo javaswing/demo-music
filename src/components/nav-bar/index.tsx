@@ -9,11 +9,17 @@ export interface NavBarProps {
   isArrowDown?: boolean;
   right?: string | React.ReactNode;
   title: string | React.ReactNode;
-  zIndex?: number;
+  zIndex?: number | string;
 }
 
 const NavBar = (props: NavBarProps) => {
-  const { className, title, left, right, leftArrow = true, isArrowDown = false, zIndex = 1 } = props;
+  const { className, title, left, right, zIndex, leftArrow = true, isArrowDown = false } = props;
+
+  const style = useMemo(() => {
+    return {
+      zIndex: zIndex !== undefined ? +zIndex : undefined, // +表示 string => number
+    };
+  }, [zIndex]);
 
   const targetArrowClassName = useMemo(() => {
     return isArrowDown && styles.arrowDown;
@@ -35,7 +41,7 @@ const NavBar = (props: NavBarProps) => {
   }, [title]);
 
   return (
-    <div className={cls(className, styles.navBar)} style={{ zIndex: zIndex }}>
+    <div className={cls(className, styles.navBar)} style={style}>
       <div className={styles.navBarContent}>
         {(left || leftArrow) && <div className={styles.navBarLeft}>{renderLeft}</div>}
         <div className={cls(styles.navBarTitle, styles.navBarText)}>{renderTitle}</div>

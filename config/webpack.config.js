@@ -109,7 +109,7 @@ module.exports = function (webpackEnv) {
       },
       {
         loader: require.resolve('css-loader'),
-        options: cssOptions,
+        options: cssOptions
       },
       {
         // Options for PostCSS as we reference these options twice
@@ -138,6 +138,7 @@ module.exports = function (webpackEnv) {
               rootValue: 75,
               propList: ['*']
             })
+
           ],
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
@@ -478,7 +479,6 @@ module.exports = function (webpackEnv) {
               exclude: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
-                modules: true,
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
@@ -534,9 +534,10 @@ module.exports = function (webpackEnv) {
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
-                  modules: {
-                    getLocalIdent: getCSSModuleLocalIdent,
-                  },
+                    modules: {
+                      exportLocalsConvention: "camelCase",
+                      getLocalIdent: getCSSModuleLocalIdent,
+                    }
                 },
                 'sass-loader'
               ),

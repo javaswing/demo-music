@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
 import cls from 'classnames';
-import NavBar from '@/components/nav-bar';
+// import NavBar from '@/components/nav-bar';
 import { getPlayListById } from '@/services';
 
-import { PlayListResponse } from './play-list-types';
+import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
 export interface PlayListProps {
@@ -28,7 +28,10 @@ export default function PlayList(props: PlayListProps) {
 
   return (
     <div className={cls(className)}>
-      <NavBar
+      <div className={styles.stickyContainer}>
+        <div className={styles.sticky}>sticky</div>
+      </div>
+      {/* <NavBar
         title={
           <>
             <div>歌单</div>
@@ -59,7 +62,7 @@ export default function PlayList(props: PlayListProps) {
             </div>
           </div>
         </div>
-      </section>
+      </section>*/}
     </div>
   );
 }

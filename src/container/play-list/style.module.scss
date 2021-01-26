@@ -72,3 +72,11 @@
     color: #fefefe;
   }
 }
+
+
+.sticky {
+  &-container {
+    height: 800px;
+  }
+  position: sticky;
+}

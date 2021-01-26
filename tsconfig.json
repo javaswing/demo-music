@@ -8,7 +8,9 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -29,10 +31,10 @@
     ],
     "plugins": [
       {
-      "name": "typescript-plugin-css-modules" ,
-      "options": {
-        "classnameTransform": "camelCaseOnly",
-      }
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "camelCaseOnly",
+        }
       }
     ]
   },
