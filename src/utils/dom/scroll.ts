@@ -2,7 +2,7 @@ import { isIOS as checkIsIOS } from '../validate/system';
 
 type ScrollElement = Element | Window;
 
-function isWindow(val: unknown): val is Window {
+export function isWindow(val: unknown): val is Window {
   return val === window;
 }
 

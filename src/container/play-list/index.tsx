@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import cls from 'classnames';
 import NavBar from '@/components/nav-bar';
-import { getPlayListById } from '@/services';
-
 import Sticky from '@/components/sticky';
+import { getPlayListById } from '@/services';
+import Marquee from '@/components/marquee';
+
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -28,8 +29,8 @@ export default function PlayList(props: PlayListProps) {
   }, [initData]);
 
   return (
-    <div className={cls(className, styles.stickyContainer)}>
-      <Sticky offsetTop={40}>
+    <div className={cls(className)}>
+      {/* <Sticky offsetTop={40}>
         <NavBar
           title={
             <>
@@ -40,7 +41,8 @@ export default function PlayList(props: PlayListProps) {
           isArrowDown
           zIndex={3}
         />
-      </Sticky>
+      </Sticky> */}
+      <Marquee text="asdfasdfasdfasdfasdfasfas" scrollable></Marquee>
       {/* <NavBar
         title={
           <>
