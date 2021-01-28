@@ -2,6 +2,8 @@ import { isNumber } from 'lodash';
 
 export function noop() {}
 
+export const inBrowser = typeof window !== 'undefined';
+
 /**
  * js 动态PX转 rem
  * @param val 单位是 PX

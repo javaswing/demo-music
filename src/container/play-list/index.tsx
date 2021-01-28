@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
 import cls from 'classnames';
-// import NavBar from '@/components/nav-bar';
+import NavBar from '@/components/nav-bar';
 import { getPlayListById } from '@/services';
 
+import Sticky from '@/components/sticky';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -27,10 +28,19 @@ export default function PlayList(props: PlayListProps) {
   }, [initData]);
 
   return (
-    <div className={cls(className)}>
-      <div className={styles.stickyContainer}>
-        <div className={styles.sticky}>sticky</div>
-      </div>
+    <div className={cls(className, styles.stickyContainer)}>
+      <Sticky offsetTop={40}>
+        <NavBar
+          title={
+            <>
+              <div>nav</div>
+            </>
+          }
+          className={styles.red}
+          isArrowDown
+          zIndex={3}
+        />
+      </Sticky>
       {/* <NavBar
         title={
           <>
