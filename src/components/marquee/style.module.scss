@@ -1,0 +1,19 @@
+.marquee {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 40px
+  }
+
+  &.txt-ellipsis {
+    max-width: 100%;
+  }
+
+  &__content {
+    position: absolute;
+    white-space: nowrap;
+    transition-timing-function: linear;
+  }
+}

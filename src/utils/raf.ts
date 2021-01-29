@@ -1,5 +1,5 @@
 /**
- * requestAnimationFrame封闭
+ * requestAnimationFrame封装
  * @see https://github.com/youzan/vant/blob/dev/packages/vant-use/src/utils.ts
  */
 
