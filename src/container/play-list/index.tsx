@@ -5,6 +5,7 @@ import Sticky from '@/components/sticky';
 import { getPlayListById } from '@/services';
 import Marquee from '@/components/marquee';
 
+import Loading from '@/components/loading';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -42,7 +43,8 @@ export default function PlayList(props: PlayListProps) {
           zIndex={3}
         />
       </Sticky> */}
-      <Marquee>在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。</Marquee>
+      {/* <Marquee>在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。</Marquee> */}
+      <Loading />
       {/* <NavBar
         title={
           <>
