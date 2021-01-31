@@ -1,4 +1,5 @@
-import { inBrowser } from './base';
+import { isNumber } from 'lodash';
+import { inBrowser, isDef } from './base';
 
 /**
  * 格式化时间显示
@@ -11,6 +12,24 @@ export function fomatSongTime(time: number | undefined) {
     return `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
   } else {
     return '00:00';
+  }
+}
+
+export function addUnit(value?: string | number): string | undefined {
+  if (!isDef(value)) {
+    return undefined;
+  }
+
+  return isNumber(value) ? `${value}px` : String(value);
+}
+
+export function getSizeStyle(originSize?: string | number) {
+  if (isDef(originSize)) {
+    const size = addUnit(originSize);
+    return {
+      width: size,
+      height: size,
+    };
   }
 }
 

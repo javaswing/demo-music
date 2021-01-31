@@ -1,16 +1,30 @@
-
 .loading {
-  margin: 0 0 2em;
-  height: 100px;
-  width: 20%;
-  text-align: center;
-  padding: 1em;
-  margin: 0 auto 1em;
-  display: inline-block;
-  vertical-align: top;
+  display: inline-flex;
   svg path,
-  svg rect{
-    fill: #FF6700;
+  svg rect {
+    fill: #eb4e46;
+  }
+
+  &__circular {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__spinner {
+    position: relative;
+    display: inline-flex;
+  }
+
+  &--vertical {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-text {
+    margin-top: 15px;
+    color: #a6a6a6;
+    font-size: 14px;
   }
 }
-
