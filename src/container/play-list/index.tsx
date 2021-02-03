@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import cls from 'classnames';
 import NavBar from '@/components/nav-bar';
 import Sticky from '@/components/sticky';
 import { getPlayListById } from '@/services';
 
+import Loading from '@/components/loading';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -16,10 +17,11 @@ const playListId = 5470484188;
 
 export default function PlayList(props: PlayListProps) {
   const { className } = props;
+  const [currentPslayList, setCurrentPslayList] = useState<PlayListResponse | undefined>();
 
   const initData = useCallback(async () => {
     const data = (await getPlayListById(playListId)) as PlayListResponse;
-    console.log('data :>> ', data);
+    setCurrentPslayList(data);
   }, []);
 
   useEffect(() => {
@@ -27,13 +29,39 @@ export default function PlayList(props: PlayListProps) {
     return () => {};
   }, [initData]);
 
+  const renderList = useMemo(() => {
+    if (currentPslayList?.playlist) {
+      return currentPslayList.playlist.tracks.map((item, index) => (
+        <div key={item.id} className={cls(styles.item, 'row row-align-center')}>
+          <span className={styles.itemNum}>{index + 1}</span>
+          <div className={cls('flex-1', styles.itemInfo)}>
+            <div className={cls('txt-ellipsis', styles.name)}>{item.name}</div>
+            <div className={cls('row', styles.other)}>
+              <div className={styles.tags}></div>
+              <span>
+                {(item.ar ?? [])[0]?.name}-{item.al?.name}
+              </span>
+            </div>
+          </div>
+          <div className={styles.itemActions}></div>
+        </div>
+      ));
+    } else {
+      return (
+        <div className={cls('row row-justify-center row-align-center')}>
+          <Loading></Loading>
+        </div>
+      );
+    }
+  }, [currentPslayList?.playlist]);
+
   return (
     <div className={cls(className)}>
       <section className={styles.top}>
         <div
           className={styles.topBg}
           style={{
-            backgroundImage: 'url(//music.163.com/api/img/blur/109951165661631177?param=170y170',
+            backgroundImage: `url(${currentPslayList?.playlist.coverImgUrl}?param=170y170`,
           }}
         ></div>
         <div className={cls('row', styles.topMain)}>
@@ -41,17 +69,21 @@ export default function PlayList(props: PlayListProps) {
             <i className={styles.count}>32342434</i>
             <img
               className={styles.img}
-              src="https://p1.music.126.net/xuNuN4G6ZgtwNKgemO07rQ==/109951165661631177.jpg?imageView=1&type=webp&thumbnail=252x0"
+              src={`${currentPslayList?.playlist.coverImgUrl}?imageView=1&type=webp&thumbnail=252x0`}
               alt=""
             />
           </div>
           <div className={cls(styles.infoBox, 'flex-1')}>
-            <div className={cls(styles.title, 'txt-ellipsis--l2')}>
-              Hi 这里有一个树洞Hi 这里有一个树洞Hi 这里有一个树洞Hi 这里有一个树洞Hi 这里有一个树洞Hi 这里有一个树洞Hi
-              这里有一个树洞
-            </div>
+            <div className={cls(styles.title, 'txt-ellipsis--l2')}>{currentPslayList?.playlist.name}</div>
           </div>
         </div>
+      </section>
+      <section className={cls(styles.main, styles.padding10)}>
+        <div className={cls(styles.mainBar, 'row row-align-center ')}>
+          <span className={styles.icon}></span>
+          播放全部<span className={styles.num}>({currentPslayList?.playlist.trackCount})</span>
+        </div>
+        {renderList}
       </section>
     </div>
   );
