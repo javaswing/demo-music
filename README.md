@@ -60,9 +60,19 @@ modules: {
 
 - 为`scss`生成的`*.d.ts`描述文件在`react-app-env.d.ts`中,目前对于引入的`style`文件的提示使用的是[`typescript-plugin-css-modules`](https://github.com/mrmckeb/typescript-plugin-css-modules)插件,目前仅支持`*.module.scss`类文件提示（暂时不会生成`*.d.ts`）文件，也能实现智能提示
 
+## docker 运行服务端
+```shell
+docker pull binaryify/netease_cloud_music_api
+
+docker run -d -p 9000:3000 --name netease_cloud_music_api    binaryify/netease_cloud_music_api
+```
+
 ## 其它
 
 - [`react-app-env.d.ts`](https://github.com/lizhongzhen11/dailyGain/issues/36)
 - [使用 SASS 生成 CSS 模块的 TypeScript 定义](https://skovy.dev/generating-typescript-definitions-for-css-modules-using-sass/)
 - [Increasing the Value of CSS Modules with Typescript](https://spin.atomicobject.com/2020/06/22/css-module-typescript/)
 - [css modules in Typescript](https://codepen.io/codiechanel/post/css-modules-in-typescript)
+
+## 鸣谢
+ - [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)

@@ -127,5 +127,37 @@ module.exports = {
     'no-undef': 0,
     "@typescript-eslint/explicit-module-boundary-types": "off",
     '@typescript-eslint/no-empty-function': 0, // 关闭ts空方法检测
+    'import/order': [
+      'warn',
+      {
+        pathGroups: [
+          {
+            pattern: '~/**',
+            group: 'external',
+          },
+          {
+            pattern: '@/**',
+            patternOptions: {
+              nocomment: false,
+            },
+            group: 'external',
+            position: 'after',
+          },
+          {
+            pattern: './*.scss',
+            group: 'object',
+          },
+          {
+            pattern: './*.less',
+            group: 'object',
+          },
+          {
+            pattern: './*.css',
+            group: 'object',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+      },
+    ]
   },
 };

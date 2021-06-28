@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import cls from 'classnames';
+import { pick } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import DetailContent from '@/components/detail-content';
 import ControlBar from '@/components/control-bar';
 import NavBar from '@/components/nav-bar';
-import cls from 'classnames';
 import { getLyricById, getSongUrl, LyricRespone } from '@/services';
-import { pick } from 'lodash';
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux';
-import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import { updateSongLrc, updateSongUrl } from '@/redux/player/action';
 import styles from './style.module.scss';
 

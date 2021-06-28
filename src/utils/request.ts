@@ -1,5 +1,5 @@
-import { baseUrl } from '@/constants/global';
 import axios, { AxiosRequestConfig } from 'axios';
+import { baseUrl } from '@/constants/global';
 
 function genAxiosInstance(config?: AxiosRequestConfig) {
   return axios.create({
