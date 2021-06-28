@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import cls from 'classnames';
 import NavBar from '@/components/nav-bar';
 import Sticky from '@/components/sticky';
-import { getPlayListById } from '@/services';
+import { getPlayListById, getPlayListDynamicDetailById } from '@/services';
 
 import Loading from '@/components/loading';
+import { getUserInfo } from '@/services/user';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -13,7 +14,7 @@ export interface PlayListProps {
   playListId?: number;
 }
 
-const playListId = 5470484188;
+const playListId = 6731043850;
 
 export default function PlayList(props: PlayListProps) {
   const { className } = props;
@@ -21,12 +22,13 @@ export default function PlayList(props: PlayListProps) {
 
   const initData = useCallback(async () => {
     const data = (await getPlayListById(playListId)) as PlayListResponse;
+    const json = await getPlayListDynamicDetailById(playListId);
+    console.log(json);
     setCurrentPslayList(data);
   }, []);
 
   useEffect(() => {
     initData();
-    return () => {};
   }, [initData]);
 
   const renderList = useMemo(() => {
@@ -35,10 +37,13 @@ export default function PlayList(props: PlayListProps) {
         <div key={item.id} className={cls(styles.item, 'row row-align-center')}>
           <span className={styles.itemNum}>{index + 1}</span>
           <div className={cls('flex-1', styles.itemInfo)}>
-            <div className={cls('txt-ellipsis', styles.name)}>{item.name}</div>
-            <div className={cls('row', styles.other)}>
+            <div className={cls('txt-ellipsis', styles.name)}>
+              {item.name}
+              <span className={styles['tns-name']}>{(item.tns ?? [])[0]}</span>
+            </div>
+            <div className={cls('row', 'txt-ellipsis', styles.other)}>
               <div className={styles.tags}></div>
-              <span>
+              <span className={cls('flex-1', styles.ar)}>
                 {(item.ar ?? [])[0]?.name}-{item.al?.name}
               </span>
             </div>
@@ -75,6 +80,11 @@ export default function PlayList(props: PlayListProps) {
           </div>
           <div className={cls(styles.infoBox, 'flex-1')}>
             <div className={cls(styles.title, 'txt-ellipsis--l2')}>{currentPslayList?.playlist.name}</div>
+            <div className={cls(styles.author, 'row row-align-center')}>
+              <img className={styles.avart} src={currentPslayList?.playlist.creator.avatarUrl} alt="" />
+              <span>{currentPslayList?.playlist.creator.nickname}</span>
+            </div>
+            <div className={cls('txt-ellipsis--l1', styles.slogan)}>{currentPslayList?.playlist.description}</div>
           </div>
         </div>
       </section>

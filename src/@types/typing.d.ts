@@ -27,5 +27,5 @@ interface BaseSongUrl {
   size?: number;
 }
 
-/** 歌曲类型定义：包含专辑和歌手信息 */
-type SongInfo = BaseSong & { al?: BaseAlbum; ar?: BaseSinger[] };
+/** 歌曲类型定义：包含专辑和歌手信息 tns为翻译的名称*/
+type SongInfo = BaseSong & { al?: BaseAlbum; ar?: BaseSinger[]; tns?: string[] };
