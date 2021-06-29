@@ -1134,17 +1134,24 @@
   resolved "https://r.cnpmjs.org/@bcoe/v8-coverage/download/@bcoe/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha1-daLotRy3WKdVPWgEpZMteqznXDk=
 
-"@better-scroll/core@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npm.taobao.org/@better-scroll/core/download/@better-scroll/core-2.1.1.tgz#845d42db780c85f219fa63efee794060b3025999"
-  integrity sha1-hF1C23gMhfIZ+mPv7nlAYLMCWZk=
+"@better-scroll/core@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@better-scroll/core/-/core-2.4.1.tgz#1f67a9cfe6738f870be5b90b13aafcc188a01e3b"
+  integrity sha512-rVCd5WaMb64UMivzP6E6XSfOAXEH3Lie8p68Gz0E4fIfN39ad7e1OI7JcDiWGeBDd/kMsUBFThJfLc9dL+F15Q==
   dependencies:
-    "@better-scroll/shared-utils" "^2.1.1"
+    "@better-scroll/shared-utils" "^2.4.1"
 
-"@better-scroll/shared-utils@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npm.taobao.org/@better-scroll/shared-utils/download/@better-scroll/shared-utils-2.1.1.tgz#d6f55befbb3f729280ecf18d0a4c7d780ffd9b7c"
-  integrity sha1-1vVb77s/cpKA7PGNCkx9eA/9m3w=
+"@better-scroll/pull-up@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@better-scroll/pull-up/-/pull-up-2.4.1.tgz#7ee99c29582d069255036b051d25e4b81dc88348"
+  integrity sha512-6fq/uM6e0H/3ZBRimLXRzftXp1W2IE7LotooFtb7rIky4FSr+Yj6FxZrydvxiKQ5QZIE95tsw2qW924YszulgQ==
+  dependencies:
+    "@better-scroll/core" "^2.4.1"
+
+"@better-scroll/shared-utils@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@better-scroll/shared-utils/-/shared-utils-2.4.1.tgz#b5e4e751a023180f1123d2c3773c75a863f71f77"
+  integrity sha512-q93ph942QRa6yWL1Gn0fKZbpHOuVFjjKeJPd6oao2vXaBr5ldC5KubijbrkgSe9SfGDfiVUmT1zvYYhdAFJUZg==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
