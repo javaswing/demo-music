@@ -3,12 +3,10 @@ import cls from 'classnames';
 import { pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
-import DetailContent from '@/components/detail-content';
-import ControlBar from '@/components/control-bar';
-import NavBar from '@/components/nav-bar';
 import { getLyricById, getSongUrl, LyricRespone } from '@/services';
 import { RootState } from '@/redux';
 import { updateSongLrc, updateSongUrl } from '@/redux/player/action';
+import { ControlBar, NavBar, DetailContent } from '@/components';
 import styles from './style.module.scss';
 
 export type SongLrcResponse = BaseResponse & Partial<LyricRespone>;

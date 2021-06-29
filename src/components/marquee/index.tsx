@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { doubleRaf, raf } from '@/utils/raf';
 import cls from 'classnames';
-import { isDef, noop } from '@/utils/base';
 import { isEqual } from 'lodash';
+import { doubleRaf, raf } from '@/utils/raf';
+import { isDef, noop } from '@/utils/base';
 import styles from './style.module.scss';
 export interface MarqueeProps {
   /** 显示的文字 */

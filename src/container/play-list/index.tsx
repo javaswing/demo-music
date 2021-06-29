@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import cls from 'classnames';
-import NavBar from '@/components/nav-bar';
-import Sticky from '@/components/sticky';
 import { getPlayListById } from '@/services';
-
-import Loading from '@/components/loading';
-import ScrollView from '@/components/scroll-view';
+import { Loading, NavBar, Sticky, ScrollView } from '@/components';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
