@@ -34,8 +34,8 @@ export default function Detail() {
     const [songUrl] = songUrlData;
     const targetSongUrl = pick(songUrl, 'url', 'urlSource', 'type', 'md5', 'size');
 
-    dispatch(updateSongUrl(songId, targetSongUrl));
-    dispatch(updateSongLrc(songId, lyricJson));
+    targetSongUrl && dispatch(updateSongUrl(songId, targetSongUrl));
+    lyricJson && dispatch(updateSongLrc(songId, lyricJson));
   }, [currentSongId, dispatch]);
 
   useEffect(() => {
@@ -43,12 +43,12 @@ export default function Detail() {
   }, [init]);
 
   useEffect(() => {
-    if (currentSong.urlInfo) {
+    if (currentSong && currentSong?.urlInfo && currentSong.urlInfo.url) {
       load({
         src: currentSong?.urlInfo.url,
       });
     }
-  }, [currentSong?.urlInfo, load]);
+  }, [currentSong, currentSong?.urlInfo, load]);
 
   const handlePlay = useCallback(() => {
     setIsClickPlay(true);

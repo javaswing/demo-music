@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import cls from 'classnames';
+import { useDispatch } from 'react-redux';
 import NavBar from '@/components/nav-bar';
 import Sticky from '@/components/sticky';
 import { getPlayListById, getPlayListDynamicDetailById } from '@/services';
@@ -7,6 +8,7 @@ import { getPlayListById, getPlayListDynamicDetailById } from '@/services';
 import Loading from '@/components/loading';
 import { getUserInfo } from '@/services/user';
 import ScrollView from '@/components/scroll-view';
+import { setCurrentSong } from '@/redux/player/action';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -21,10 +23,11 @@ export default function PlayList(props: PlayListProps) {
   const { className } = props;
   const [currentPslayList, setCurrentPslayList] = useState<PlayListResponse | undefined>();
 
+  const dispatch = useDispatch();
+
   const initData = useCallback(async () => {
     const data = (await getPlayListById(playListId)) as PlayListResponse;
-    const json = await getPlayListDynamicDetailById(playListId);
-    console.log(json);
+    // const json = await getPlayListDynamicDetailById(playListId);
     setCurrentPslayList(data);
   }, []);
 
@@ -32,10 +35,17 @@ export default function PlayList(props: PlayListProps) {
     initData();
   }, [initData]);
 
+  const handleItemClick = useCallback(
+    (e, info: SongInfo) => {
+      dispatch(setCurrentSong({ id: info.id }));
+    },
+    [dispatch]
+  );
+
   const renderList = useMemo(() => {
     if (currentPslayList?.playlist) {
       return currentPslayList.playlist.tracks.map((item, index) => (
-        <div key={item.id} className={cls(styles.item, 'row row-align-center')}>
+        <div key={item.id} className={cls(styles.item, 'row row-align-center')} onClick={e => handleItemClick(e, item)}>
           <span className={styles.itemNum}>{index + 1}</span>
           <div className={cls('flex-1', styles.itemInfo)}>
             <div className={cls('txt-ellipsis', styles.name)}>
@@ -59,7 +69,7 @@ export default function PlayList(props: PlayListProps) {
         </div>
       );
     }
-  }, [currentPslayList?.playlist]);
+  }, [currentPslayList?.playlist, handleItemClick]);
 
   return (
     <div className={cls(className)}>
