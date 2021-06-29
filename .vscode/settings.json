@@ -1,9 +1,5 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "spellright.language": [],
-  "spellright.documentTypes": [
-    "latex"
-  ],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
@@ -22,8 +18,5 @@
   },
   "eslint.workingDirectories": [
     "./src",
-  ],
-  "cSpell.words": [
-    "browserslist"
   ]
 }
