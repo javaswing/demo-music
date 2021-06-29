@@ -63,27 +63,23 @@ export default function PlayList(props: PlayListProps) {
 
   return (
     <div className={cls(className)}>
-      <ScrollView wrapHeight="100vh">
-        <section className={styles.top}>
-          {/* <NavBar title={currentPslayList?.playlist.name} zIndex={100} /> */}
-          <div
-            className={styles.topBg}
-            style={{
-              backgroundImage: `url(${currentPslayList?.playlist.coverImgUrl}?param=170y170`,
-            }}
-          ></div>
-          <div className={cls('row', styles.topMain)}>
-            <div className={styles.coverBox}>
-              <i className={styles.count}>32342434</i>
-              <img
-                className={styles.img}
-                src={`${currentPslayList?.playlist.coverImgUrl}?imageView=1&type=webp&thumbnail=252x0`}
-                alt=""
-              />
-            </div>
-            <div className={cls(styles.infoBox, 'flex-1')}>
-              <div className={cls(styles.title, 'txt-ellipsis--l2')}>{currentPslayList?.playlist.name}</div>
-            </div>
+      {/* <ScrollView wrapHeight="100vh"> */}
+      <section className={styles.top}>
+        {/* <NavBar title={currentPslayList?.playlist.name} zIndex={100} /> */}
+        <div
+          className={styles.topBg}
+          style={{
+            backgroundImage: `url(${currentPslayList?.playlist.coverImgUrl}?param=170y170`,
+          }}
+        ></div>
+        <div className={cls('row', styles.topMain)}>
+          <div className={styles.coverBox}>
+            <i className={styles.count}>32342434</i>
+            <img
+              className={styles.img}
+              src={`${currentPslayList?.playlist.coverImgUrl}?imageView=1&type=webp&thumbnail=252x0`}
+              alt=""
+            />
           </div>
           <div className={cls(styles.infoBox, 'flex-1')}>
             <div className={cls(styles.title, 'txt-ellipsis--l2')}>{currentPslayList?.playlist.name}</div>
@@ -93,9 +89,16 @@ export default function PlayList(props: PlayListProps) {
             </div>
             <div className={cls('txt-ellipsis--l1', styles.slogan)}>{currentPslayList?.playlist.description}</div>
           </div>
-          {renderList}
-        </section>
-      </ScrollView>
+        </div>
+      </section>
+      <section className={cls(styles.main)}>
+        <div className={cls(styles.mainBar, 'row row-align-center', styles.padding10)}>
+          <span className={styles.icon}></span>
+          播放全部<span className={styles.num}>({currentPslayList?.playlist.trackCount})</span>
+        </div>
+        {renderList}
+      </section>
+      {/* </ScrollView> */}
     </div>
   );
 }

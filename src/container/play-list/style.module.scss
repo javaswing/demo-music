@@ -1,3 +1,9 @@
+.hover {
+  &:active {
+    background-color: #f1f1f1;
+  }
+}
+
 .top {
   position: relative;
   width: 375px;
@@ -95,6 +101,7 @@
     font-size: 16px;
     font-weight: bold;
     color: #000;
+    @extend .hover;
     .icon {
       position: relative;
       display: inline-block;
@@ -128,8 +135,11 @@
 }
 
 .item {
-  margin-top: 20px;
-  height: 34px;
+  position: relative;
+  padding: 10px 10px;
+  min-height: 34px;
+  @extend .hover;
+
   &__num {
     font-size: 14px;
     flex: 0 0 27px;
