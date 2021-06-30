@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import Detail from '@/container/detail';
 import PlayList from './container/play-list';
 import { RootState } from './redux';
-// import styles from './App.module.scss';
+import './App.scss';
 
 function App() {
-  const { currentSongId, playerList, playerModel } = useSelector((state: RootState) => state.player);
+  const { app } = useSelector((state: RootState) => state);
   useEffect(() => {
     const handleMove = (ev: TouchEvent) => {
       ev.preventDefault();
@@ -18,12 +19,16 @@ function App() {
   }, []);
 
   const renderComponent = useMemo(() => {
-    if (currentSongId) {
-      return <Detail />;
+    if (app.songDetailVisible) {
+      return (
+        <CSSTransition in={app.songDetailVisible} timeout={200} classNames="alert">
+          <Detail />
+        </CSSTransition>
+      );
     } else {
       return <PlayList />;
     }
-  }, [currentSongId]);
+  }, [app.songDetailVisible]);
 
   return <>{renderComponent}</>;
 }
