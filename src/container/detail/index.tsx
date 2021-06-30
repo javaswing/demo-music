@@ -9,6 +9,7 @@ import NavBar from '@/components/nav-bar';
 import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
 import { RootState } from '@/redux';
 import { updateSongInfo, updateSongLrc, updateSongUrl } from '@/redux/player/action';
+import { updateAppSongDetailVisible } from '@/redux/app/action';
 import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
@@ -47,6 +48,7 @@ export default function Detail() {
     targetSongUrl && dispatch(updateSongUrl(songId, targetSongUrl));
     lyricJson && dispatch(updateSongLrc(songId, lyricJson));
     song && dispatch(updateSongInfo(song));
+    // TODO处理自动播放功能
   }, [currentSongId, dispatch]);
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export default function Detail() {
 
   useEffect(() => {
     // loading完成自动继续执行播放
-    if (!loading && isClickPlay) {
+    if (!loading) {
       handlePlay();
     }
   }, [handlePlay, isClickPlay, loading]);
@@ -93,10 +95,18 @@ export default function Detail() {
     [isDiskModel]
   );
 
+  const handleNavBack = useCallback(
+    (e: MouseEvent) => {
+      dispatch(updateAppSongDetailVisible(false));
+    },
+    [dispatch]
+  );
+
   return (
     <div className={styles.content}>
       <div className={cls(styles.playerWrapper, 'row')}>
         <NavBar
+          onLeftClick={handleNavBack}
           title={
             <>
               <div className={styles.songName}>{currentSong?.name}</div>
