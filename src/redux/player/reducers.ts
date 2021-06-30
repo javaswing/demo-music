@@ -2,9 +2,10 @@ import { LyricRespone } from '@/services';
 import { PlayerActionTypes } from './types';
 
 /** 播放器用歌曲信息，包含歌曲lrcInfo */
-export interface PlayerSongInfo extends SongInfo {
+export interface PlayerSongInfo {
   lrcInfo?: LyricRespone;
   urlInfo?: BaseSongUrl;
+  songInfo?: SongInfo;
 }
 
 export type PlayerList = {
@@ -32,9 +33,11 @@ export default function playerReducer(state = initialState, action: PlayerAction
       const playerInfoList = action.payload;
       const oldPlayerList = { ...state.playerList };
       playerInfoList.forEach(item => {
-        const songId = item.id;
-        const info = oldPlayerList[songId];
-        oldPlayerList[songId] = { ...info, ...item };
+        const songId = item.songInfo?.id;
+        if (songId) {
+          const info = oldPlayerList[songId];
+          oldPlayerList[songId] = { ...info, ...item };
+        }
       });
       return {
         ...state,
@@ -43,9 +46,11 @@ export default function playerReducer(state = initialState, action: PlayerAction
     }
     case 'UPDATE_SONG_INFO': {
       const info = action.payload;
+      const { id } = info;
+      const oldInfo = state.playerList[id];
       const newPlayerList = {
         ...state.playerList,
-        [info.id]: info,
+        [id]: { ...oldInfo, songInfo: info },
       };
       return {
         ...state,

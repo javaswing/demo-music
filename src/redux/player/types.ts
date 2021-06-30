@@ -10,7 +10,7 @@ export const CHANGE_PLAYER_MODEL = 'CHANGE_PLAYER_MODEL';
 
 interface UpdateSongInfo {
   type: typeof UPDATE_SONG_INFO;
-  payload: PlayerSongInfo;
+  payload: SongInfo;
 }
 interface SetPlayList {
   type: typeof SET_PLAY_LIST;
@@ -19,7 +19,7 @@ interface SetPlayList {
 
 interface SetCurretSong {
   type: typeof SET_CURRENT_SONG;
-  payload: PlayerSongInfo;
+  payload: SongInfo;
 }
 
 interface UpdateSongLrc {

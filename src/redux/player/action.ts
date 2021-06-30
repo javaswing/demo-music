@@ -13,7 +13,7 @@ import {
  * 更新歌曲信息
  * @param info
  */
-export const updateSongInfo = (info: PlayerSongInfo): PlayerActionTypes => {
+export const updateSongInfo = (info: SongInfo): PlayerActionTypes => {
   return {
     type: UPDATE_SONG_INFO,
     payload: info,
@@ -50,7 +50,7 @@ export const updateSongUrl = (id: number, urlInfo: BaseSongUrl): PlayerActionTyp
   };
 };
 
-export const setCurrentSong = (info: PlayerSongInfo): PlayerActionTypes => {
+export const setCurrentSong = (info: SongInfo): PlayerActionTypes => {
   return {
     type: SET_CURRENT_SONG,
     payload: info,

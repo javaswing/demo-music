@@ -32,7 +32,7 @@ export default function Detail() {
 
   const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
-  const currentSong = useMemo(() => playerList[currentSongId], [currentSongId, playerList]);
+  const currentSong = useMemo(() => playerList[currentSongId] ?? {}, [currentSongId, playerList]);
 
   const init = useCallback(async () => {
     const songId = currentSongId;
@@ -48,7 +48,6 @@ export default function Detail() {
     targetSongUrl && dispatch(updateSongUrl(songId, targetSongUrl));
     lyricJson && dispatch(updateSongLrc(songId, lyricJson));
     song && dispatch(updateSongInfo(song));
-    // TODO处理自动播放功能
   }, [currentSongId, dispatch]);
 
   useEffect(() => {
@@ -85,8 +84,19 @@ export default function Detail() {
     [seek]
   );
 
-  const singerName = useMemo(() => currentSong?.ar?.[0]?.name, [currentSong?.ar]);
-  const albumStyle = useMemo(() => ({ backgroundImage: `url(${currentSong?.al?.picUrl})` }), [currentSong?.al?.picUrl]);
+  const singerName = useMemo(() => {
+    return currentSong.songInfo?.ar?.[0]?.name;
+  }, [currentSong]);
+  const albumStyle = useMemo(() => {
+    if (currentSong) {
+      return { backgroundImage: `url(${currentSong.songInfo?.al?.picUrl}?param=50y50)` };
+    } else {
+      return {
+        backgroundImage: `linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%)`,
+        backgroundBlendMode: `multiply`,
+      };
+    }
+  }, [currentSong]);
 
   const toggleDetail = useCallback(
     e => {
@@ -109,7 +119,7 @@ export default function Detail() {
           onLeftClick={handleNavBack}
           title={
             <>
-              <div className={styles.songName}>{currentSong?.name}</div>
+              <div className={styles.songName}>{currentSong.songInfo?.name}</div>
               <div className={styles.singerName}>{singerName}</div>
             </>
           }
@@ -122,7 +132,7 @@ export default function Detail() {
           lyricInfo={currentSong?.lrcInfo}
           isPlay={playing}
           isDiskModel={isDiskModel}
-          coverImg={currentSong?.al?.picUrl}
+          coverImg={currentSong.songInfo?.al?.picUrl}
           className={styles.playerContent}
         />
         <ControlBar
