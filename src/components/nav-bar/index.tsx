@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import cls from 'classnames';
+import { noop } from 'lodash';
 import styles from './style.module.scss';
 
 export interface NavBarProps {
@@ -10,10 +11,22 @@ export interface NavBarProps {
   right?: string | React.ReactNode;
   title: string | React.ReactNode;
   zIndex?: number | string;
+  onLeftClick?: (e: MouseEvent) => void;
+  onRightClick?: (e: MouseEvent) => void;
 }
 
 const NavBar = (props: NavBarProps) => {
-  const { className, title, left, right, zIndex, leftArrow = true, isArrowDown = false } = props;
+  const {
+    className,
+    title,
+    left,
+    right,
+    zIndex,
+    leftArrow = true,
+    isArrowDown = false,
+    onLeftClick = noop,
+    onRightClick = noop,
+  } = props;
 
   const style = useMemo(() => {
     return {
@@ -43,9 +56,17 @@ const NavBar = (props: NavBarProps) => {
   return (
     <div className={cls(className, styles.navBar)} style={style}>
       <div className={styles.navBarContent}>
-        {(left || leftArrow) && <div className={styles.navBarLeft}>{renderLeft}</div>}
+        {(left || leftArrow) && (
+          <div onClick={onLeftClick} className={styles.navBarLeft}>
+            {renderLeft}
+          </div>
+        )}
         <div className={cls(styles.navBarTitle, styles.navBarText)}>{renderTitle}</div>
-        {right && <div className={styles.navBarRight}>{renderRight}</div>}
+        {right && (
+          <div className={styles.navBarRight} onClick={onRightClick}>
+            {renderRight}
+          </div>
+        )}
       </div>
     </div>
   );
