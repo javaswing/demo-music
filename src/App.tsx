@@ -19,18 +19,21 @@ function App() {
   }, []);
 
   const renderComponent = useMemo(() => {
-    if (app.songDetailVisible) {
-      return (
-        <CSSTransition in={app.songDetailVisible} timeout={200} classNames="alert">
+    return (
+      <CSSTransition timeout={300} in={app.songDetailVisible} unmountOnExit classNames="slide">
+        <div className="top-view">
           <Detail />
-        </CSSTransition>
-      );
-    } else {
-      return <PlayList />;
-    }
+        </div>
+      </CSSTransition>
+    );
   }, [app.songDetailVisible]);
 
-  return <>{renderComponent}</>;
+  return (
+    <>
+      {renderComponent}
+      <PlayList />
+    </>
+  );
 }
 
 export default App;
