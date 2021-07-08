@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import cls from 'classnames';
 import Disk from '@/components/disk';
 import Lyric from '@/components/lyric';
@@ -28,18 +28,10 @@ const DetailContent = (props: DetailContentProps) => {
     onClick = noop,
   } = props;
 
-  const rotate = useMemo(() => {
-    // TODO: 优化，只能是初始角度依赖播放进度。10倍的正常速度
-    return (position / duration) * 100 * 3.6 * 10 || 0;
-  }, [duration, position]);
-
   return (
     <div className={cls(className)} onClick={onClick}>
-      {isDiskModel ? (
-        <Disk rotate={rotate} isPlay={isPlay} diskCover={coverImg} />
-      ) : (
-        <Lyric position={position} noLyric={lyricInfo?.nolyric} lyricStr={lyricInfo?.lrc?.lyric} />
-      )}
+      <Disk isHiden={!isDiskModel} isPlay={isPlay} diskCover={coverImg} />
+      {!isDiskModel && <Lyric position={position} noLyric={lyricInfo?.nolyric} lyricStr={lyricInfo?.lrc?.lyric} />}
     </div>
   );
 };
