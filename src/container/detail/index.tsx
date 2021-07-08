@@ -10,6 +10,7 @@ import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services'
 import { RootState } from '@/redux';
 import { updateSongInfo, updateSongLrc, updateSongUrl } from '@/redux/player/action';
 import { updateAppSongDetailVisible } from '@/redux/app/action';
+import { cutImg } from '@/utils/base';
 import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
@@ -89,7 +90,7 @@ export default function Detail() {
   }, [currentSong]);
   const albumStyle = useMemo(() => {
     if (currentSong) {
-      return { backgroundImage: `url(${currentSong.songInfo?.al?.picUrl}?param=50y50)` };
+      return { backgroundImage: `url(${cutImg(currentSong.songInfo?.al?.picUrl, 50)})` };
     } else {
       return {
         backgroundImage: `linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%)`,
@@ -116,6 +117,7 @@ export default function Detail() {
     <div className={styles.content}>
       <div className={cls(styles.playerWrapper, 'row')}>
         <NavBar
+          isArrowDown
           onLeftClick={handleNavBack}
           title={
             <>
@@ -147,7 +149,6 @@ export default function Detail() {
       </div>
       <div className={styles.mask}>
         <div className={styles.maskAlbum} style={albumStyle}></div>
-        <div className={styles.maskAlbum}></div>
       </div>
     </div>
   );

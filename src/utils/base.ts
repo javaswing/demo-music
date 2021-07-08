@@ -16,6 +16,11 @@ export function rem(val?: number) {
   }
 }
 
+export function cutImg(imgPath: string | undefined, val: number) {
+  if (!imgPath) return;
+  return `${imgPath}?param=${val}y${val}`;
+}
+
 /**
  * 检测当前值是否包含undefinded和val
  * @param val

@@ -1,6 +1,7 @@
 import React from 'react';
 import cls from 'classnames';
 import { defaultDiskCover } from '@/constants/global';
+import { cutImg } from '@/utils/base';
 import styles from './style.module.scss';
 
 export interface DiskProps {
@@ -28,7 +29,7 @@ const Disk = (props: DiskProps) => {
             transform: `rotate(${rotate}deg)`,
           }}
         >
-          <img className={styles.img} src={diskCover} />
+          <img className={styles.img} src={cutImg(diskCover, 300)} />
         </div>
       </div>
     </div>
