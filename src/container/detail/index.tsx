@@ -3,9 +3,7 @@ import cls from 'classnames';
 import { pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
-import DetailContent from '@/components/detail-content';
-import ControlBar from '@/components/control-bar';
-import NavBar from '@/components/nav-bar';
+import { DetailContent, ControlBar, NavBar } from '@/components';
 import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
 import { RootState } from '@/redux';
 import { updateSongInfo, updateSongLrc, updateSongUrl } from '@/redux/player/action';
@@ -30,7 +28,6 @@ export default function Detail() {
 
   const { currentSongId, playerList, playerModel } = useSelector((state: RootState) => state.player);
   const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
-
   const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
   const currentSong = useMemo(() => playerList[currentSongId] ?? {}, [currentSongId, playerList]);
@@ -88,6 +85,7 @@ export default function Detail() {
   const singerName = useMemo(() => {
     return currentSong.songInfo?.ar?.[0]?.name;
   }, [currentSong]);
+
   const albumStyle = useMemo(() => {
     if (currentSong) {
       return { backgroundImage: `url(${cutImg(currentSong.songInfo?.al?.picUrl, 50)})` };
