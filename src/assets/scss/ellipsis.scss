@@ -4,6 +4,10 @@
   @include ellipsis();
 }
 
+.txt-ellipsis--l1 {
+  @include multi-ellipsis(1);
+}
+
 .txt-ellipsis--l2 {
   @include multi-ellipsis(2);
 }

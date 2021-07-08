@@ -1,0 +1,25 @@
+@import './assets/scss/var.scss';
+
+.slide-enter {
+  transform: translate3d(0, 100%, 0);
+
+}
+.slide-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: transform .3s ease-in;
+}
+.slide-exit {
+  transform: translate3d(0, 0, 0);
+}
+.slide-exit-active {
+  transform: translate3d(0, 100%, 0);
+  transition: transform .3s ease-in;
+}
+
+.top-view {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
+}

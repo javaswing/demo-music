@@ -3,13 +3,22 @@ import cls from 'classnames';
 import { pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
-import { getLyricById, getSongUrl, LyricRespone } from '@/services';
+import DetailContent from '@/components/detail-content';
+import ControlBar from '@/components/control-bar';
+import NavBar from '@/components/nav-bar';
+import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
 import { RootState } from '@/redux';
-import { updateSongLrc, updateSongUrl } from '@/redux/player/action';
-import { ControlBar, NavBar, DetailContent } from '@/components';
+import { updateSongInfo, updateSongLrc, updateSongUrl } from '@/redux/player/action';
+import { updateAppSongDetailVisible } from '@/redux/app/action';
+import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
 export type SongLrcResponse = BaseResponse & Partial<LyricRespone>;
+
+export type SongInfoResponse = Pick<BaseResponse, 'code'> & {
+  privileges: Privilege[];
+  songs: SongInfo[];
+};
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -23,17 +32,22 @@ export default function Detail() {
 
   const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
-  const currentSong = useMemo(() => playerList[currentSongId], [currentSongId, playerList]);
+  const currentSong = useMemo(() => playerList[currentSongId] ?? {}, [currentSongId, playerList]);
 
   const init = useCallback(async () => {
     const songId = currentSongId;
+    const detail = ((await getSongInfo(songId)) as unknown) as SongInfoResponse;
+    const [song] = detail.songs;
+
     const { data: songUrlData } = await getSongUrl(songId);
+
     const lyricJson = (await getLyricById(songId)) as SongLrcResponse;
     const [songUrl] = songUrlData;
     const targetSongUrl = pick(songUrl, 'url', 'urlSource', 'type', 'md5', 'size');
 
-    dispatch(updateSongUrl(songId, targetSongUrl));
-    dispatch(updateSongLrc(songId, lyricJson));
+    targetSongUrl && dispatch(updateSongUrl(songId, targetSongUrl));
+    lyricJson && dispatch(updateSongLrc(songId, lyricJson));
+    song && dispatch(updateSongInfo(song));
   }, [currentSongId, dispatch]);
 
   useEffect(() => {
@@ -41,12 +55,12 @@ export default function Detail() {
   }, [init]);
 
   useEffect(() => {
-    if (currentSong.urlInfo) {
+    if (currentSong && currentSong?.urlInfo && currentSong.urlInfo.url) {
       load({
         src: currentSong?.urlInfo.url,
       });
     }
-  }, [currentSong?.urlInfo, load]);
+  }, [currentSong, currentSong?.urlInfo, load]);
 
   const handlePlay = useCallback(() => {
     setIsClickPlay(true);
@@ -58,7 +72,7 @@ export default function Detail() {
 
   useEffect(() => {
     // loading完成自动继续执行播放
-    if (!loading && isClickPlay) {
+    if (!loading) {
       handlePlay();
     }
   }, [handlePlay, isClickPlay, loading]);
@@ -70,8 +84,19 @@ export default function Detail() {
     [seek]
   );
 
-  const singerName = useMemo(() => currentSong?.ar?.[0]?.name, [currentSong?.ar]);
-  const albumStyle = useMemo(() => ({ backgroundImage: `url(${currentSong?.al?.picUrl})` }), [currentSong?.al?.picUrl]);
+  const singerName = useMemo(() => {
+    return currentSong.songInfo?.ar?.[0]?.name;
+  }, [currentSong]);
+  const albumStyle = useMemo(() => {
+    if (currentSong) {
+      return { backgroundImage: `url(${currentSong.songInfo?.al?.picUrl}?param=50y50)` };
+    } else {
+      return {
+        backgroundImage: `linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%)`,
+        backgroundBlendMode: `multiply`,
+      };
+    }
+  }, [currentSong]);
 
   const toggleDetail = useCallback(
     e => {
@@ -80,13 +105,21 @@ export default function Detail() {
     [isDiskModel]
   );
 
+  const handleNavBack = useCallback(
+    (e: MouseEvent) => {
+      dispatch(updateAppSongDetailVisible(false));
+    },
+    [dispatch]
+  );
+
   return (
     <div className={styles.content}>
       <div className={cls(styles.playerWrapper, 'row')}>
         <NavBar
+          onLeftClick={handleNavBack}
           title={
             <>
-              <div className={styles.songName}>{currentSong?.name}</div>
+              <div className={styles.songName}>{currentSong.songInfo?.name}</div>
               <div className={styles.singerName}>{singerName}</div>
             </>
           }
@@ -99,7 +132,7 @@ export default function Detail() {
           lyricInfo={currentSong?.lrcInfo}
           isPlay={playing}
           isDiskModel={isDiskModel}
-          coverImg={currentSong?.al?.picUrl}
+          coverImg={currentSong.songInfo?.al?.picUrl}
           className={styles.playerContent}
         />
         <ControlBar

@@ -55,6 +55,15 @@ export function getPlayListById(id: number, s = 8) {
 }
 
 /**
+ * 歌单详情动态
+ * @param id 歌单 id
+ * @returns
+ */
+export function getPlayListDynamicDetailById(id: number) {
+  return request({ url: '/playlist/detail/dynamic', params: { id }, method: 'get' });
+}
+
+/**
  * 获取歌词
  * @param id
  */

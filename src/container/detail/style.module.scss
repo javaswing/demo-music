@@ -5,13 +5,17 @@
 }
 
 .songName {
+  margin-top: 5px;
   overflow: hidden;
-  height: 25px;
+  height: 20px;
+  font-weight: normal;
 }
 
 .singerName {
   font-size: 12px;
   color: #aaabaa;
+  text-align: center;
+  font-weight: normal;
 }
 
 .player {
@@ -60,7 +64,8 @@
     background-position: center;
     filter: blur(25px);
     transform: scale(1.05);
-    background-image: url('http://p1.music.126.net/dREm6MLlitjPHtUMD8l7bQ==/109951163849833537.jpg?param=500y500');
+    background-repeat: no-repeat;
+    // background-image: url('http://p1.music.126.net/dREm6MLlitjPHtUMD8l7bQ==/109951163849833537.jpg?param=500y500');
   }
 
   &__cover {
