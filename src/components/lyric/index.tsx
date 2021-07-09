@@ -80,7 +80,7 @@ const Lyric = (props: LyricProps) => {
     }
     return formatLrc.map((e, index) => (
       <div
-        key={e.time}
+        key={e.time + e.lrc}
         className={cls(styles.flag, {
           [styles.active]: currentIndex === index,
         })}
