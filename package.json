@@ -127,7 +127,7 @@
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@types/classnames": "^2.2.11",
     "@types/lodash": "^4.14.167",
-    "@types/react-redux": "^7.1.14",
+    "@types/react-redux": "^7.1.18",
     "@types/react-transition-group": "^4.4.1",
     "@types/redux-logger": "^3.0.8",
     "@typescript-eslint/eslint-plugin": "^4.10.0",

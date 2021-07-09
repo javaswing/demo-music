@@ -6,7 +6,7 @@ import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import { DetailContent, ControlBar, NavBar } from '@/components';
 import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
 import { RootState } from '@/redux';
-import { updateSongInfo, updateSongLrc, updateSongUrl } from '@/redux/player/action';
+import { initCurrentSong, updateSongInfo, updateSongLrc, updateSongUrl } from '@/redux/player/action';
 import { updateAppSongDetailVisible } from '@/redux/app/action';
 import { cutImg } from '@/utils/base';
 import { Privilege } from '../play-list/types';
@@ -34,18 +34,7 @@ export default function Detail() {
 
   const init = useCallback(async () => {
     const songId = currentSongId;
-    const detail = ((await getSongInfo(songId)) as unknown) as SongInfoResponse;
-    const [song] = detail.songs;
-
-    const { data: songUrlData } = await getSongUrl(songId);
-
-    const lyricJson = (await getLyricById(songId)) as SongLrcResponse;
-    const [songUrl] = songUrlData;
-    const targetSongUrl = pick(songUrl, 'url', 'urlSource', 'type', 'md5', 'size');
-
-    targetSongUrl && dispatch(updateSongUrl(songId, targetSongUrl));
-    lyricJson && dispatch(updateSongLrc(songId, lyricJson));
-    song && dispatch(updateSongInfo(song));
+    dispatch(initCurrentSong(songId));
   }, [currentSongId, dispatch]);
 
   useEffect(() => {
@@ -128,8 +117,6 @@ export default function Detail() {
         <DetailContent
           onClick={toggleDetail}
           position={position}
-          duration={duration}
-          lyricInfo={currentSong?.lrcInfo}
           isPlay={playing}
           isDiskModel={isDiskModel}
           coverImg={currentSong.songInfo?.al?.picUrl}
