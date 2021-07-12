@@ -44,3 +44,7 @@ export type PlayerActionTypes =
   | SetCurretSong
   | ChangePlayerModel
   | UpdateSongUrl;
+
+export type Status = 'idle' | 'loading' | 'succeeded' | 'failed';
+
+export type Error = string | null;

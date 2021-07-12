@@ -3,6 +3,7 @@ import cls from 'classnames';
 import BScroll from '@better-scroll/core';
 import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll';
 import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { RootState } from '@/redux';
 import { initCurrentSongLrc } from '@/redux/player/action';
 import styles from './style.module.scss';
@@ -19,18 +20,18 @@ const lyrcLineHeight = 35;
 
 const Lyric = (props: LyricProps) => {
   const { className, position = 0, isPlaying } = props;
+  const dispatch = useDispatch();
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<BScrollConstructor>(); // scroll 实例
   const [isTap, setIsTap] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const dispatch = useDispatch();
   const { currentSongId, playerList } = useSelector((state: RootState) => state.player);
   const currentSong = useMemo(() => playerList[currentSongId] ?? {}, [currentSongId, playerList]);
 
   useEffect(() => {
-    dispatch(initCurrentSongLrc(currentSongId));
+    isEmpty(currentSong.lrcInfo) && dispatch(initCurrentSongLrc(currentSongId));
     return () => {};
-  }, [currentSongId, dispatch]);
+  }, [currentSong, currentSongId, dispatch]);
 
   const lyricStr = useMemo(() => currentSong.lrcInfo?.lrc?.lyric, [currentSong.lrcInfo?.lrc?.lyric]);
 

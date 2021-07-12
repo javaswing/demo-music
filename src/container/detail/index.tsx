@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import cls from 'classnames';
-import { pick } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
+import { isEmpty } from 'lodash';
 import { DetailContent, ControlBar, NavBar } from '@/components';
-import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
+import { LyricRespone } from '@/services';
 import { RootState } from '@/redux';
-import { initCurrentSong, updateSongInfo, updateSongLrc, updateSongUrl } from '@/redux/player/action';
+import { initCurrentSong } from '@/redux/player/action';
 import { updateAppSongDetailVisible } from '@/redux/app/action';
 import { cutImg } from '@/utils/base';
 import { Privilege } from '../play-list/types';
@@ -34,8 +34,8 @@ export default function Detail() {
 
   const init = useCallback(async () => {
     const songId = currentSongId;
-    dispatch(initCurrentSong(songId));
-  }, [currentSongId, dispatch]);
+    isEmpty(currentSong) && dispatch(initCurrentSong(songId));
+  }, [currentSong, currentSongId, dispatch]);
 
   useEffect(() => {
     init();
