@@ -28,45 +28,56 @@ const NavBar = (props: NavBarProps) => {
     onRightClick = noop,
   } = props;
 
-  const style = useMemo(() => {
+  const rootStyle = useMemo(() => {
     return {
       zIndex: zIndex !== undefined ? +zIndex : undefined, // +表示 string => number
     };
   }, [zIndex]);
 
-  const targetArrowClassName = useMemo(() => {
-    return isArrowDown && styles.arrowDown;
-  }, [isArrowDown]);
+  const renderArrow = useMemo(() => {
+    return (
+      leftArrow && (
+        <div
+          className={cls(styles.arrow, {
+            [styles.arrowDown]: isArrowDown,
+          })}
+        ></div>
+      )
+    );
+  }, [leftArrow, isArrowDown]);
 
   const renderLeft = useMemo(() => {
-    if (React.isValidElement(left)) return left;
-    return [leftArrow && <div className={cls(styles.arrow, targetArrowClassName)}></div>];
-  }, [left, leftArrow, targetArrowClassName]);
+    if (left || leftArrow) {
+      return (
+        <div onClick={onLeftClick} className={styles.navBarLeft}>
+          {renderArrow}
+          {left}
+        </div>
+      );
+    }
+  }, [left, leftArrow, onLeftClick, renderArrow]);
 
   const renderRight = useMemo(() => {
-    if (React.isValidElement(right)) return right;
-    return right;
-  }, [right]);
+    return (
+      right && (
+        <div className={styles.navBarRight} onClick={onRightClick}>
+          {right}
+        </div>
+      )
+    );
+  }, [onRightClick, right]);
 
   const renderTitle = useMemo(() => {
-    if (React.isValidElement(title)) return title;
+    return <div className={cls(styles.navBarTitle, styles.navBarText)}>{title}</div>;
     return title;
   }, [title]);
 
   return (
-    <div className={cls(className, styles.navBar)} style={style}>
+    <div className={cls(className, styles.navBar)} style={rootStyle}>
       <div className={styles.navBarContent}>
-        {(left || leftArrow) && (
-          <div onClick={onLeftClick} className={styles.navBarLeft}>
-            {renderLeft}
-          </div>
-        )}
-        <div className={cls(styles.navBarTitle, styles.navBarText)}>{renderTitle}</div>
-        {right && (
-          <div className={styles.navBarRight} onClick={onRightClick}>
-            {renderRight}
-          </div>
-        )}
+        {renderLeft}
+        {renderTitle}
+        {renderRight}
       </div>
     </div>
   );

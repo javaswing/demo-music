@@ -1,4 +1,9 @@
-import { LyricRespone } from '@/services';
+import { ThunkAction } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { pick } from 'lodash';
+import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
+import { SongInfoResponse, SongLrcResponse } from '@/container/detail';
+import { RootState } from '..';
 import { PlayerSongInfo } from './reducers';
 import {
   PlayerActionTypes,
@@ -55,4 +60,31 @@ export const setCurrentSong = (info: SongInfo): PlayerActionTypes => {
     type: SET_CURRENT_SONG,
     payload: info,
   };
+};
+
+/**
+ * 异步action
+ * @param id 歌曲ID
+ */
+export const initCurrentSong = (songId: number): ThunkAction<void, RootState, unknown, AnyAction> => async dispatch => {
+  const detail = ((await getSongInfo(songId)) as unknown) as SongInfoResponse;
+  const { data: songUrlData } = await getSongUrl(songId);
+  const [song] = detail.songs;
+  const [songUrl] = songUrlData;
+  const targetSongUrl = pick(songUrl, 'url', 'urlSource', 'type', 'md5', 'size');
+  // 提交 action
+  targetSongUrl && dispatch(updateSongUrl(songId, targetSongUrl));
+  song && dispatch(updateSongInfo(song));
+};
+
+/**
+ * 异步初始化歌词
+ * @param songId
+ * @returns
+ */
+export const initCurrentSongLrc = (
+  songId: number
+): ThunkAction<void, RootState, unknown, AnyAction> => async dispatch => {
+  const lyricJson = (await getLyricById(songId)) as SongLrcResponse;
+  lyricJson && dispatch(updateSongLrc(songId, lyricJson));
 };

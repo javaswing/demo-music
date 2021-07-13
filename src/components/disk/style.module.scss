@@ -53,12 +53,20 @@ $originY: 29px;
     border-radius: 50%;
     background: url('../../assets/img/disk.png') no-repeat center center;
     background-size: contain;
+    transition:all 0.1s;
     z-index: 2;
-    .img {
+    .imgContainer {
+      overflow: hidden;
       position: relative;
       width: 205px;
       height: 205px;
       border-radius: 50%;
+      background: url('../../assets/img/default-cover.png') no-repeat;
+      background-size: contain;
+    }
+    .img {
+      width: 100%;
+      height: 100%;
     }
   }
 }

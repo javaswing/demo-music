@@ -2,11 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import cls from 'classnames';
 import BScroll from '@better-scroll/core';
 import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/redux';
+import { initCurrentSongLrc } from '@/redux/player/action';
 import styles from './style.module.scss';
 
 export interface LyricProps {
-  lyricStr?: string;
-  noLyric?: boolean;
   isPlaying?: boolean;
   className?: string;
   position?: number;
@@ -17,11 +18,21 @@ export interface LyricProps {
 const lyrcLineHeight = 35;
 
 const Lyric = (props: LyricProps) => {
-  const { className, lyricStr, position = 0, isPlaying, noLyric } = props;
+  const { className, position = 0, isPlaying } = props;
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<BScrollConstructor>(); // scroll 实例
   const [isTap, setIsTap] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const dispatch = useDispatch();
+  const { currentSongId, playerList } = useSelector((state: RootState) => state.player);
+  const currentSong = useMemo(() => playerList[currentSongId] ?? {}, [currentSongId, playerList]);
+
+  useEffect(() => {
+    dispatch(initCurrentSongLrc(currentSongId));
+    return () => {};
+  }, [currentSongId, dispatch]);
+
+  const lyricStr = useMemo(() => currentSong.lrcInfo?.lrc?.lyric, [currentSong.lrcInfo?.lrc?.lyric]);
 
   const formatLrc = useMemo(() => {
     const lyricArr = lyricStr?.split('\n') ?? [];
@@ -64,12 +75,12 @@ const Lyric = (props: LyricProps) => {
 
   // TODO 处理加载中和加载出错的界面显示
   const renderLrc = useMemo(() => {
-    if (noLyric) {
+    if (!lyricStr) {
       return <div className={cls(styles.flag)}>纯音乐，无歌词</div>;
     }
     return formatLrc.map((e, index) => (
       <div
-        key={e.time}
+        key={e.time + e.lrc}
         className={cls(styles.flag, {
           [styles.active]: currentIndex === index,
         })}
@@ -77,14 +88,14 @@ const Lyric = (props: LyricProps) => {
         {e.lrc}
       </div>
     ));
-  }, [currentIndex, formatLrc, noLyric]);
+  }, [currentIndex, formatLrc, lyricStr]);
 
   useEffect(() => {
-    if (noLyric) return;
+    if (!lyricStr) return;
     const scrollY = -lyrcLineHeight * currentIndex;
     !isTap && scrollRef.current?.scrollTo(0, scrollY, 500);
     return () => {};
-  }, [currentIndex, isTap, noLyric]);
+  }, [currentIndex, isTap, lyricStr]);
 
   return (
     <div ref={scrollWrapperRef} className={cls(className, styles.listLrc)}>
