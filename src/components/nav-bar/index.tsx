@@ -1,32 +1,31 @@
-import React, { useMemo } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import cls from 'classnames';
-import { noop } from 'lodash';
 import styles from './style.module.scss';
 
 export interface NavBarProps {
-  className?: string;
-  left?: React.ReactNode;
-  leftArrow?: boolean;
-  isArrowDown?: boolean;
-  right?: string | React.ReactNode;
+  className: string;
+  left: React.ReactNode;
+  leftArrow: boolean;
+  isArrowDown: boolean;
+  right: string | React.ReactNode;
   title: string | React.ReactNode;
-  zIndex?: number | string;
-  onLeftClick?: (e: MouseEvent) => void;
-  onRightClick?: (e: MouseEvent) => void;
+  zIndex: number | string;
+  onLeftClick: (e: MouseEvent) => void;
+  onRightClick: (e: MouseEvent) => void;
 }
 
-const NavBar = (props: NavBarProps) => {
-  const {
-    className,
-    title,
-    left,
-    right,
-    zIndex,
-    leftArrow = true,
-    isArrowDown = false,
-    onLeftClick = noop,
-    onRightClick = noop,
-  } = props;
+const defaultProps = {
+  leftArrow: true,
+  isArrowDown: false,
+  onLeftClick: (e: MouseEvent) => {},
+  onRightClick: (e: MouseEvent) => {},
+} as NavBarProps;
+
+const NavBar: FC<Partial<NavBarProps>> = props => {
+  const { className, title, left, right, zIndex, leftArrow, isArrowDown, onLeftClick, onRightClick } = {
+    ...defaultProps,
+    ...props,
+  };
 
   const rootStyle = useMemo(() => {
     return {
@@ -46,26 +45,40 @@ const NavBar = (props: NavBarProps) => {
     );
   }, [leftArrow, isArrowDown]);
 
+  const handleLeftClick = useCallback(
+    (e: any) => {
+      onLeftClick && onLeftClick(e);
+    },
+    [onLeftClick]
+  );
+
+  const handleRightClick = useCallback(
+    (e: any) => {
+      onRightClick && onRightClick(e);
+    },
+    [onRightClick]
+  );
+
   const renderLeft = useMemo(() => {
     if (left || leftArrow) {
       return (
-        <div onClick={onLeftClick} className={styles.navBarLeft}>
+        <div onClick={handleLeftClick} className={styles.navBarLeft}>
           {renderArrow}
           {left}
         </div>
       );
     }
-  }, [left, leftArrow, onLeftClick, renderArrow]);
+  }, [handleLeftClick, left, leftArrow, renderArrow]);
 
   const renderRight = useMemo(() => {
     return (
       right && (
-        <div className={styles.navBarRight} onClick={onRightClick}>
+        <div className={styles.navBarRight} onClick={handleRightClick}>
           {right}
         </div>
       )
     );
-  }, [onRightClick, right]);
+  }, [handleRightClick, right]);
 
   const renderTitle = useMemo(() => {
     return <div className={cls(styles.navBarTitle, styles.navBarText)}>{title}</div>;
@@ -82,5 +95,7 @@ const NavBar = (props: NavBarProps) => {
     </div>
   );
 };
+
+NavBar.defaultProps = defaultProps;
 
 export default React.memo(NavBar);
