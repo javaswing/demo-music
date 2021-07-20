@@ -9,6 +9,7 @@ import { RootState } from '@/redux';
 import { initCurrentSong } from '@/redux/player/action';
 import { cutImg } from '@/utils/base';
 import { changSongDetailVisible } from '@/redux/app';
+import { fetchLrc } from '@/redux/player/lrc';
 import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
@@ -88,9 +89,12 @@ export default function Detail() {
 
   const toggleDetail = useCallback(
     e => {
+      if (!isDiskModel && currentSongId) {
+        dispatch(fetchLrc(currentSongId));
+      }
       setIsDiskModel(!isDiskModel);
     },
-    [isDiskModel]
+    [currentSongId, dispatch, isDiskModel]
   );
 
   const handleNavBack = useCallback(
@@ -116,7 +120,6 @@ export default function Detail() {
         />
         <DetailContent
           onClick={toggleDetail}
-          position={position}
           isPlay={playing}
           isDiskModel={isDiskModel}
           coverImg={currentSong.songInfo?.al?.picUrl}

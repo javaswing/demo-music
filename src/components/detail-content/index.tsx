@@ -9,17 +9,16 @@ export interface DetailContentProps {
   className?: string;
   coverImg?: string;
   isPlay?: boolean;
-  position?: number;
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const DetailContent = (props: DetailContentProps) => {
-  const { isDiskModel = true, className, coverImg, isPlay, position = 0, onClick = noop } = props;
+  const { isDiskModel = true, className, coverImg, isPlay, onClick = noop } = props;
 
   return (
     <div className={cls(className)} onClick={onClick}>
       <Disk isHiden={!isDiskModel} isPlay={isPlay} diskCover={coverImg} />
-      {!isDiskModel && <Lyric position={position} />}
+      {!isDiskModel && <Lyric />}
     </div>
   );
 };

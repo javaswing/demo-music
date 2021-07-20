@@ -4,6 +4,7 @@ import BScroll from '@better-scroll/core';
 import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { useAudioPosition } from 'react-use-audio-player';
 import { RootState } from '@/redux';
 import { initCurrentSongLrc } from '@/redux/player/action';
 import styles from './style.module.scss';
@@ -11,7 +12,6 @@ import styles from './style.module.scss';
 export interface LyricProps {
   isPlaying?: boolean;
   className?: string;
-  position?: number;
   loading?: boolean;
   error?: boolean;
 }
@@ -19,7 +19,10 @@ export interface LyricProps {
 const lyrcLineHeight = 35;
 
 const Lyric = (props: LyricProps) => {
-  const { className, position = 0, isPlaying } = props;
+  const { className, isPlaying } = props;
+  const { position, duration, seek } = useAudioPosition({
+    highRefreshRate: true,
+  });
   const dispatch = useDispatch();
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<BScrollConstructor>(); // scroll 实例
