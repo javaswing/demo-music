@@ -7,8 +7,8 @@ import { DetailContent, ControlBar, NavBar } from '@/components';
 import { LyricRespone } from '@/services';
 import { RootState } from '@/redux';
 import { initCurrentSong } from '@/redux/player/action';
-import { updateAppSongDetailVisible } from '@/redux/app/action';
 import { cutImg } from '@/utils/base';
+import { changSongDetailVisible } from '@/redux/app';
 import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
@@ -95,7 +95,7 @@ export default function Detail() {
 
   const handleNavBack = useCallback(
     (e: MouseEvent) => {
-      dispatch(updateAppSongDetailVisible(false));
+      dispatch(changSongDetailVisible(false));
     },
     [dispatch]
   );

@@ -9,7 +9,7 @@ import Loading from '@/components/loading';
 import { getUserInfo } from '@/services/user';
 import ScrollView from '@/components/scroll-view';
 import { setCurrentSong } from '@/redux/player/action';
-import { updateAppSongDetailVisible } from '@/redux/app/action';
+import { changSongDetailVisible } from '@/redux/app';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -38,7 +38,7 @@ export default function PlayList(props: PlayListProps) {
   const handleItemClick = useCallback(
     (e, info: SongInfo) => {
       dispatch(setCurrentSong({ id: info.id }));
-      dispatch(updateAppSongDetailVisible(true));
+      dispatch(changSongDetailVisible(true));
     },
     [dispatch]
   );
