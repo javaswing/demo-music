@@ -5,7 +5,7 @@ import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
 import { isEmpty } from 'lodash';
 import { DetailContent, ControlBar, NavBar } from '@/components';
 import { LyricRespone } from '@/services';
-import { RootState } from '@/redux';
+import { RootState } from '@/store';
 import { initCurrentSong } from '@/redux/player/action';
 import { cutImg } from '@/utils/base';
 import { changSongDetailVisible } from '@/redux/app';

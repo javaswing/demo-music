@@ -5,5 +5,4 @@ import lrcReducer from './player/lrc';
 
 const rootReducer = combineReducers({ player: playerReducer, app: appReducer, lrc: lrcReducer });
 
-export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

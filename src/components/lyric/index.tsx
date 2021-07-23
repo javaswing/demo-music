@@ -3,10 +3,13 @@ import cls from 'classnames';
 import BScroll from '@better-scroll/core';
 import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEmpty } from 'lodash';
 import { useAudioPosition } from 'react-use-audio-player';
-import { RootState } from '@/redux';
-import { initCurrentSongLrc } from '@/redux/player/action';
+
+import { isEmpty } from 'lodash';
+import { RootState } from '@/store';
+import { lrcSelecters } from '@/redux/player/lrc';
+import { useAppSelector } from '@/hook/redux-hooks';
+import { fetchLrc } from '@/redux/player/fetch';
 import styles from './style.module.scss';
 
 export interface LyricProps {
@@ -28,15 +31,21 @@ const Lyric = (props: LyricProps) => {
   const scrollRef = useRef<BScrollConstructor>(); // scroll 实例
   const [isTap, setIsTap] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const { currentSongId, playerList } = useSelector((state: RootState) => state.player);
-  const currentSong = useMemo(() => playerList[currentSongId] ?? {}, [currentSongId, playerList]);
+  const lrcState = useAppSelector((state: RootState) => state.lrc);
+  const { currentSongId } = useSelector((state: RootState) => state.player);
+
+  const isLoading = useMemo(() => lrcState.loading === 'loading', [lrcState.loading]);
+
+  const isError = useMemo(() => lrcState.error !== null, [lrcState.error]);
+
+  const lyricStr = useMemo(() => lrcSelecters.selectById(lrcState, currentSongId)?.lyric, [currentSongId, lrcState]);
 
   useEffect(() => {
-    isEmpty(currentSong.lrcInfo) && dispatch(initCurrentSongLrc(currentSongId));
+    if (isEmpty(lyricStr) && currentSongId) {
+      dispatch(fetchLrc(currentSongId));
+    }
     return () => {};
-  }, [currentSong, currentSongId, dispatch]);
-
-  const lyricStr = useMemo(() => currentSong.lrcInfo?.lrc?.lyric, [currentSong.lrcInfo?.lrc?.lyric]);
+  }, [currentSongId, dispatch, lyricStr]);
 
   const formatLrc = useMemo(() => {
     const lyricArr = lyricStr?.split('\n') ?? [];
@@ -79,6 +88,12 @@ const Lyric = (props: LyricProps) => {
 
   // TODO 处理加载中和加载出错的界面显示
   const renderLrc = useMemo(() => {
+    if (isError) {
+      return <div className={cls(styles.flag)}>加载出错</div>;
+    }
+    if (isLoading) {
+      return <div className={cls(styles.flag)}>加载中，请稍后...</div>;
+    }
     if (!lyricStr) {
       return <div className={cls(styles.flag)}>纯音乐，无歌词</div>;
     }
@@ -92,7 +107,7 @@ const Lyric = (props: LyricProps) => {
         {e.lrc}
       </div>
     ));
-  }, [currentIndex, formatLrc, lyricStr]);
+  }, [currentIndex, formatLrc, isError, isLoading, lyricStr]);
 
   useEffect(() => {
     if (!lyricStr) return;

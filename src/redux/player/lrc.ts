@@ -35,6 +35,7 @@ const lrcSlice = createSlice({
       })
       .addCase(fetchLrc.fulfilled, (state, action) => {
         action.payload.lrc && lrcAdapter.addOne(state, { ...action.payload.lrc, songId: action.payload.songId });
+        state.loading = 'idle';
       })
       .addCase(fetchLrc.rejected, (state, action) => {
         state.loading = 'idle';
@@ -44,5 +45,7 @@ const lrcSlice = createSlice({
 });
 
 export const {} = lrcSlice.actions;
+
+export const lrcSelecters = lrcAdapter.getSelectors();
 
 export default lrcSlice.reducer;

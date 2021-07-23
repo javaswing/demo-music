@@ -3,7 +3,8 @@ import { AnyAction } from 'redux';
 import { pick } from 'lodash';
 import { getLyricById, getSongInfo, getSongUrl, LyricRespone } from '@/services';
 import { SongInfoResponse, SongLrcResponse } from '@/container/detail';
-import { RootState } from '..';
+
+import { RootState } from '@/store';
 import { PlayerSongInfo } from './reducers';
 import {
   PlayerActionTypes,

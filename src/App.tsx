@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import Detail from '@/container/detail';
 import PlayList from './container/play-list';
-import { RootState } from './redux';
 import './App.scss';
+import { RootState } from './store';
 
 function App() {
   const { app } = useSelector((state: RootState) => state);
