@@ -39,6 +39,10 @@ export default function PlayList(props: PlayListProps) {
 
   const handleItemClick = useCallback(
     async (e, info: SongInfo) => {
+      if (playerState.currentSongId === info.id) {
+        dispatch(changSongDetailVisible(true));
+        return;
+      }
       if (!playerSelecters.selectById(playerState, info.id)) {
         await dispatch(fetchSongInfoAndUrlInfo(info.id));
       } else {
