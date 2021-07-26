@@ -9,7 +9,6 @@ import { RootState } from '@/store';
 import { initCurrentSong } from '@/redux/player/action';
 import { cutImg } from '@/utils/base';
 import { changSongDetailVisible } from '@/redux/app';
-import { fetchLrc } from '@/redux/player/lrc';
 import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
