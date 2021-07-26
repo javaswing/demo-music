@@ -7,9 +7,8 @@ import { useAudioPosition } from 'react-use-audio-player';
 
 import { isEmpty } from 'lodash';
 import { RootState } from '@/store';
-import { lrcSelecters } from '@/redux/player/lrc';
+import { fetchLrc, lrcSelecters } from '@/redux/player/lrc';
 import { useAppSelector } from '@/hook/redux-hooks';
-import { fetchLrc } from '@/redux/player/fetch';
 import styles from './style.module.scss';
 
 export interface LyricProps {
@@ -23,7 +22,7 @@ const lyrcLineHeight = 35;
 
 const Lyric = (props: LyricProps) => {
   const { className, isPlaying } = props;
-  const { position, duration, seek } = useAudioPosition({
+  const { position } = useAudioPosition({
     highRefreshRate: true,
   });
   const dispatch = useDispatch();
@@ -86,16 +85,12 @@ const Lyric = (props: LyricProps) => {
     };
   }, [currentIndex, isPlaying]);
 
-  // TODO 处理加载中和加载出错的界面显示
   const renderLrc = useMemo(() => {
     if (isError) {
       return <div className={cls(styles.flag)}>加载出错</div>;
     }
-    if (isLoading) {
-      return <div className={cls(styles.flag)}>加载中，请稍后...</div>;
-    }
-    if (!lyricStr) {
-      return <div className={cls(styles.flag)}>纯音乐，无歌词</div>;
+    if (!lyricStr || isLoading) {
+      return <div className={cls(styles.flag)}>{isLoading ? '加载中，请稍后...' : '纯音乐，无歌词'}</div>;
     }
     return formatLrc.map((e, index) => (
       <div

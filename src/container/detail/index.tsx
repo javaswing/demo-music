@@ -89,12 +89,9 @@ export default function Detail() {
 
   const toggleDetail = useCallback(
     e => {
-      if (!isDiskModel && currentSongId) {
-        dispatch(fetchLrc(currentSongId));
-      }
       setIsDiskModel(!isDiskModel);
     },
-    [currentSongId, dispatch, isDiskModel]
+    [isDiskModel]
   );
 
   const handleNavBack = useCallback(
