@@ -7,7 +7,7 @@ import { useAudioPosition } from 'react-use-audio-player';
 
 import { isEmpty } from 'lodash';
 import { RootState } from '@/store';
-import { fetchLrc, lrcSelecters } from '@/redux/lrc/lrc';
+import { fetchLrc, lrcSelecters } from '@/redux/lrc';
 import { useAppSelector } from '@/hook/redux-hooks';
 import styles from './style.module.scss';
 

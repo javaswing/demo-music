@@ -3,13 +3,11 @@ import cls from 'classnames';
 import { useDispatch } from 'react-redux';
 import NavBar from '@/components/nav-bar';
 import Sticky from '@/components/sticky';
-import { getPlayListById, getPlayListDynamicDetailById } from '@/services';
+import { getPlayListById } from '@/services';
 
 import Loading from '@/components/loading';
-import { getUserInfo } from '@/services/user';
-import ScrollView from '@/components/scroll-view';
-import { setCurrentSong } from '@/redux/player/action';
 import { changSongDetailVisible } from '@/redux/app';
+import { fetchSongInfoAndUrlInfo } from '@/redux/player/fetch';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -36,8 +34,8 @@ export default function PlayList(props: PlayListProps) {
   }, [initData]);
 
   const handleItemClick = useCallback(
-    (e, info: SongInfo) => {
-      dispatch(setCurrentSong({ id: info.id }));
+    async (e, info: SongInfo) => {
+      await dispatch(fetchSongInfoAndUrlInfo(info.id));
       dispatch(changSongDetailVisible(true));
     },
     [dispatch]

@@ -6,9 +6,10 @@ import { isEmpty } from 'lodash';
 import { DetailContent, ControlBar, NavBar } from '@/components';
 import { LyricRespone } from '@/services';
 import { RootState } from '@/store';
-import { initCurrentSong } from '@/redux/player/action';
 import { cutImg } from '@/utils/base';
 import { changSongDetailVisible } from '@/redux/app';
+import { playerSelecters } from '@/redux/player';
+import { fetchSongInfoAndUrlInfo } from '@/redux/player/fetch';
 import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
@@ -26,15 +27,19 @@ export default function Detail() {
     highRefreshRate: true,
   });
 
-  const { currentSongId, playerList, playerModel } = useSelector((state: RootState) => state.player);
+  const playerState = useSelector((state: RootState) => state.player);
+  const { currentSongId, entities, playerModel } = playerState;
   const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
   const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
-  const currentSong = useMemo(() => playerList[currentSongId] ?? {}, [currentSongId, playerList]);
+  const currentSong = useMemo(() => playerSelecters.selectById(playerState, currentSongId), [
+    currentSongId,
+    playerState,
+  ]);
 
   const init = useCallback(async () => {
     const songId = currentSongId;
-    isEmpty(currentSong) && dispatch(initCurrentSong(songId));
+    isEmpty(currentSong) && dispatch(fetchSongInfoAndUrlInfo(songId));
   }, [currentSong, currentSongId, dispatch]);
 
   useEffect(() => {
@@ -72,7 +77,7 @@ export default function Detail() {
   );
 
   const singerName = useMemo(() => {
-    return currentSong.songInfo?.ar?.[0]?.name;
+    return currentSong?.songInfo?.ar?.[0]?.name;
   }, [currentSong]);
 
   const albumStyle = useMemo(() => {
@@ -108,7 +113,7 @@ export default function Detail() {
           onLeftClick={handleNavBack}
           title={
             <>
-              <div className={styles.songName}>{currentSong.songInfo?.name}</div>
+              <div className={styles.songName}>{currentSong?.songInfo?.name}</div>
               <div className={styles.singerName}>{singerName}</div>
             </>
           }
@@ -118,7 +123,7 @@ export default function Detail() {
           onClick={toggleDetail}
           isPlay={playing}
           isDiskModel={isDiskModel}
-          coverImg={currentSong.songInfo?.al?.picUrl}
+          coverImg={currentSong?.songInfo?.al?.picUrl}
           className={styles.playerContent}
         />
         <ControlBar
