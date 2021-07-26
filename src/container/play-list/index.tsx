@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import cls from 'classnames';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAudioPlayer } from 'react-use-audio-player';
 import NavBar from '@/components/nav-bar';
 import Sticky from '@/components/sticky';
 import { getPlayListById } from '@/services';
@@ -8,6 +9,8 @@ import { getPlayListById } from '@/services';
 import Loading from '@/components/loading';
 import { changSongDetailVisible } from '@/redux/app';
 import { fetchSongInfoAndUrlInfo } from '@/redux/player/fetch';
+import { playerSelecters, setCurrentSongId } from '@/redux/player';
+import { RootState } from '@/store';
 import { PlayListResponse } from './types';
 import styles from './style.module.scss';
 
@@ -21,8 +24,9 @@ const playListId = 5464225647;
 export default function PlayList(props: PlayListProps) {
   const { className } = props;
   const [currentPslayList, setCurrentPslayList] = useState<PlayListResponse | undefined>();
-
   const dispatch = useDispatch();
+
+  const playerState = useSelector((state: RootState) => state.player);
 
   const initData = useCallback(async () => {
     const data = (await getPlayListById(playListId)) as PlayListResponse;
@@ -35,10 +39,14 @@ export default function PlayList(props: PlayListProps) {
 
   const handleItemClick = useCallback(
     async (e, info: SongInfo) => {
-      await dispatch(fetchSongInfoAndUrlInfo(info.id));
+      if (!playerSelecters.selectById(playerState, info.id)) {
+        await dispatch(fetchSongInfoAndUrlInfo(info.id));
+      } else {
+        dispatch(setCurrentSongId(info.id));
+      }
       dispatch(changSongDetailVisible(true));
     },
-    [dispatch]
+    [dispatch, playerState]
   );
 
   const renderList = useMemo(() => {

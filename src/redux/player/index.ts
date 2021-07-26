@@ -19,6 +19,7 @@ export interface PlayerState {
   currentSongId: number;
   error: null | string | undefined;
   loading: 'loading' | 'idle';
+  currentRequestId: string | undefined;
 }
 
 const playerSlice = createSlice({
@@ -28,32 +29,38 @@ const playerSlice = createSlice({
     currentSongId: 0,
     error: null,
     loading: 'idle',
+    currentRequestId: undefined,
   }),
   reducers: {
     changePlayerModel: (state, action: PayloadAction<PlayerModel>) => {
       state.playerModel = action.payload;
     },
+    setCurrentSongId: (state, action: PayloadAction<number>) => {
+      state.currentSongId = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchSongInfoAndUrlInfo.pending, state => {
+      .addCase(fetchSongInfoAndUrlInfo.pending, (state, action) => {
         state.loading = 'loading';
         state.error = null;
+        // state.currentRequestId = action.meta.requestId;
       })
       .addCase(fetchSongInfoAndUrlInfo.fulfilled, (state, action) => {
-        console.log('fulfilled');
         playerAdapter.addOne(state, action.payload);
         state.currentSongId = action.payload.songInfo.id;
         state.loading = 'idle';
+        // state.currentRequestId = undefined;
       })
       .addCase(fetchSongInfoAndUrlInfo.rejected, (state, action) => {
         state.loading = 'idle';
         state.error = action.error.message;
+        // state.currentRequestId = undefined;
       });
   },
 });
 
-export const { changePlayerModel } = playerSlice.actions;
+export const { changePlayerModel, setCurrentSongId } = playerSlice.actions;
 
 export const playerSelecters = playerAdapter.getSelectors();
 

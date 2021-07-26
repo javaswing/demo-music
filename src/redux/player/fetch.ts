@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import resolve from 'resolve';
 import { SongInfoResponse } from '@/container/detail';
 import { getSongInfo, getSongUrl } from '@/services';
+import { RootState } from '@/store';
 import { PlayerSongInfo } from '.';
 
 export interface ValidationErrors {
@@ -26,7 +27,7 @@ export const fetchSongInfoAndUrlInfo = createAsyncThunk<
   {
     rejectValue: ValidationErrors;
   }
->('player/song', async (songId: number, { rejectWithValue }) => {
+>('player/song', async (songId: number, { rejectWithValue, getState }) => {
   try {
     const data = await fetchInfo(songId);
     return data;

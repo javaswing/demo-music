@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import cls from 'classnames';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import { useAudioPosition } from 'react-use-audio-player';
 import { fomatSongTime } from '@/utils/format';
 import { noop, rem } from '@/utils/base';
 import styles from './style.module.scss';
@@ -9,17 +10,23 @@ import styles from './style.module.scss';
 export interface ControlBarProps {
   className?: string;
   onControl: () => void;
-  onSeek?: (value: number) => void;
-  duration?: number;
-  position?: number;
   isPlay?: boolean;
   isLoading?: boolean;
 }
 
 const ControlBar = (props: ControlBarProps) => {
-  const { className, isPlay, duration = 0, position = 0, onControl = noop, onSeek = noop, isLoading } = props;
-  const [currentValue, setCurrentValue] = useState<number>(duration);
+  const { className, isPlay, onControl = noop, isLoading } = props;
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const { position, duration, seek } = useAudioPosition({
+    highRefreshRate: true,
+  });
+  const [currentValue, setCurrentValue] = useState<number>(duration);
+  const handleSeek = useCallback(
+    (value: number) => {
+      seek(value);
+    },
+    [seek]
+  );
 
   useEffect(() => {
     if (!isDragging) {
@@ -46,9 +53,9 @@ const ControlBar = (props: ControlBarProps) => {
   const handleAfterChange = useCallback(
     (value: number) => {
       setIsDragging(false);
-      onSeek(value);
+      handleSeek(value);
     },
-    [onSeek]
+    [handleSeek]
   );
 
   const handleOnChange = useCallback((value: number) => {

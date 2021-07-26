@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import cls from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAudioPlayer, useAudioPosition } from 'react-use-audio-player';
-import { isEmpty } from 'lodash';
+import { useAudioPlayer } from 'react-use-audio-player';
 import { DetailContent, ControlBar, NavBar } from '@/components';
 import { LyricRespone } from '@/services';
 import { RootState } from '@/store';
 import { cutImg } from '@/utils/base';
 import { changSongDetailVisible } from '@/redux/app';
 import { playerSelecters } from '@/redux/player';
-import { fetchSongInfoAndUrlInfo } from '@/redux/player/fetch';
 import { Privilege } from '../play-list/types';
 import styles from './style.module.scss';
 
@@ -22,14 +20,12 @@ export type SongInfoResponse = Pick<BaseResponse, 'code'> & {
 
 export default function Detail() {
   const dispatch = useDispatch();
-  const { load, playing, loading, ready, togglePlayPause } = useAudioPlayer();
-  const { position, duration, seek } = useAudioPosition({
-    highRefreshRate: true,
+  const { playing, loading, load, togglePlayPause, ready, pause, player } = useAudioPlayer({
+    autoplay: false,
   });
 
   const playerState = useSelector((state: RootState) => state.player);
-  const { currentSongId, entities, playerModel } = playerState;
-  const [isClickPlay, setIsClickPlay] = useState<boolean>(false);
+  const { currentSongId } = playerState;
   const [isDiskModel, setIsDiskModel] = useState<boolean>(true);
 
   const currentSong = useMemo(() => playerSelecters.selectById(playerState, currentSongId), [
@@ -37,44 +33,38 @@ export default function Detail() {
     playerState,
   ]);
 
-  const init = useCallback(async () => {
-    const songId = currentSongId;
-    isEmpty(currentSong) && dispatch(fetchSongInfoAndUrlInfo(songId));
-  }, [currentSong, currentSongId, dispatch]);
+  const timeRef = useRef<boolean>(false);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    const song = playerSelecters.selectById(playerState, playerState.currentSongId);
+    if (song) {
+      load({ src: [song?.urlInfo?.url] });
+      timeRef.current = true;
+    }
+  }, [load, playerState]);
 
+  // 定时刷新
   useEffect(() => {
-    if (currentSong && currentSong?.urlInfo && currentSong.urlInfo.url) {
-      load({
-        src: currentSong?.urlInfo.url,
-      });
+    let id: NodeJS.Timeout | null = null;
+    id && clearInterval(id);
+    if (!timeRef.current) {
+      id && clearInterval(id);
+      return;
     }
-  }, [currentSong, currentSong?.urlInfo, load]);
-
-  const handlePlay = useCallback(() => {
-    setIsClickPlay(true);
-    if (ready) {
-      togglePlayPause();
-      setIsClickPlay(false);
+    function watch() {
+      if (playing) {
+        timeRef.current = false;
+        id && clearInterval(id);
+        return;
+      }
+      // hack 这个库有问题，如果Load之后判断ready执行play会在第二首歌的时候播放不出来
+      player.play();
     }
-  }, [ready, togglePlayPause]);
-
-  useEffect(() => {
-    // loading完成自动继续执行播放
-    if (!loading) {
-      handlePlay();
-    }
-  }, [handlePlay, isClickPlay, loading]);
-
-  const handleSeek = useCallback(
-    (value: number) => {
-      seek(value);
-    },
-    [seek]
-  );
+    id = setInterval(watch, 1000);
+    return () => {
+      id && clearInterval(id);
+    };
+  }, [pause, player, playing, ready, togglePlayPause]);
 
   const singerName = useMemo(() => {
     return currentSong?.songInfo?.ar?.[0]?.name;
@@ -104,7 +94,7 @@ export default function Detail() {
     },
     [dispatch]
   );
-
+  console.log('render');
   return (
     <div className={styles.content}>
       <div className={cls(styles.playerWrapper, 'row')}>
@@ -126,15 +116,7 @@ export default function Detail() {
           coverImg={currentSong?.songInfo?.al?.picUrl}
           className={styles.playerContent}
         />
-        <ControlBar
-          position={position}
-          duration={duration}
-          isPlay={playing}
-          onSeek={handleSeek}
-          onControl={handlePlay}
-          isLoading={loading}
-          className={styles.playerControl}
-        />
+        <ControlBar isPlay={playing} onControl={togglePlayPause} isLoading={loading} className={styles.playerControl} />
       </div>
       <div className={styles.mask}>
         <div className={styles.maskAlbum} style={albumStyle}></div>
