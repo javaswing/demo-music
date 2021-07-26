@@ -20,7 +20,7 @@ export type SongInfoResponse = Pick<BaseResponse, 'code'> & {
 
 export default function Detail() {
   const dispatch = useDispatch();
-  const { playing, loading, load, togglePlayPause, ready, pause, player } = useAudioPlayer({
+  const { playing, loading, load, togglePlayPause, player } = useAudioPlayer({
     autoplay: false,
   });
 
@@ -37,11 +37,18 @@ export default function Detail() {
 
   useEffect(() => {
     const song = playerSelecters.selectById(playerState, playerState.currentSongId);
-    if (song) {
+    if (!song?.urlInfo?.url) {
+      console.log('没有该歌曲播放信息');
+      return;
+    }
+    if (!player) {
+      load({ src: [song?.urlInfo?.url] });
+      timeRef.current = true;
+    } else if (song && player && player._src !== song?.urlInfo?.url && playing) {
       load({ src: [song?.urlInfo?.url] });
       timeRef.current = true;
     }
-  }, [load, playerState]);
+  }, [load, player, playerState, playing]);
 
   // 定时刷新
   useEffect(() => {
@@ -64,7 +71,7 @@ export default function Detail() {
     return () => {
       id && clearInterval(id);
     };
-  }, [pause, player, playing, ready, togglePlayPause]);
+  }, [player, playing]);
 
   const singerName = useMemo(() => {
     return currentSong?.songInfo?.ar?.[0]?.name;

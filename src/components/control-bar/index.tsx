@@ -80,7 +80,7 @@ const ControlBar = (props: ControlBarProps) => {
         <div className={styles.slider}>
           <Slider
             handleStyle={dotStyleObj}
-            max={duration}
+            max={Math.floor(duration)}
             min={0}
             trackStyle={{
               backgroundColor: 'rgba(255, 255,255, .4)',
