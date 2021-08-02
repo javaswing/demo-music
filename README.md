@@ -31,6 +31,9 @@ yarn start
 - [ ] 真机模式下的详细调试
 
 ## 运行图
+![image](https://user-images.githubusercontent.com/7713463/127879927-943b9333-a89a-436d-99b8-195028b8bb98.png)
+![Kapture 2021-08-02 at 23 00 11](https://user-images.githubusercontent.com/7713463/127882208-4eb0b723-6c19-4f55-ac0d-7677603a6ddb.gif)
+
 
 ## 鸣谢
  - [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
