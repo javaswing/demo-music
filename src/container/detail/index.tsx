@@ -101,7 +101,6 @@ export default function Detail() {
     },
     [dispatch]
   );
-  console.log('render');
   return (
     <div className={styles.content}>
       <div className={cls(styles.playerWrapper, 'row')}>
