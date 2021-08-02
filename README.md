@@ -6,6 +6,8 @@
 - ` "react-dom": "^17.0.1"`
 - `"typescript": "^4.1.3"`
 
+另外有旧的vue2版本的代码，[地址](https://github.com/javaSwing/vue-demo-music/tree/vue2)
+
 
 ## 核心
 - redux部分使用了 `redux-toolkit`进行简化编写
