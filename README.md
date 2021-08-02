@@ -23,11 +23,14 @@ yarn
 # 之后启动项目
 yarn start
 ```
+
 ## todo
 - [ ] 列表`scroll-view`组件的封装
 - [ ] 播放器列表的功能的实现及mini模式组件
 - [ ] `play-list`组件功能的完善
 - [ ] 真机模式下的详细调试
+
+## 运行图
 
 ## 鸣谢
  - [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
